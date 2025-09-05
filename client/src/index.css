@@ -3,85 +3,124 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gruvbox Light Theme (Default) */
 :root {
-  --background: hsl(231, 15%, 18%);
-  --foreground: hsl(60, 30%, 96%);
-  --card: hsl(232, 14%, 31%);
-  --card-foreground: hsl(60, 30%, 96%);
-  --popover: hsl(232, 14%, 31%);
-  --popover-foreground: hsl(60, 30%, 96%);
-  --primary: hsl(265, 89%, 78%);
-  --primary-foreground: hsl(231, 15%, 18%);
-  --secondary: hsl(191, 97%, 77%);
-  --secondary-foreground: hsl(231, 15%, 18%);
-  --muted: hsl(232, 14%, 31%);
-  --muted-foreground: hsl(225, 27%, 51%);
-  --accent: hsl(135, 94%, 65%);
-  --accent-foreground: hsl(231, 15%, 18%);
-  --destructive: hsl(0, 100%, 67%);
-  --destructive-foreground: hsl(60, 30%, 96%);
-  --border: hsl(232, 14%, 31%);
-  --input: hsl(232, 14%, 31%);
-  --ring: hsl(265, 89%, 78%);
-  --success: hsl(135, 94%, 65%);
-  --warning: hsl(31, 100%, 71%);
-  --chart-1: hsl(265, 89%, 78%);
-  --chart-2: hsl(135, 94%, 65%);
-  --chart-3: hsl(31, 100%, 71%);
-  --chart-4: hsl(326, 100%, 74%);
-  --chart-5: hsl(191, 97%, 77%);
-  --sidebar: hsl(231, 15%, 18%);
-  --sidebar-foreground: hsl(60, 30%, 96%);
-  --sidebar-primary: hsl(265, 89%, 78%);
-  --sidebar-primary-foreground: hsl(231, 15%, 18%);
-  --sidebar-accent: hsl(232, 14%, 31%);
-  --sidebar-accent-foreground: hsl(60, 30%, 96%);
-  --sidebar-border: hsl(232, 14%, 31%);
-  --sidebar-ring: hsl(265, 89%, 78%);
+  /* Background Colors */
+  --background: #fbf1c7; /* light0 */
+  --foreground: #3c3836; /* dark1 */
+  --card: #f2e5bc; /* light0_soft */
+  --card-foreground: #3c3836; /* dark1 */
+  --popover: #f2e5bc; /* light0_soft */
+  --popover-foreground: #3c3836; /* dark1 */
+  
+  /* Primary Colors */
+  --primary: #d79921; /* neutral_yellow */
+  --primary-foreground: #fbf1c7; /* light0 */
+  --secondary: #98971a; /* neutral_green */
+  --secondary-foreground: #fbf1c7; /* light0 */
+  
+  /* Accent Colors */
+  --muted: #ebdbb2; /* light1 */
+  --muted-foreground: #665c54; /* dark3 */
+  --accent: #458588; /* neutral_blue */
+  --accent-foreground: #fbf1c7; /* light0 */
+  
+  /* State Colors */
+  --destructive: #cc241d; /* neutral_red */
+  --destructive-foreground: #fbf1c7; /* light0 */
+  --success: #98971a; /* neutral_green */
+  --warning: #d65d0e; /* neutral_orange */
+  
+  /* Interactive Elements */
+  --border: #d5c4a1; /* light2 */
+  --input: #ebdbb2; /* light1 */
+  --ring: #d79921; /* neutral_yellow */
+  
+  /* Chart Colors */
+  --chart-1: #d79921; /* neutral_yellow */
+  --chart-2: #98971a; /* neutral_green */
+  --chart-3: #d65d0e; /* neutral_orange */
+  --chart-4: #b16286; /* neutral_purple */
+  --chart-5: #458588; /* neutral_blue */
+  
+  /* Sidebar */
+  --sidebar: #f2e5bc; /* light0_soft */
+  --sidebar-foreground: #3c3836; /* dark1 */
+  --sidebar-primary: #d79921; /* neutral_yellow */
+  --sidebar-primary-foreground: #fbf1c7; /* light0 */
+  --sidebar-accent: #ebdbb2; /* light1 */
+  --sidebar-accent-foreground: #3c3836; /* dark1 */
+  --sidebar-border: #d5c4a1; /* light2 */
+  --sidebar-ring: #d79921; /* neutral_yellow */
+  
+  /* Typography & Layout */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 8px;
-  --shadow-2xs: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2);
-  --shadow-xs: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2);
-  --shadow-sm: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2), 0px 1px 2px -1px hsl(231, 15%, 10%, 0.1);
-  --shadow: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2), 0px 1px 2px -1px hsl(231, 15%, 10%, 0.1);
-  --shadow-md: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2), 0px 2px 4px -1px hsl(231, 15%, 10%, 0.1);
-  --shadow-lg: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2), 0px 4px 6px -1px hsl(231, 15%, 10%, 0.1);
-  --shadow-xl: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2), 0px 8px 10px -1px hsl(231, 15%, 10%, 0.1);
-  --shadow-2xl: 0px 2px 0px 0px hsl(231, 15%, 10%, 0.2);
+  --shadow-2xs: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1);
+  --shadow-xs: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1);
+  --shadow-sm: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1), 0px 1px 2px -1px hsla(0, 0%, 0%, 0.05);
+  --shadow: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1), 0px 1px 2px -1px hsla(0, 0%, 0%, 0.05);
+  --shadow-md: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1), 0px 2px 4px -1px hsla(0, 0%, 0%, 0.05);
+  --shadow-lg: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1), 0px 4px 6px -1px hsla(0, 0%, 0%, 0.05);
+  --shadow-xl: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1), 0px 8px 10px -1px hsla(0, 0%, 0%, 0.05);
+  --shadow-2xl: 0px 2px 0px 0px hsla(0, 0%, 0%, 0.1);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
+/* Gruvbox Dark Theme */
 .dark {
-  --background: hsl(231, 15%, 12%);
-  --foreground: hsl(60, 30%, 96%);
-  --card: hsl(232, 14%, 24%);
-  --card-foreground: hsl(60, 30%, 96%);
-  --popover: hsl(232, 14%, 24%);
-  --popover-foreground: hsl(60, 30%, 96%);
-  --primary: hsl(326, 100%, 74%);
-  --primary-foreground: hsl(231, 15%, 18%);
-  --secondary: hsl(191, 97%, 77%);
-  --secondary-foreground: hsl(231, 15%, 18%);
-  --muted: hsl(232, 14%, 24%);
-  --muted-foreground: hsl(225, 27%, 51%);
-  --accent: hsl(65, 92%, 76%);
-  --accent-foreground: hsl(231, 15%, 18%);
-  --destructive: hsl(0, 100%, 67%);
-  --destructive-foreground: hsl(60, 30%, 96%);
-  --border: hsl(232, 14%, 24%);
-  --input: hsl(232, 14%, 24%);
-  --ring: hsl(326, 100%, 74%);
-  --sidebar: hsl(231, 15%, 12%);
-  --sidebar-foreground: hsl(60, 30%, 96%);
-  --sidebar-primary: hsl(326, 100%, 74%);
-  --sidebar-primary-foreground: hsl(231, 15%, 18%);
-  --sidebar-accent: hsl(232, 14%, 24%);
-  --sidebar-accent-foreground: hsl(60, 30%, 96%);
-  --sidebar-border: hsl(232, 14%, 24%);
-  --sidebar-ring: hsl(326, 100%, 74%);
+  /* Background Colors */
+  --background: #282828; /* dark0 */
+  --foreground: #ebdbb2; /* light1 */
+  --card: #32302f; /* dark0_soft */
+  --card-foreground: #ebdbb2; /* light1 */
+  --popover: #32302f; /* dark0_soft */
+  --popover-foreground: #ebdbb2; /* light1 */
+  
+  /* Primary Colors */
+  --primary: #fabd2f; /* bright_yellow */
+  --primary-foreground: #282828; /* dark0 */
+  --secondary: #b8bb26; /* bright_green */
+  --secondary-foreground: #282828; /* dark0 */
+  
+  /* Accent Colors */
+  --muted: #3c3836; /* dark1 */
+  --muted-foreground: #a89984; /* light4 */
+  --accent: #83a598; /* bright_blue */
+  --accent-foreground: #282828; /* dark0 */
+  
+  /* State Colors */
+  --destructive: #fb4934; /* bright_red */
+  --destructive-foreground: #ebdbb2; /* light1 */
+  --success: #b8bb26; /* bright_green */
+  --warning: #fe8019; /* bright_orange */
+  
+  /* Interactive Elements */
+  --border: #504945; /* dark2 */
+  --input: #3c3836; /* dark1 */
+  --ring: #fabd2f; /* bright_yellow */
+  
+  /* Chart Colors */
+  --chart-1: #fabd2f; /* bright_yellow */
+  --chart-2: #b8bb26; /* bright_green */
+  --chart-3: #fe8019; /* bright_orange */
+  --chart-4: #d3869b; /* bright_purple */
+  --chart-5: #83a598; /* bright_blue */
+  
+  /* Sidebar */
+  --sidebar: #282828; /* dark0 */
+  --sidebar-foreground: #ebdbb2; /* light1 */
+  --sidebar-primary: #fabd2f; /* bright_yellow */
+  --sidebar-primary-foreground: #282828; /* dark0 */
+  --sidebar-accent: #3c3836; /* dark1 */
+  --sidebar-accent-foreground: #ebdbb2; /* light1 */
+  --sidebar-border: #504945; /* dark2 */
+  --sidebar-ring: #fabd2f; /* bright_yellow */
+  
+  /* Typography & Layout */
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;

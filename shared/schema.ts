@@ -1,40 +1,40 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, timestamp, real } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   avatar: text("avatar"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
-export const workouts = pgTable("workouts", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
+export const workouts = sqliteTable("workouts", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
   type: text("type").notNull(),
   duration: integer("duration").notNull(), // minutes
   calories: integer("calories"),
   distance: real("distance"), // km
   notes: text("notes"),
-  date: timestamp("date").defaultNow(),
+  date: integer("date", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
-export const meals = pgTable("meals", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
+export const meals = sqliteTable("meals", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
   name: text("name").notNull(),
   photoUrl: text("photo_url"),
   calories: integer("calories").notNull(),
   notes: text("notes"),
-  date: timestamp("date").defaultNow(),
+  date: integer("date", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
-export const trainers = pgTable("trainers", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const trainers = sqliteTable("trainers", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
   name: text("name").notNull(),
   specialty: text("specialty").notNull(),
   bio: text("bio"),
@@ -46,8 +46,8 @@ export const trainers = pgTable("trainers", {
   contact: text("contact"),
 });
 
-export const gyms = pgTable("gyms", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+export const gyms = sqliteTable("gyms", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
   name: text("name").notNull(),
   location: text("location").notNull(),
   address: text("address").notNull(),
@@ -55,19 +55,19 @@ export const gyms = pgTable("gyms", {
   rating: real("rating").default(0),
   reviewCount: integer("review_count").default(0),
   photoUrl: text("photo_url"),
-  amenities: text("amenities").array(),
+  amenities: text("amenities"),
   hours: text("hours"),
   distance: real("distance"), // km from user
 });
 
-export const bookings = pgTable("bookings", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
-  trainerId: varchar("trainer_id").notNull().references(() => trainers.id),
-  date: timestamp("date").notNull(),
+export const bookings = sqliteTable("bookings", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
+  trainerId: text("trainer_id").notNull().references(() => trainers.id),
+  date: integer("date", { mode: "timestamp" }).notNull(),
   status: text("status").notNull().default("pending"), // pending, confirmed, cancelled
   notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
 // Insert schemas

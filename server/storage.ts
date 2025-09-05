@@ -110,7 +110,7 @@ export class MemStorage implements IStorage {
         rating: 4.8,
         reviewCount: 342,
         photoUrl: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=300&fit=crop",
-        amenities: ["Cardio Equipment", "Free Weights", "Group Classes", "Locker Rooms"],
+        amenities: JSON.stringify(["Cardio Equipment", "Free Weights", "Group Classes", "Locker Rooms"]),
         hours: "Open 24/7",
         distance: 1.2
       },
@@ -122,7 +122,7 @@ export class MemStorage implements IStorage {
         rating: 4.6,
         reviewCount: 198,
         photoUrl: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&h=300&fit=crop",
-        amenities: ["Premium Equipment", "Personal Training", "Swimming Pool", "Sauna", "Juice Bar"],
+        amenities: JSON.stringify(["Premium Equipment", "Personal Training", "Swimming Pool", "Sauna", "Juice Bar"]),
         hours: "6 AM - 11 PM",
         distance: 2.1
       }
