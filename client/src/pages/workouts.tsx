@@ -50,7 +50,7 @@ const workoutTypeData = {
 
 const intensityLevels = {
   low: { color: "text-green-500", label: "Low" },
-  moderate: { color: "text-orange-400", label: "Moderate" },
+  moderate: { color: "text-gray-400", label: "Moderate" },
   high: { color: "text-red-500", label: "High" }
 };
 
@@ -277,7 +277,7 @@ export default function WorkoutsPage() {
               className="rounded"
             />
             <Label htmlFor="personalRecord" className="flex items-center space-x-2">
-              <Trophy className="w-4 h-4 text-cyan-400" />
+              <Trophy className="w-4 h-4 text-white" />
               <span>Personal Record</span>
             </Label>
           </div>
@@ -434,7 +434,7 @@ export default function WorkoutsPage() {
                               {workout.name || workout.type.charAt(0).toUpperCase() + workout.type.slice(1)}
                             </h3>
                             {workout.personalRecord && (
-                              <Trophy className="w-4 h-4 text-cyan-400" />
+                              <Trophy className="w-4 h-4 text-white" />
                             )}
                           </div>
                           <div className="flex items-center space-x-2 text-sm text-muted-foreground">

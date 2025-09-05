@@ -318,56 +318,6 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
-      <Card className="mb-6">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/workouts">
-              <Button 
-                variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
-                data-testid="button-log-workout"
-              >
-                <PlayCircle className="w-6 h-6 text-blue-500" />
-                <span className="text-sm">Start Workout</span>
-              </Button>
-            </Link>
-            <Link href="/meals">
-              <Button 
-                variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
-                data-testid="button-log-meal"
-              >
-                <Apple className="w-6 h-6 text-green-500" />
-                <span className="text-sm">Log Meal</span>
-              </Button>
-            </Link>
-            <Link href="/trainers">
-              <Button 
-                variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
-                data-testid="button-find-trainer"
-              >
-                <Users className="w-6 h-6 text-purple-500" />
-                <span className="text-sm">Find Trainer</span>
-              </Button>
-            </Link>
-            <Link href="/gyms">
-              <Button 
-                variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
-                data-testid="button-find-gym"
-              >
-                <MapPin className="w-6 h-6 text-orange-500" />
-                <span className="text-sm">Find Gym</span>
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Achievements */}
       <Card className="mb-6">
@@ -386,13 +336,13 @@ export default function Dashboard() {
               <div
                 key={badge.id}
                 className={`p-3 rounded-xl text-center native-transition ${
-                  index < 2 ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-muted/30'
+                  index < 2 ? 'bg-white/10 border border-white/20' : 'bg-muted/30'
                 }`}
               >
                 <div className="text-2xl mb-1">{<badge.icon className="w-6 h-6 mx-auto" />}</div>
                 <h4 className="font-medium text-xs mb-1">{badge.title}</h4>
                 {index < 2 && (
-                  <CheckCircle2 className="w-4 h-4 text-purple-400 mx-auto" />
+                  <CheckCircle2 className="w-4 h-4 text-white mx-auto" />
                 )}
               </div>
             ))}
