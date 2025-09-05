@@ -188,16 +188,3 @@
   transition: transform 0.2s ease;
 }
 
-/* Ensure bottom navigation is visible and fixed */
-nav[style*="position: fixed"] {
-  position: fixed !important;
-  bottom: 0px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 999999 !important;
-  width: 100% !important;
-  max-width: 448px !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
