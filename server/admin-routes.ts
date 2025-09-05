@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { adminStorage } from "./admin-storage";
 import { adminLoginSchema } from "@shared/admin-schema";
 import { insertTrainerSchema, insertGymSchema } from "@shared/schema";
+import { upload, processImage, getFileUrl } from "./upload-utils";
 
 const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || "admin-secret-key-2024";
 
@@ -111,9 +112,24 @@ export async function registerAdminRoutes(app: Express) {
     }
   });
 
-  app.post("/admin/api/trainers", authenticateAdmin, async (req, res) => {
+  app.post("/admin/api/trainers", authenticateAdmin, upload.single('photo'), async (req, res) => {
     try {
-      const trainerData = insertTrainerSchema.parse(req.body);
+      const trainerData = insertTrainerSchema.parse({
+        ...req.body,
+        price: parseInt(req.body.price),
+        rating: parseFloat(req.body.rating) || 0,
+        reviewCount: parseInt(req.body.reviewCount) || 0,
+        experience: parseInt(req.body.experience) || null,
+        isVerified: req.body.isVerified ? 1 : 0,
+        isActive: req.body.isActive ? 1 : 0
+      });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 400, height: 400 });
+        trainerData.photoUrl = getFileUrl(processedPath);
+      }
+      
       const trainer = await adminStorage.createTrainer(trainerData);
       res.json(trainer);
     } catch (error) {
@@ -122,9 +138,24 @@ export async function registerAdminRoutes(app: Express) {
     }
   });
 
-  app.put("/admin/api/trainers/:id", authenticateAdmin, async (req, res) => {
+  app.put("/admin/api/trainers/:id", authenticateAdmin, upload.single('photo'), async (req, res) => {
     try {
-      const updates = insertTrainerSchema.partial().parse(req.body);
+      const updates = insertTrainerSchema.partial().parse({
+        ...req.body,
+        price: req.body.price ? parseInt(req.body.price) : undefined,
+        rating: req.body.rating ? parseFloat(req.body.rating) : undefined,
+        reviewCount: req.body.reviewCount ? parseInt(req.body.reviewCount) : undefined,
+        experience: req.body.experience ? parseInt(req.body.experience) : undefined,
+        isVerified: req.body.isVerified !== undefined ? (req.body.isVerified ? 1 : 0) : undefined,
+        isActive: req.body.isActive !== undefined ? (req.body.isActive ? 1 : 0) : undefined
+      });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 400, height: 400 });
+        updates.photoUrl = getFileUrl(processedPath);
+      }
+      
       const trainer = await adminStorage.updateTrainer(req.params.id, updates);
       if (trainer) {
         res.json(trainer);
@@ -162,9 +193,26 @@ export async function registerAdminRoutes(app: Express) {
     }
   });
 
-  app.post("/admin/api/gyms", authenticateAdmin, async (req, res) => {
+  app.post("/admin/api/gyms", authenticateAdmin, upload.single('photo'), async (req, res) => {
     try {
-      const gymData = insertGymSchema.parse(req.body);
+      const gymData = insertGymSchema.parse({
+        ...req.body,
+        price: parseInt(req.body.price),
+        rating: parseFloat(req.body.rating) || 0,
+        reviewCount: parseInt(req.body.reviewCount) || 0,
+        distance: parseFloat(req.body.distance) || 0,
+        hasPool: req.body.hasPool ? 1 : 0,
+        hasSauna: req.body.hasSauna ? 1 : 0,
+        hasClasses: req.body.hasClasses ? 1 : 0,
+        hasPT: req.body.hasPT ? 1 : 0
+      });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 800, height: 400 });
+        gymData.photoUrl = getFileUrl(processedPath);
+      }
+      
       const gym = await adminStorage.createGym(gymData);
       res.json(gym);
     } catch (error) {
@@ -173,9 +221,26 @@ export async function registerAdminRoutes(app: Express) {
     }
   });
 
-  app.put("/admin/api/gyms/:id", authenticateAdmin, async (req, res) => {
+  app.put("/admin/api/gyms/:id", authenticateAdmin, upload.single('photo'), async (req, res) => {
     try {
-      const updates = insertGymSchema.partial().parse(req.body);
+      const updates = insertGymSchema.partial().parse({
+        ...req.body,
+        price: req.body.price ? parseInt(req.body.price) : undefined,
+        rating: req.body.rating ? parseFloat(req.body.rating) : undefined,
+        reviewCount: req.body.reviewCount ? parseInt(req.body.reviewCount) : undefined,
+        distance: req.body.distance ? parseFloat(req.body.distance) : undefined,
+        hasPool: req.body.hasPool !== undefined ? (req.body.hasPool ? 1 : 0) : undefined,
+        hasSauna: req.body.hasSauna !== undefined ? (req.body.hasSauna ? 1 : 0) : undefined,
+        hasClasses: req.body.hasClasses !== undefined ? (req.body.hasClasses ? 1 : 0) : undefined,
+        hasPT: req.body.hasPT !== undefined ? (req.body.hasPT ? 1 : 0) : undefined
+      });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 800, height: 400 });
+        updates.photoUrl = getFileUrl(processedPath);
+      }
+      
       const gym = await adminStorage.updateGym(req.params.id, updates);
       if (gym) {
         res.json(gym);

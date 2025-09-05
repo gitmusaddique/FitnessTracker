@@ -3,8 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import multer from "multer";
-import path from "path";
+import { upload, processImage, getFileUrl } from "./upload-utils";
 import { 
   insertUserSchema, 
   loginSchema, 
@@ -15,20 +14,6 @@ import {
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
-// Configure multer for file uploads
-const upload = multer({
-  dest: 'uploads/',
-  limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
-  },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Only image files are allowed'));
-    }
-  }
-});
 
 // Middleware to verify JWT token
 const authenticateToken = async (req: any, res: any, next: any) => {
@@ -197,9 +182,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mealData = insertMealSchema.parse({
         ...req.body,
         userId: req.user.id,
-        photoUrl: req.file ? `/uploads/${req.file.filename}` : undefined,
         calories: parseInt(req.body.calories)
       });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 600, height: 400 });
+        mealData.photoUrl = getFileUrl(processedPath);
+      }
       
       const meal = await storage.createMeal(mealData);
       res.json(meal);

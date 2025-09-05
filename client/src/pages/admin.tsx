@@ -385,6 +385,7 @@ function AdminDashboard() {
 // Trainer Management Component
 function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDelete: (id: string) => void }) {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingTrainer, setEditingTrainer] = useState<Trainer | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -404,25 +405,90 @@ function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDele
   });
 
   const createTrainerMutation = useMutation({
-    mutationFn: async (data: InsertTrainer) => {
-      const response = await adminApiRequest("POST", "/admin/api/trainers", data);
+    mutationFn: async (data: FormData) => {
+      const response = await fetch("/admin/api/trainers", {
+        method: "POST",
+        headers: adminAuthManager.getAuthHeaders(),
+        body: data
+      });
+      if (!response.ok) throw new Error("Failed to create trainer");
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/admin/api/trainers"] });
       form.reset();
       setShowAddForm(false);
+      setEditingTrainer(null);
       toast({ title: "Trainer created successfully" });
     }
   });
 
+  const updateTrainerMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string, data: FormData }) => {
+      const response = await fetch(`/admin/api/trainers/${id}`, {
+        method: "PUT",
+        headers: adminAuthManager.getAuthHeaders(),
+        body: data
+      });
+      if (!response.ok) throw new Error("Failed to update trainer");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/admin/api/trainers"] });
+      form.reset();
+      setShowAddForm(false);
+      setEditingTrainer(null);
+      toast({ title: "Trainer updated successfully" });
+    }
+  });
+
   const handleSubmit = (data: InsertTrainer) => {
-    createTrainerMutation.mutate({
-      ...data,
-      price: Number(data.price),
-      rating: Number(data.rating),
-      reviewCount: Number(data.reviewCount)
+    const formData = new FormData();
+    
+    // Add all text fields
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value.toString());
+      }
     });
+    
+    // Add photo if selected
+    const photoInput = document.getElementById('trainer-photo') as HTMLInputElement;
+    if (photoInput?.files?.[0]) {
+      formData.append('photo', photoInput.files[0]);
+    }
+    
+    if (editingTrainer) {
+      updateTrainerMutation.mutate({ id: editingTrainer.id, data: formData });
+    } else {
+      createTrainerMutation.mutate(formData);
+    }
+  };
+  
+  const startEdit = (trainer: Trainer) => {
+    setEditingTrainer(trainer);
+    setShowAddForm(true);
+    form.reset({
+      name: trainer.name,
+      email: trainer.email,
+      specialty: trainer.specialty,
+      bio: trainer.bio || "",
+      price: trainer.price,
+      rating: trainer.rating || 0,
+      reviewCount: trainer.reviewCount || 0,
+      location: trainer.location || "",
+      contact: trainer.contact || "",
+      experience: trainer.experience || 0,
+      certifications: trainer.certifications || "",
+      isVerified: trainer.isVerified || 0,
+      isActive: trainer.isActive || 0
+    });
+  };
+  
+  const cancelEdit = () => {
+    setEditingTrainer(null);
+    setShowAddForm(false);
+    form.reset();
   };
 
   return (
@@ -455,6 +521,15 @@ function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDele
               <Label htmlFor="bio">Bio</Label>
               <Textarea {...form.register("bio")} placeholder="Trainer bio..." />
             </div>
+            <div>
+              <Label htmlFor="trainer-photo">Photo</Label>
+              <Input 
+                id="trainer-photo"
+                type="file" 
+                accept="image/*"
+                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
+              />
+            </div>
             <div className="grid grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="price">Price (cents)</Label>
@@ -479,11 +554,23 @@ function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDele
                 <Input {...form.register("contact")} placeholder="contact@example.com" />
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="experience">Experience (years)</Label>
+                <Input type="number" {...form.register("experience", { valueAsNumber: true })} placeholder="5" />
+              </div>
+              <div>
+                <Label htmlFor="certifications">Certifications</Label>
+                <Input {...form.register("certifications")} placeholder="NASM, ACE" />
+              </div>
+            </div>
             <div className="flex space-x-2">
-              <Button type="submit" disabled={createTrainerMutation.isPending}>
-                {createTrainerMutation.isPending ? "Creating..." : "Create Trainer"}
+              <Button type="submit" disabled={createTrainerMutation.isPending || updateTrainerMutation.isPending}>
+                {createTrainerMutation.isPending || updateTrainerMutation.isPending 
+                  ? (editingTrainer ? "Updating..." : "Creating...") 
+                  : (editingTrainer ? "Update Trainer" : "Create Trainer")}
               </Button>
-              <Button type="button" variant="outline" onClick={() => setShowAddForm(false)}>
+              <Button type="button" variant="outline" onClick={cancelEdit}>
                 Cancel
               </Button>
             </div>
@@ -493,23 +580,42 @@ function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDele
         <div className="space-y-4">
           {trainers.map((trainer) => (
             <div key={trainer.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex-1">
-                <h3 className="font-semibold">{trainer.name}</h3>
-                <p className="text-sm text-muted-foreground">{trainer.specialty}</p>
-                <p className="text-sm">{trainer.email}</p>
-                <div className="flex items-center space-x-4 mt-2">
-                  <Badge variant="secondary">${(trainer.price / 100).toFixed(0)}/hr</Badge>
-                  <Badge variant="outline">⭐ {trainer.rating}</Badge>
-                  <span className="text-xs text-muted-foreground">{trainer.reviewCount} reviews</span>
+              <div className="flex items-start space-x-4 flex-1">
+                {trainer.photoUrl && (
+                  <img 
+                    src={trainer.photoUrl} 
+                    alt={trainer.name}
+                    className="w-16 h-16 rounded-full object-cover"
+                  />
+                )}
+                <div className="flex-1">
+                  <h3 className="font-semibold">{trainer.name}</h3>
+                  <p className="text-sm text-muted-foreground">{trainer.specialty}</p>
+                  <p className="text-sm">{trainer.email}</p>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <Badge variant="secondary">${(trainer.price / 100).toFixed(0)}/hr</Badge>
+                    <Badge variant="outline">⭐ {trainer.rating}</Badge>
+                    <span className="text-xs text-muted-foreground">{trainer.reviewCount} reviews</span>
+                    {trainer.experience && <span className="text-xs text-muted-foreground">{trainer.experience}y exp</span>}
+                  </div>
                 </div>
               </div>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => onDelete(trainer.id)}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => startEdit(trainer)}
+                >
+                  <Edit className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => onDelete(trainer.id)}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           ))}
         </div>
@@ -521,6 +627,7 @@ function TrainerManagement({ trainers, onDelete }: { trainers: Trainer[], onDele
 // Gym Management Component
 function GymManagement({ gyms, onDelete }: { gyms: Gym[], onDelete: (id: string) => void }) {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [editingGym, setEditingGym] = useState<Gym | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -540,26 +647,89 @@ function GymManagement({ gyms, onDelete }: { gyms: Gym[], onDelete: (id: string)
   });
 
   const createGymMutation = useMutation({
-    mutationFn: async (data: InsertGym) => {
-      const response = await adminApiRequest("POST", "/admin/api/gyms", data);
+    mutationFn: async (data: FormData) => {
+      const response = await fetch("/admin/api/gyms", {
+        method: "POST",
+        headers: adminAuthManager.getAuthHeaders(),
+        body: data
+      });
+      if (!response.ok) throw new Error("Failed to create gym");
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/admin/api/gyms"] });
       form.reset();
       setShowAddForm(false);
+      setEditingGym(null);
       toast({ title: "Gym created successfully" });
     }
   });
 
+  const updateGymMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string, data: FormData }) => {
+      const response = await fetch(`/admin/api/gyms/${id}`, {
+        method: "PUT",
+        headers: adminAuthManager.getAuthHeaders(),
+        body: data
+      });
+      if (!response.ok) throw new Error("Failed to update gym");
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/admin/api/gyms"] });
+      form.reset();
+      setShowAddForm(false);
+      setEditingGym(null);
+      toast({ title: "Gym updated successfully" });
+    }
+  });
+
   const handleSubmit = (data: InsertGym) => {
-    createGymMutation.mutate({
-      ...data,
-      price: Number(data.price),
-      rating: Number(data.rating),
-      reviewCount: Number(data.reviewCount),
-      distance: Number(data.distance)
+    const formData = new FormData();
+    
+    // Add all text fields
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value.toString());
+      }
     });
+    
+    // Add photo if selected
+    const photoInput = document.getElementById('gym-photo') as HTMLInputElement;
+    if (photoInput?.files?.[0]) {
+      formData.append('photo', photoInput.files[0]);
+    }
+    
+    if (editingGym) {
+      updateGymMutation.mutate({ id: editingGym.id, data: formData });
+    } else {
+      createGymMutation.mutate(formData);
+    }
+  };
+  
+  const startEdit = (gym: Gym) => {
+    setEditingGym(gym);
+    setShowAddForm(true);
+    form.reset({
+      name: gym.name,
+      location: gym.location,
+      address: gym.address,
+      price: gym.price,
+      rating: gym.rating || 0,
+      reviewCount: gym.reviewCount || 0,
+      amenities: gym.amenities || "",
+      hours: gym.hours || "",
+      distance: gym.distance || 0,
+      email: gym.email || "",
+      phone: gym.phone || "",
+      website: gym.website || ""
+    });
+  };
+  
+  const cancelEdit = () => {
+    setEditingGym(null);
+    setShowAddForm(false);
+    form.reset();
   };
 
   return (
@@ -614,11 +784,36 @@ function GymManagement({ gyms, onDelete }: { gyms: Gym[], onDelete: (id: string)
               <Label htmlFor="hours">Hours</Label>
               <Input {...form.register("hours")} placeholder="6 AM - 11 PM" />
             </div>
+            <div>
+              <Label htmlFor="gym-photo">Photo</Label>
+              <Input 
+                id="gym-photo"
+                type="file" 
+                accept="image/*"
+                className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input {...form.register("email")} placeholder="info@gym.com" />
+              </div>
+              <div>
+                <Label htmlFor="phone">Phone</Label>
+                <Input {...form.register("phone")} placeholder="+1234567890" />
+              </div>
+              <div>
+                <Label htmlFor="website">Website</Label>
+                <Input {...form.register("website")} placeholder="https://gym.com" />
+              </div>
+            </div>
             <div className="flex space-x-2">
-              <Button type="submit" disabled={createGymMutation.isPending}>
-                {createGymMutation.isPending ? "Creating..." : "Create Gym"}
+              <Button type="submit" disabled={createGymMutation.isPending || updateGymMutation.isPending}>
+                {createGymMutation.isPending || updateGymMutation.isPending 
+                  ? (editingGym ? "Updating..." : "Creating...") 
+                  : (editingGym ? "Update Gym" : "Create Gym")}
               </Button>
-              <Button type="button" variant="outline" onClick={() => setShowAddForm(false)}>
+              <Button type="button" variant="outline" onClick={cancelEdit}>
                 Cancel
               </Button>
             </div>
@@ -628,24 +823,42 @@ function GymManagement({ gyms, onDelete }: { gyms: Gym[], onDelete: (id: string)
         <div className="space-y-4">
           {gyms.map((gym) => (
             <div key={gym.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex-1">
-                <h3 className="font-semibold">{gym.name}</h3>
-                <p className="text-sm text-muted-foreground">{gym.address}</p>
-                <p className="text-sm">{gym.location}</p>
-                <div className="flex items-center space-x-4 mt-2">
-                  <Badge variant="secondary">${(gym.price / 100).toFixed(0)}/month</Badge>
-                  <Badge variant="outline">⭐ {gym.rating}</Badge>
-                  <span className="text-xs text-muted-foreground">{gym.reviewCount} reviews</span>
-                  <span className="text-xs text-muted-foreground">{gym.distance}km away</span>
+              <div className="flex items-start space-x-4 flex-1">
+                {gym.photoUrl && (
+                  <img 
+                    src={gym.photoUrl} 
+                    alt={gym.name}
+                    className="w-16 h-16 rounded-lg object-cover"
+                  />
+                )}
+                <div className="flex-1">
+                  <h3 className="font-semibold">{gym.name}</h3>
+                  <p className="text-sm text-muted-foreground">{gym.address}</p>
+                  <p className="text-sm">{gym.location}</p>
+                  <div className="flex items-center space-x-4 mt-2">
+                    <Badge variant="secondary">${(gym.price / 100).toFixed(0)}/month</Badge>
+                    <Badge variant="outline">⭐ {gym.rating}</Badge>
+                    <span className="text-xs text-muted-foreground">{gym.reviewCount} reviews</span>
+                    <span className="text-xs text-muted-foreground">{gym.distance}km away</span>
+                  </div>
                 </div>
               </div>
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => onDelete(gym.id)}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+              <div className="flex space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => startEdit(gym)}
+                >
+                  <Edit className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => onDelete(gym.id)}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
           ))}
         </div>
