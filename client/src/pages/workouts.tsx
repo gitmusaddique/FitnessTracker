@@ -414,10 +414,11 @@ export default function WorkoutsPage() {
             </CardContent>
           </Card>
         ) : (
-          filteredWorkouts.map((workout) => {
+          filteredWorkouts.map((workout, index) => {
             const typeData = workoutTypeData[workout.type as keyof typeof workoutTypeData] || workoutTypeData.strength;
             const intensityData = intensityLevels[workout.intensity as keyof typeof intensityLevels];
             const IconComponent = typeData.icon;
+            const workoutNumber = index + 1;
             
             return (
               <Card key={workout.id} className="overflow-hidden" data-testid={`workout-card-${workout.id}`}>
@@ -431,7 +432,7 @@ export default function WorkoutsPage() {
                         <div>
                           <div className="flex items-center space-x-2">
                             <h3 className="font-semibold" data-testid={`workout-name-${workout.id}`}>
-                              {workout.name || workout.type.charAt(0).toUpperCase() + workout.type.slice(1)}
+                              {workoutNumber}. {workout.name || workout.type.charAt(0).toUpperCase() + workout.type.slice(1)}
                             </h3>
                             {workout.personalRecord && (
                               <Trophy className="w-4 h-4 text-foreground" />
