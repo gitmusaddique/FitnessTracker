@@ -126,6 +126,41 @@ input:focus, textarea:focus, select:focus {
   scroll-behavior: smooth;
 }
 
+/* Bottom Navigation Styling */
+.md-navigation-bar {
+  background-color: hsl(var(--card));
+  border-top: 1px solid hsl(var(--border));
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.md-navigation-item {
+  color: hsl(var(--muted-foreground));
+  transition: color 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.md-navigation-item.active {
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--primary-container));
+}
+
+.mobile-safe-area {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.native-transition {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* Touch-friendly interactions */
 @media (hover: none) and (pointer: coarse) {
   button:active, .btn:active {
