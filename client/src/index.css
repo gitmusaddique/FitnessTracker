@@ -103,7 +103,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .md-navigation-item {
-  color: white;
+  color: hsl(var(--muted-foreground));
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 12px;
   padding: 12px;
