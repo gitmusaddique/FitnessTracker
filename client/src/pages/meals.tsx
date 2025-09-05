@@ -350,7 +350,7 @@ export default function MealsPage() {
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:opacity-90"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
             disabled={createMealMutation.isPending}
             data-testid="button-save-meal"
           >
@@ -373,7 +373,7 @@ export default function MealsPage() {
         </div>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-gradient-to-r from-green-500 to-blue-500 hover:opacity-90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90"
           data-testid="button-add-meal"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -383,7 +383,7 @@ export default function MealsPage() {
 
       {/* Daily Nutrition Summary */}
       <Card className="mb-6 overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-green-500/10 to-blue-500/10 pb-3">
+        <CardHeader className="bg-muted/10 pb-3">
           <CardTitle className="flex items-center text-lg">
             <Target className="w-5 h-5 mr-2" />
             Today's Nutrition
@@ -457,7 +457,7 @@ export default function MealsPage() {
           onClick={() => setActiveFilter("all")}
           className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
             activeFilter === "all"
-              ? "bg-success text-white"
+              ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground hover:bg-muted/80"
           }`}
           data-testid="filter-all"
@@ -470,7 +470,7 @@ export default function MealsPage() {
             onClick={() => setActiveFilter(type)}
             className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all capitalize ${
               activeFilter === type
-                ? "bg-success text-white"
+                ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
             data-testid={`filter-${type}`}
@@ -508,7 +508,7 @@ export default function MealsPage() {
               </p>
               <Button
                 onClick={() => setShowAddForm(true)}
-                className="bg-gradient-to-r from-green-500 to-blue-500"
+                className="bg-primary text-primary-foreground"
                 data-testid="button-add-first-meal"
               >
                 <Plus className="w-4 h-4 mr-2" />
@@ -565,19 +565,19 @@ export default function MealsPage() {
 
                       <div className="grid grid-cols-4 gap-2 text-center mb-3">
                         <div>
-                          <p className="text-lg font-bold text-warning">{meal.calories}</p>
+                          <p className="text-lg font-bold text-foreground">{meal.calories}</p>
                           <p className="text-xs text-muted-foreground">cal</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-error">{Math.round(meal.protein || 0)}g</p>
+                          <p className="text-sm font-bold text-foreground">{Math.round(meal.protein || 0)}g</p>
                           <p className="text-xs text-muted-foreground">protein</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-primary">{Math.round(meal.carbs || 0)}g</p>
+                          <p className="text-sm font-bold text-foreground">{Math.round(meal.carbs || 0)}g</p>
                           <p className="text-xs text-muted-foreground">carbs</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-surface-variant">{Math.round(meal.fat || 0)}g</p>
+                          <p className="text-sm font-bold text-foreground">{Math.round(meal.fat || 0)}g</p>
                           <p className="text-xs text-muted-foreground">fat</p>
                         </div>
                       </div>

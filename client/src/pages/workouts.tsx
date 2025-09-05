@@ -277,7 +277,7 @@ export default function WorkoutsPage() {
               className="rounded"
             />
             <Label htmlFor="personalRecord" className="flex items-center space-x-2">
-              <Trophy className="w-4 h-4 text-white" />
+              <Trophy className="w-4 h-4 text-foreground" />
               <span>Personal Record</span>
             </Label>
           </div>
@@ -295,7 +295,7 @@ export default function WorkoutsPage() {
 
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
             disabled={createWorkoutMutation.isPending}
             data-testid="button-save-workout"
           >
@@ -318,7 +318,7 @@ export default function WorkoutsPage() {
         </div>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
+          className="bg-primary text-primary-foreground hover:bg-primary/90"
           data-testid="button-add-workout"
         >
           <Plus className="w-4 h-4 mr-2" />
@@ -336,13 +336,13 @@ export default function WorkoutsPage() {
         </Card>
         <Card className="p-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-success">{Math.round(totalDuration / 60)}h</p>
+            <p className="text-2xl font-bold text-foreground">{Math.round(totalDuration / 60)}h</p>
             <p className="text-xs text-muted-foreground">Total Time</p>
           </div>
         </Card>
         <Card className="p-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-warning">{personalRecords}</p>
+            <p className="text-2xl font-bold text-foreground">{personalRecords}</p>
             <p className="text-xs text-muted-foreground">PRs</p>
           </div>
         </Card>
@@ -405,7 +405,7 @@ export default function WorkoutsPage() {
               </p>
               <Button
                 onClick={() => setShowAddForm(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-600"
+                className="bg-primary text-primary-foreground"
                 data-testid="button-add-first-workout"
               >
                 <Plus className="w-4 h-4 mr-2" />
@@ -434,7 +434,7 @@ export default function WorkoutsPage() {
                               {workout.name || workout.type.charAt(0).toUpperCase() + workout.type.slice(1)}
                             </h3>
                             {workout.personalRecord && (
-                              <Trophy className="w-4 h-4 text-white" />
+                              <Trophy className="w-4 h-4 text-foreground" />
                             )}
                           </div>
                           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
@@ -481,7 +481,7 @@ export default function WorkoutsPage() {
                         <div className="flex items-center justify-center space-x-1 mb-1">
                           <Flame className="w-3 h-3 text-muted-foreground" />
                         </div>
-                        <p className="text-lg font-bold text-warning" data-testid={`workout-calories-${workout.id}`}>
+                        <p className="text-lg font-bold text-foreground" data-testid={`workout-calories-${workout.id}`}>
                           {workout.calories || '—'}
                         </p>
                         <p className="text-xs text-muted-foreground">Calories</p>

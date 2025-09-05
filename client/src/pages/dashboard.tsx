@@ -206,7 +206,7 @@ export default function Dashboard() {
                 <div
                   key={i}
                   className={`flex-1 h-2 rounded ${
-                    i < todayWorkouts.length ? 'bg-success' : 'bg-muted'
+                    i < todayWorkouts.length ? 'bg-primary' : 'bg-muted'
                   }`}
                 />
               ))}
@@ -245,15 +245,15 @@ export default function Dashboard() {
         <CardContent>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-bold text-primary" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
+              <p className="text-2xl font-bold text-foreground" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
               <p className="text-xs text-muted-foreground">Workouts</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-success">{Math.round(stats.totalDuration / 60)}h</p>
+              <p className="text-2xl font-bold text-foreground">{Math.round(stats.totalDuration / 60)}h</p>
               <p className="text-xs text-muted-foreground">Hours</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-warning">{(stats.totalCalories / 1000).toFixed(1)}k</p>
+              <p className="text-2xl font-bold text-foreground">{(stats.totalCalories / 1000).toFixed(1)}k</p>
               <p className="text-xs text-muted-foreground">Calories</p>
             </div>
           </div>
@@ -336,13 +336,13 @@ export default function Dashboard() {
               <div
                 key={badge.id}
                 className={`p-3 rounded-xl text-center native-transition ${
-                  index < 2 ? 'bg-white/10 border border-white/20' : 'bg-muted/30'
+                  index < 2 ? 'bg-primary/10 border border-primary/20' : 'bg-muted/30'
                 }`}
               >
                 <div className="text-2xl mb-1">{<badge.icon className="w-6 h-6 mx-auto" />}</div>
                 <h4 className="font-medium text-xs mb-1">{badge.title}</h4>
                 {index < 2 && (
-                  <CheckCircle2 className="w-4 h-4 text-white mx-auto" />
+                  <CheckCircle2 className="w-4 h-4 text-foreground mx-auto" />
                 )}
               </div>
             ))}
@@ -378,8 +378,8 @@ export default function Dashboard() {
           ))}
           {recentMeals.slice(0, 1).map((meal) => (
             <div key={meal.id} className="flex items-center space-x-3 p-2 bg-muted/20 rounded-lg" data-testid="activity-meal">
-              <div className="w-10 h-10 bg-success/10 rounded-full flex items-center justify-center">
-                <Apple className="w-5 h-5 text-success" />
+              <div className="w-10 h-10 bg-muted/30 rounded-full flex items-center justify-center">
+                <Apple className="w-5 h-5 text-foreground" />
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-sm">{meal.name}</h4>
@@ -398,7 +398,7 @@ export default function Dashboard() {
 
       {/* Floating Action Button */}
       <Button
-        className="fixed bottom-20 right-4 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow z-40"
+        className="fixed bottom-20 right-4 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-shadow z-40"
         asChild
         data-testid="button-floating-add"
       >
