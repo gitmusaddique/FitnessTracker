@@ -142,3 +142,11 @@
 .slide-up {
   animation: slideUp 0.3s ease-out;
 }
+
+/* Ensure bottom navigation is always on top and fixed */
+nav[class*="bottom-0"] {
+  position: fixed !important;
+  bottom: 0 !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
