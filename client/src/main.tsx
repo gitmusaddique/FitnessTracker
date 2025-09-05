@@ -45,7 +45,28 @@ function hexToHsl(hex: string): string {
   return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
 }
 
-// Load colors then render app
-loadColors().then(() => {
+// Load initial theme then render app
+async function loadInitialTheme() {
+  const savedTheme = localStorage.getItem('theme') || 'paper';
+  try {
+    const response = await fetch(`/themes/${savedTheme}.json`);
+    const colors = await response.json();
+    
+    const root = document.documentElement;
+    Object.entries(colors).forEach(([key, value]) => {
+      const hex = value as string;
+      const hsl = hexToHsl(hex);
+      root.style.setProperty(`--${key}`, hsl);
+    });
+    
+    document.body.className = savedTheme === 'dark' ? 'dark' : '';
+  } catch (error) {
+    console.error('Failed to load initial theme:', error);
+    // Fallback to colors.json if theme files fail
+    await loadColors();
+  }
+}
+
+loadInitialTheme().then(() => {
   createRoot(document.getElementById("root")!).render(<App />);
 });
