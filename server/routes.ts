@@ -132,12 +132,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/workouts", authenticateToken, async (req: any, res) => {
+  app.post("/api/workouts", authenticateToken, upload.single('photo'), async (req: any, res) => {
     try {
       const workoutData = insertWorkoutSchema.parse({
         ...req.body,
-        userId: req.user.id
+        userId: req.user.id,
+        duration: parseInt(req.body.duration),
+        calories: req.body.calories ? parseInt(req.body.calories) : undefined,
+        distance: req.body.distance ? parseFloat(req.body.distance) : undefined,
+        personalRecord: req.body.personalRecord ? 1 : 0
       });
+      
+      // Handle photo upload
+      if (req.file) {
+        const processedPath = await processImage(req.file.path, { width: 600, height: 400 });
+        workoutData.photoUrl = getFileUrl(processedPath);
+      }
       
       const workout = await storage.createWorkout(workoutData);
       res.json(workout);

@@ -221,12 +221,22 @@ export default function MealsPage() {
               <label htmlFor="photo-upload" className="cursor-pointer">
                 <div className="border-2 border-dashed border-input rounded-lg p-6 text-center hover:border-primary transition-colors">
                   {selectedFile ? (
-                    <div>
+                    <div className="relative">
                       <img
                         src={URL.createObjectURL(selectedFile)}
                         alt="Selected meal"
                         className="w-24 h-24 object-cover rounded-lg mx-auto mb-3"
                       />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        className="absolute top-0 right-1/2 translate-x-6 -translate-y-2 h-6 w-6 rounded-full p-0"
+                        onClick={() => setSelectedFile(null)}
+                        data-testid="button-remove-meal-photo"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
                       <p className="text-primary font-medium text-sm">{selectedFile.name}</p>
                     </div>
                   ) : (

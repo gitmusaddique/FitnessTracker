@@ -36,7 +36,8 @@ import {
   Repeat,
   ArrowRight,
   CheckCircle2,
-  Star
+  Star,
+  Camera
 } from "lucide-react";
 
 const workoutTypeData = {
@@ -56,6 +57,7 @@ const intensityLevels = {
 
 export default function WorkoutsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeTimer, setActiveTimer] = useState<string | null>(null);
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -84,13 +86,39 @@ export default function WorkoutsPage() {
   });
 
   const createWorkoutMutation = useMutation({
-    mutationFn: async (data: InsertWorkout) => {
-      const response = await apiRequest("POST", "/api/workouts", data);
+    mutationFn: async (data: InsertWorkout & { file?: File }) => {
+      const formData = new FormData();
+      formData.append("userId", data.userId);
+      formData.append("name", data.name);
+      formData.append("type", data.type || "");
+      if (data.category) formData.append("category", data.category);
+      formData.append("duration", data.duration.toString());
+      if (data.calories) formData.append("calories", data.calories.toString());
+      if (data.distance) formData.append("distance", data.distance.toString());
+      if (data.intensity) formData.append("intensity", data.intensity);
+      if (data.personalRecord) formData.append("personalRecord", "true");
+      if (data.notes) formData.append("notes", data.notes);
+      if (data.file) formData.append("photo", data.file);
+
+      const response = await fetch("/api/workouts", {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || response.statusText);
+      }
+
       return response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       form.reset();
+      setSelectedFile(null);
       setShowAddForm(false);
       toast({
         title: "Workout completed!",
@@ -126,8 +154,16 @@ export default function WorkoutsPage() {
       duration: Number(data.duration),
       calories: data.calories ? Number(data.calories) : undefined,
       distance: data.distance ? Number(data.distance) : undefined,
-      personalRecord: data.personalRecord ? 1 : 0
+      personalRecord: data.personalRecord ? 1 : 0,
+      file: selectedFile || undefined
     });
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
   };
 
   // Calculate stats
@@ -179,6 +215,49 @@ export default function WorkoutsPage() {
               placeholder="e.g. Morning Push Day"
               data-testid="input-workout-name"
             />
+          </div>
+
+          <div>
+            <Label>Photo</Label>
+            <div className="mt-2">
+              <label htmlFor="workout-photo-upload" className="cursor-pointer">
+                <div className="border-2 border-dashed border-input rounded-lg p-6 text-center hover:border-primary transition-colors">
+                  {selectedFile ? (
+                    <div className="relative">
+                      <img
+                        src={URL.createObjectURL(selectedFile)}
+                        alt="Selected workout"
+                        className="w-24 h-24 object-cover rounded-lg mx-auto mb-3"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        className="absolute top-0 right-1/2 translate-x-6 -translate-y-2 h-6 w-6 rounded-full p-0"
+                        onClick={() => setSelectedFile(null)}
+                        data-testid="button-remove-workout-photo"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
+                      <p className="text-primary font-medium text-sm">{selectedFile.name}</p>
+                    </div>
+                  ) : (
+                    <>
+                      <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                      <p className="text-muted-foreground text-sm">Add workout photo</p>
+                    </>
+                  )}
+                </div>
+              </label>
+              <input
+                id="workout-photo-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleFileSelect}
+                className="hidden"
+                data-testid="input-workout-photo"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -437,8 +516,18 @@ export default function WorkoutsPage() {
                   <div className="p-4">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center space-x-3">
-                        <div className={`w-12 h-12 rounded-full flex items-center justify-center ${typeData.bg}`}>
-                          <IconComponent className={`w-6 h-6 ${typeData.color}`} />
+                        <div className="flex-shrink-0">
+                          {workout.photoUrl ? (
+                            <img
+                              src={workout.photoUrl}
+                              alt={workout.name}
+                              className="w-12 h-12 object-cover rounded-lg"
+                            />
+                          ) : (
+                            <div className={`w-12 h-12 rounded-full flex items-center justify-center ${typeData.bg}`}>
+                              <IconComponent className={`w-6 h-6 ${typeData.color}`} />
+                            </div>
+                          )}
                         </div>
                         <div>
                           <div className="flex items-center space-x-2">

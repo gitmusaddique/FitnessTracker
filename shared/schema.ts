@@ -39,6 +39,7 @@ export const workouts = sqliteTable("workouts", {
   exercises: text("exercises"), // JSON array of exercises
   personalRecord: integer("personal_record").default(0), // 0 = false, 1 = true
   notes: text("notes"),
+  photoUrl: text("photo_url"),
   mood: text("mood"), // great, good, okay, tired
   difficulty: integer("difficulty"), // 1-10 scale
   muscleGroups: text("muscle_groups"), // JSON array

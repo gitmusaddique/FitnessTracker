@@ -9,7 +9,8 @@ const uploadDirs = [
   'uploads/trainers',
   'uploads/gyms', 
   'uploads/users',
-  'uploads/meals'
+  'uploads/meals',
+  'uploads/workouts'
 ];
 
 uploadDirs.forEach(dir => {
@@ -32,6 +33,8 @@ const storage = multer.diskStorage({
       uploadPath += 'users/';
     } else if (req.url.includes('/meals')) {
       uploadPath += 'meals/';
+    } else if (req.url.includes('/workouts')) {
+      uploadPath += 'workouts/';
     }
     
     cb(null, uploadPath);
