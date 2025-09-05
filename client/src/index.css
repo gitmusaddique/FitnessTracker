@@ -144,9 +144,16 @@
 }
 
 /* Ensure bottom navigation is always on top and fixed */
-nav[class*="bottom-0"] {
+nav[class*="bottom-0"],
+nav.fixed.bottom-0,
+nav[class*="fixed"][class*="bottom-0"] {
   position: fixed !important;
   bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
   z-index: 9999 !important;
   pointer-events: auto !important;
+  transform: none !important;
+  margin: 0 auto !important;
+  max-width: 448px !important; /* max-w-md equivalent */
 }
