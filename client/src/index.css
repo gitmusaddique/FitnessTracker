@@ -1,183 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Black and White Light Theme */
+/* Simple Dark Theme Only */
 :root {
-  /* Primary Colors - Black */
-  --md-sys-color-primary: 0 0 0; /* #000000 */
-  --md-sys-color-on-primary: 255 255 255; /* #FFFFFF */
-  --md-sys-color-primary-container: 245 245 245; /* #F5F5F5 */
-  --md-sys-color-on-primary-container: 0 0 0; /* #000000 */
-
-  /* Secondary Colors - Grey */
-  --md-sys-color-secondary: 128 128 128; /* #808080 */
-  --md-sys-color-on-secondary: 255 255 255; /* #FFFFFF */
-  --md-sys-color-secondary-container: 240 240 240; /* #F0F0F0 */
-  --md-sys-color-on-secondary-container: 0 0 0; /* #000000 */
-
-  /* Tertiary Colors - Dark Grey */
-  --md-sys-color-tertiary: 64 64 64; /* #404040 */
-  --md-sys-color-on-tertiary: 255 255 255; /* #FFFFFF */
-  --md-sys-color-tertiary-container: 230 230 230; /* #E6E6E6 */
-  --md-sys-color-on-tertiary-container: 0 0 0; /* #000000 */
-
-  /* Error Colors - Black */
-  --md-sys-color-error: 0 0 0; /* #000000 */
-  --md-sys-color-on-error: 255 255 255; /* #FFFFFF */
-  --md-sys-color-error-container: 240 240 240; /* #F0F0F0 */
-  --md-sys-color-on-error-container: 0 0 0; /* #000000 */
-
-  /* Surface Colors - White */
-  --md-sys-color-surface-dim: 250 250 250; /* #FAFAFA */
-  --md-sys-color-surface: 255 255 255; /* #FFFFFF */
-  --md-sys-color-surface-bright: 255 255 255; /* #FFFFFF */
-  --md-sys-color-on-surface: 0 0 0; /* #000000 */
-  --md-sys-color-on-surface-variant: 128 128 128; /* #808080 */
-  --md-sys-color-surface-container-lowest: 255 255 255; /* #FFFFFF */
-  --md-sys-color-surface-container-low: 250 250 250; /* #FAFAFA */
-  --md-sys-color-surface-container: 245 245 245; /* #F5F5F5 */
-  --md-sys-color-surface-container-high: 240 240 240; /* #F0F0F0 */
-  --md-sys-color-surface-container-highest: 235 235 235; /* #EBEBEB */
-
-  /* Outline Colors - Grey */
-  --md-sys-color-outline: 128 128 128; /* #808080 */
-  --md-sys-color-outline-variant: 200 200 200; /* #C8C8C8 */
-
-  /* Additional System Colors */
-  --md-sys-color-inverse-surface: 0 0 0; /* #000000 */
-  --md-sys-color-inverse-on-surface: 255 255 255; /* #FFFFFF */
-  --md-sys-color-inverse-primary: 255 255 255; /* #FFFFFF */
-  --md-sys-color-shadow: 0 0 0; /* #000000 */
-  --md-sys-color-scrim: 0 0 0; /* #000000 */
-  --md-sys-color-surface-tint: 0 0 0; /* #000000 */
-
-  /* Semantic Mappings */
-  --background: var(--md-sys-color-surface);
-  --foreground: var(--md-sys-color-on-surface);
-  --card: var(--md-sys-color-surface-container);
-  --card-foreground: var(--md-sys-color-on-surface);
-  --popover: var(--md-sys-color-surface-container);
-  --popover-foreground: var(--md-sys-color-on-surface);
-  --primary: var(--md-sys-color-primary);
-  --primary-foreground: var(--md-sys-color-on-primary);
-  --secondary: var(--md-sys-color-secondary);
-  --secondary-foreground: var(--md-sys-color-on-secondary);
-  --muted: var(--md-sys-color-surface-container-low);
-  --muted-foreground: var(--md-sys-color-on-surface-variant);
-  --accent: var(--md-sys-color-tertiary);
-  --accent-foreground: var(--md-sys-color-on-tertiary);
-  --destructive: var(--md-sys-color-error);
-  --destructive-foreground: var(--md-sys-color-on-error);
-  --border: var(--md-sys-color-outline-variant);
-  --input: var(--md-sys-color-surface-container-highest);
-  --ring: var(--md-sys-color-primary);
-  --success: 0 0 0; /* Black */
-  --warning: 128 128 128; /* Grey */
-  --chart-1: var(--md-sys-color-primary);
-  --chart-2: var(--md-sys-color-secondary);
-  --chart-3: var(--md-sys-color-tertiary);
-  --chart-4: var(--md-sys-color-error);
-  --chart-5: 160 160 160; /* Light Grey */
-  --sidebar: var(--md-sys-color-surface-container);
-  --sidebar-foreground: var(--md-sys-color-on-surface);
-  --sidebar-primary: var(--md-sys-color-primary);
-  --sidebar-primary-foreground: var(--md-sys-color-on-primary);
-  --sidebar-accent: var(--md-sys-color-secondary);
-  --sidebar-accent-foreground: var(--md-sys-color-on-secondary);
-  --sidebar-border: var(--md-sys-color-outline-variant);
-  --sidebar-ring: var(--md-sys-color-primary);
+  --background: 0 0% 0%; /* Black background */
+  --foreground: 0 0% 100%; /* White text */
+  --card: 0 0% 10%; /* Dark gray cards */
+  --card-foreground: 0 0% 100%; /* White text on cards */
+  --popover: 0 0% 10%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 0 0% 100%; /* White primary */
+  --primary-foreground: 0 0% 0%; /* Black text on primary */
+  --secondary: 0 0% 20%; /* Dark gray */
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 15%; /* Slightly lighter gray */
+  --muted-foreground: 0 0% 70%; /* Light gray text */
+  --accent: 0 0% 20%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 0% 100%;
+  --destructive-foreground: 0 0% 0%;
+  --border: 0 0% 20%; /* Dark gray borders */
+  --input: 0 0% 15%;
+  --ring: 0 0% 100%;
+  --primary-container: 0 0% 20%;
+  --on-primary-container: 0 0% 100%;
   --radius: 0.75rem;
-}
-
-/* Black and White Dark Theme */
-.dark {
-  /* Primary Colors - White */
-  --md-sys-color-primary: 255 255 255; /* #FFFFFF */
-  --md-sys-color-on-primary: 0 0 0; /* #000000 */
-  --md-sys-color-primary-container: 32 32 32; /* #202020 */
-  --md-sys-color-on-primary-container: 255 255 255; /* #FFFFFF */
-
-  /* Secondary Colors - Light Grey */
-  --md-sys-color-secondary: 192 192 192; /* #C0C0C0 */
-  --md-sys-color-on-secondary: 0 0 0; /* #000000 */
-  --md-sys-color-secondary-container: 48 48 48; /* #303030 */
-  --md-sys-color-on-secondary-container: 255 255 255; /* #FFFFFF */
-
-  /* Tertiary Colors - Medium Grey */
-  --md-sys-color-tertiary: 160 160 160; /* #A0A0A0 */
-  --md-sys-color-on-tertiary: 0 0 0; /* #000000 */
-  --md-sys-color-tertiary-container: 64 64 64; /* #404040 */
-  --md-sys-color-on-tertiary-container: 255 255 255; /* #FFFFFF */
-
-  /* Error Colors - White */
-  --md-sys-color-error: 255 255 255; /* #FFFFFF */
-  --md-sys-color-on-error: 0 0 0; /* #000000 */
-  --md-sys-color-error-container: 48 48 48; /* #303030 */
-  --md-sys-color-on-error-container: 255 255 255; /* #FFFFFF */
-
-  /* Surface Colors - Black */
-  --md-sys-color-surface-dim: 8 8 8; /* #080808 */
-  --md-sys-color-surface: 0 0 0; /* #000000 */
-  --md-sys-color-surface-bright: 32 32 32; /* #202020 */
-  --md-sys-color-on-surface: 255 255 255; /* #FFFFFF */
-  --md-sys-color-on-surface-variant: 192 192 192; /* #C0C0C0 */
-  --md-sys-color-surface-container-lowest: 0 0 0; /* #000000 */
-  --md-sys-color-surface-container-low: 16 16 16; /* #101010 */
-  --md-sys-color-surface-container: 24 24 24; /* #181818 */
-  --md-sys-color-surface-container-high: 32 32 32; /* #202020 */
-  --md-sys-color-surface-container-highest: 48 48 48; /* #303030 */
-
-  /* Outline Colors - Grey */
-  --md-sys-color-outline: 128 128 128; /* #808080 */
-  --md-sys-color-outline-variant: 64 64 64; /* #404040 */
-
-  /* Additional System Colors */
-  --md-sys-color-inverse-surface: 255 255 255; /* #FFFFFF */
-  --md-sys-color-inverse-on-surface: 0 0 0; /* #000000 */
-  --md-sys-color-inverse-primary: 0 0 0; /* #000000 */
-  --md-sys-color-shadow: 0 0 0; /* #000000 */
-  --md-sys-color-scrim: 0 0 0; /* #000000 */
-  --md-sys-color-surface-tint: 255 255 255; /* #FFFFFF */
-
-  /* Semantic Mappings - Dark Theme */
-  --background: var(--md-sys-color-surface);
-  --foreground: var(--md-sys-color-on-surface);
-  --card: var(--md-sys-color-surface-container);
-  --card-foreground: var(--md-sys-color-on-surface);
-  --popover: var(--md-sys-color-surface-container);
-  --popover-foreground: var(--md-sys-color-on-surface);
-  --primary: var(--md-sys-color-primary);
-  --primary-foreground: var(--md-sys-color-on-primary);
-  --secondary: var(--md-sys-color-secondary);
-  --secondary-foreground: var(--md-sys-color-on-secondary);
-  --muted: var(--md-sys-color-surface-container-low);
-  --muted-foreground: var(--md-sys-color-on-surface-variant);
-  --accent: var(--md-sys-color-tertiary);
-  --accent-foreground: var(--md-sys-color-on-tertiary);
-  --destructive: var(--md-sys-color-error);
-  --destructive-foreground: var(--md-sys-color-on-error);
-  --border: var(--md-sys-color-outline-variant);
-  --input: var(--md-sys-color-surface-container-highest);
-  --ring: var(--md-sys-color-primary);
-  --success: 255 255 255; /* White */
-  --warning: 192 192 192; /* Light Grey */
-  --chart-1: var(--md-sys-color-primary);
-  --chart-2: var(--md-sys-color-secondary);
-  --chart-3: var(--md-sys-color-tertiary);
-  --chart-4: var(--md-sys-color-error);
-  --chart-5: 128 128 128; /* Grey */
-  --sidebar: var(--md-sys-color-surface-container);
-  --sidebar-foreground: var(--md-sys-color-on-surface);
-  --sidebar-primary: var(--md-sys-color-primary);
-  --sidebar-primary-foreground: var(--md-sys-color-on-primary);
-  --sidebar-accent: var(--md-sys-color-secondary);
-  --sidebar-accent-foreground: var(--md-sys-color-on-secondary);
-  --sidebar-border: var(--md-sys-color-outline-variant);
-  --sidebar-ring: var(--md-sys-color-primary);
 }
 
 * {
@@ -193,7 +43,6 @@ body {
   font-weight: 400;
   line-height: 1.5;
   overflow-x: hidden;
-  /* Hide scrollbars for native mobile feel */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -212,585 +61,74 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Material Design 3 Card Styles */
-.md-surface {
-  background-color: hsl(var(--md-sys-color-surface-container));
-  border-radius: 12px;
-  border: 1px solid hsl(var(--md-sys-color-outline-variant) / 0.12);
-}
-
-.md-surface-variant {
-  background-color: hsl(var(--md-sys-color-surface-container-high));
-  border-radius: 12px;
-}
-
-.md-primary-container {
-  background-color: hsl(var(--md-sys-color-primary-container));
-  color: hsl(var(--md-sys-color-on-primary-container));
-  border-radius: 12px;
-}
-
-.md-secondary-container {
-  background-color: hsl(var(--md-sys-color-secondary-container));
-  color: hsl(var(--md-sys-color-on-secondary-container));
-  border-radius: 12px;
-}
-
-.md-tertiary-container {
-  background-color: hsl(var(--md-sys-color-tertiary-container));
-  color: hsl(var(--md-sys-color-on-tertiary-container));
-  border-radius: 12px;
-}
-
-/* Material Design 3 Button Styles */
-.md-filled-button {
-  background-color: hsl(var(--md-sys-color-primary));
-  color: hsl(var(--md-sys-color-on-primary));
-  border-radius: 20px;
-  padding: 10px 24px;
-  font-weight: 500;
-  border: none;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.md-filled-button:hover {
-  box-shadow: 0 1px 3px hsl(var(--md-sys-color-shadow) / 0.3);
-  transform: translateY(-1px);
-}
-
-.md-outlined-button {
-  background-color: transparent;
-  color: hsl(var(--md-sys-color-primary));
-  border: 1px solid hsl(var(--md-sys-color-outline));
-  border-radius: 20px;
-  padding: 10px 24px;
-  font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.md-outlined-button:hover {
-  background-color: hsl(var(--md-sys-color-primary) / 0.08);
-}
-
-.md-text-button {
-  background-color: transparent;
-  color: hsl(var(--md-sys-color-primary));
-  border: none;
-  border-radius: 20px;
-  padding: 10px 12px;
-  font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.md-text-button:hover {
-  background-color: hsl(var(--md-sys-color-primary) / 0.08);
-}
-
-/* Material Design 3 FAB */
-.md-fab {
-  background-color: hsl(var(--md-sys-color-primary-container));
-  color: hsl(var(--md-sys-color-on-primary-container));
-  border-radius: 16px;
-  width: 56px;
-  height: 56px;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 5px hsl(var(--md-sys-color-shadow) / 0.2),
-              0 6px 10px hsl(var(--md-sys-color-shadow) / 0.14),
-              0 1px 18px hsl(var(--md-sys-color-shadow) / 0.12);
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-  position: fixed;
-  bottom: calc(80px + env(safe-area-inset-bottom));
-  right: 16px;
-  z-index: 50;
-}
-
-.md-fab:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 8px hsl(var(--md-sys-color-shadow) / 0.25),
-              0 8px 14px hsl(var(--md-sys-color-shadow) / 0.18),
-              0 3px 22px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-/* Material Design 3 Navigation */
-.md-navigation-bar {
-  background-color: hsl(var(--md-sys-color-surface-container));
-  border-top: 1px solid hsl(var(--md-sys-color-outline-variant) / 0.12);
-  backdrop-filter: blur(16px);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.md-navigation-item {
-  color: hsl(var(--md-sys-color-on-surface-variant));
-  transition: color 0.2s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.md-navigation-item.active {
-  color: hsl(var(--md-sys-color-on-secondary-container));
-  background-color: hsl(var(--md-sys-color-secondary-container));
-}
-
-/* Material Design 3 Typography */
-.md-display-large {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 57px;
-  font-weight: 400;
-  line-height: 64px;
-  letter-spacing: -0.25px;
-}
-
-.md-display-medium {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 45px;
-  font-weight: 400;
-  line-height: 52px;
-  letter-spacing: 0px;
-}
-
-.md-display-small {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 36px;
-  font-weight: 400;
-  line-height: 44px;
-  letter-spacing: 0px;
-}
-
-.md-headline-large {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 40px;
-  letter-spacing: 0px;
-}
-
-.md-headline-medium {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 36px;
-  letter-spacing: 0px;
-}
-
-.md-headline-small {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: 32px;
-  letter-spacing: 0px;
-}
-
-.md-title-large {
-  font-family: 'Roboto Flex', 'Roboto', sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 28px;
-  letter-spacing: 0px;
-}
-
-.md-title-medium {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0.15px;
-}
-
-.md-title-small {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0.1px;
-}
-
-.md-label-large {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: 0.1px;
-}
-
-.md-label-medium {
-  font-family: 'Roboto', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 16px;
-  letter-spacing: 0.5px;
-}
-
-.md-label-small {
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 16px;
-  letter-spacing: 0.5px;
-}
-
-.md-body-large {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0.5px;
-}
-
-.md-body-medium {
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.25px;
-}
-
-.md-body-small {
-  font-family: 'Roboto', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0.4px;
-}
-
-/* Material Design 3 Elevation */
-.md-elevation-1 {
-  box-shadow: 0 1px 2px hsl(var(--md-sys-color-shadow) / 0.3),
-              0 1px 3px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-.md-elevation-2 {
-  box-shadow: 0 1px 2px hsl(var(--md-sys-color-shadow) / 0.3),
-              0 2px 6px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-.md-elevation-3 {
-  box-shadow: 0 1px 3px hsl(var(--md-sys-color-shadow) / 0.3),
-              0 4px 8px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-.md-elevation-4 {
-  box-shadow: 0 2px 3px hsl(var(--md-sys-color-shadow) / 0.3),
-              0 6px 10px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-.md-elevation-5 {
-  box-shadow: 0 4px 4px hsl(var(--md-sys-color-shadow) / 0.3),
-              0 8px 12px hsl(var(--md-sys-color-shadow) / 0.15);
-}
-
-/* Material Design 3 Semantic Cards */
-.workout-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--md-sys-color-primary) / 0.12) 0%, 
-    hsl(var(--md-sys-color-surface-container)) 100%);
-  border: 1px solid hsl(var(--md-sys-color-primary) / 0.12);
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.workout-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px hsl(var(--md-sys-color-shadow) / 0.25);
-}
-
-.nutrition-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--md-sys-color-secondary) / 0.12) 0%, 
-    hsl(var(--md-sys-color-surface-container)) 100%);
-  border: 1px solid hsl(var(--md-sys-color-secondary) / 0.12);
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.progress-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--md-sys-color-tertiary) / 0.12) 0%, 
-    hsl(var(--md-sys-color-surface-container)) 100%);
-  border: 1px solid hsl(var(--md-sys-color-tertiary) / 0.12);
-}
-
-.achievement-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--md-sys-color-tertiary) / 0.12) 0%, 
-    hsl(var(--md-sys-color-surface-container)) 100%);
-  border: 1px solid hsl(var(--md-sys-color-tertiary) / 0.12);
-}
-
-/* Material Motion */
-.md-transition-standard {
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-}
-
-.md-transition-emphasized {
-  transition: all 0.5s cubic-bezier(0.05, 0.7, 0.1, 1);
-}
-
-/* Native Mobile UI Enhancements */
-.native-transition {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.native-bounce {
-  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.native-card {
-  border-radius: 16px;
-  backdrop-filter: blur(20px);
-  box-shadow: 
-    0 1px 3px hsl(var(--shadow) / 0.12),
-    0 1px 2px hsl(var(--shadow) / 0.24),
-    inset 0 1px 0 hsl(var(--border) / 0.1);
-}
-
-/* Enhanced Card Components */
+/* Simple card styles */
 .card {
   border-radius: 16px !important;
-  border: 1px solid hsl(var(--border) / 0.8);
-  backdrop-filter: blur(20px);
-  box-shadow: 
-    0 1px 3px hsl(var(--shadow) / 0.08),
-    0 1px 2px hsl(var(--shadow) / 0.16);
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
   transform: translateY(-1px);
-  box-shadow: 
-    0 4px 12px hsl(var(--shadow) / 0.12),
-    0 2px 4px hsl(var(--shadow) / 0.24);
 }
 
-.native-button {
-  border-radius: 12px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  backdrop-filter: blur(20px);
-}
-
-/* Enhanced Button Components */
-.btn, button {
+/* Simple button styles */
+button, .btn {
   border-radius: 12px !important;
   font-weight: 600;
-  letter-spacing: -0.01em;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px);
 }
 
-.btn:active, button:active {
+button:active, .btn:active {
   transform: scale(0.98);
 }
 
-/* Enhanced Input Components */
+/* Simple input styles */
 input, textarea, select {
   border-radius: 12px !important;
-  font-size: 16px !important; /* Prevents zoom on iOS */
-  backdrop-filter: blur(20px);
+  font-size: 16px !important;
+  background-color: hsl(var(--input));
+  color: hsl(var(--foreground));
+  border: 1px solid hsl(var(--border));
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus, textarea:focus, select:focus {
-  transform: scale(1.02);
-  box-shadow: 
-    0 0 0 2px hsl(var(--primary) / 0.2),
-    0 4px 8px hsl(var(--shadow) / 0.12);
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
 }
 
-/* Native scrolling enhancements */
-* {
-  scroll-behavior: smooth;
-}
-
-/* iOS/Android style haptic feedback simulation */
-@media (hover: none) and (pointer: coarse) {
-  .native-transition:active {
-    transform: scale(0.95);
-  }
-  
-  .touch-target:active {
-    background-color: hsl(var(--primary) / 0.1);
-  }
-}
-
-/* Native mobile enhancements */
-.native-glass {
-  backdrop-filter: blur(20px) saturate(180%);
-  background-color: hsl(var(--background) / 0.85);
-  border: 1px solid hsl(var(--border) / 0.5);
-}
-
-/* Enhanced visual depth */
-.depth-1 {
-  box-shadow: 
-    0 1px 3px hsl(var(--shadow) / 0.08),
-    0 1px 2px hsl(var(--shadow) / 0.16);
-}
-
-.depth-2 {
-  box-shadow: 
-    0 4px 8px hsl(var(--shadow) / 0.12),
-    0 2px 4px hsl(var(--shadow) / 0.24);
-}
-
-.depth-3 {
-  box-shadow: 
-    0 8px 16px hsl(var(--shadow) / 0.16),
-    0 4px 8px hsl(var(--shadow) / 0.32);
-}
-
-/* Refined typography for mobile */
-.mobile-heading {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.mobile-body {
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.5;
-}
-
-/* Native list styling */
-.native-list {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.native-list-item:hover {
-  background-color: hsl(var(--primary) / 0.05);
-  transform: translateX(4px);
-}
-
-/* Status bar safe area for iOS */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .ios-safe-top {
-    padding-top: env(safe-area-inset-top);
-  }
-}
-
-.native-input {
-  border-radius: 12px;
-  padding: 16px;
-  font-size: 16px; /* Prevents zoom on iOS */
-  backdrop-filter: blur(20px);
-}
-
-.mobile-safe-area {
-  padding-bottom: env(safe-area-inset-bottom, 20px);
-}
-
-/* Touch-friendly interactive elements */
-.touch-target {
-  min-height: 44px;
-  min-width: 44px;
-}
-
-/* Native-style list items */
-.native-list-item {
-  padding: 16px 20px;
-  border-radius: 12px;
-  margin: 0 16px 8px 16px;
-  backdrop-filter: blur(20px);
-}
-
-/* Smooth scroll behavior */
-.smooth-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Mobile-specific optimizations */
+/* Mobile optimizations */
 @media (max-width: 768px) {
   body {
     -webkit-overflow-scrolling: touch;
     touch-action: manipulation;
   }
   
-  /* Prevent zoom on input focus */
-  input, select, textarea {
-    font-size: 16px;
-  }
-  
-  /* Enhanced touch targets for mobile */
   button, [role="button"] {
     min-height: 44px;
     min-width: 44px;
   }
   
-  /* Native iOS/Android spacing */
   .container {
     padding: 0 16px;
   }
   
-  /* Bottom navigation safe area */
   .bottom-nav {
     padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 }
 
-/* Progress indicators with Material Design 3 styling */
-.md-progress-linear {
-  background-color: hsl(var(--md-sys-color-surface-container-highest));
-  height: 4px;
-  border-radius: 2px;
-  overflow: hidden;
+/* Smooth scrolling */
+* {
+  scroll-behavior: smooth;
 }
 
-.md-progress-linear-indicator {
-  background-color: hsl(var(--md-sys-color-primary));
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.3s cubic-bezier(0.2, 0, 0, 1);
-}
-
-/* States and interactions */
-.md-state-layer {
-  position: relative;
-  overflow: hidden;
-}
-
-.md-state-layer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: currentColor;
-  opacity: 0;
-  transition: opacity 0.2s cubic-bezier(0.2, 0, 0, 1);
-  pointer-events: none;
-}
-
-.md-state-layer:hover::before {
-  opacity: 0.08;
-}
-
-.md-state-layer:focus::before {
-  opacity: 0.12;
-}
-
-.md-state-layer:active::before {
-  opacity: 0.16;
-}
-
-/* Custom focus styles for accessibility */
-.focus-visible {
-  outline: 2px solid hsl(var(--md-sys-color-primary));
-  outline-offset: 2px;
-}
-
-/* Safe area for notched devices */
-.safe-area-top {
-  padding-top: env(safe-area-inset-top);
-}
-
-.safe-area-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  button:active, .btn:active {
+    transform: scale(0.95);
+  }
 }
