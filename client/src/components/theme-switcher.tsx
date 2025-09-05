@@ -2,35 +2,64 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const themes = {
+  paper: {
+    "background": "#ffffff",
+    "foreground": "#1a1a1a",
+    "card": "#f8f9fa",
+    "card-foreground": "#1a1a1a",
+    "popover": "#ffffff",
+    "popover-foreground": "#1a1a1a",
+    "primary": "#2563eb",
+    "primary-foreground": "#ffffff",
+    "secondary": "#64748b",
+    "secondary-foreground": "#ffffff",
+    "muted": "#f1f5f9",
+    "muted-foreground": "#64748b",
+    "accent": "#0ea5e9",
+    "accent-foreground": "#ffffff",
+    "destructive": "#dc2626",
+    "destructive-foreground": "#ffffff",
+    "border": "#e2e8f0",
+    "input": "#f8fafc",
+    "ring": "#2563eb",
+    "success": "#16a34a",
+    "warning": "#ca8a04",
+    "info": "#0ea5e9",
+    "error": "#dc2626"
+  },
+  dark: {
+    "background": "#0f172a",
+    "foreground": "#f8fafc",
+    "card": "#1e293b",
+    "card-foreground": "#f8fafc",
+    "popover": "#1e293b",
+    "popover-foreground": "#f8fafc",
+    "primary": "#3b82f6",
+    "primary-foreground": "#ffffff",
+    "secondary": "#64748b",
+    "secondary-foreground": "#ffffff",
+    "muted": "#334155",
+    "muted-foreground": "#94a3b8",
+    "accent": "#06b6d4",
+    "accent-foreground": "#ffffff",
+    "destructive": "#ef4444",
+    "destructive-foreground": "#ffffff",
+    "border": "#334155",
+    "input": "#1e293b",
+    "ring": "#3b82f6",
+    "success": "#10b981",
+    "warning": "#f59e0b",
+    "info": "#06b6d4",
+    "error": "#ef4444"
+  }
+};
+
 export default function ThemeSwitcher() {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check saved theme preference
-    const savedTheme = localStorage.getItem('theme') || 'paper';
-    const isDarkTheme = savedTheme === 'dark';
-    setIsDark(isDarkTheme);
-    loadTheme(savedTheme);
-  }, []);
-
-  const loadTheme = async (themeName: string) => {
-    try {
-      const response = await fetch(`/themes/${themeName}.json`);
-      const colors = await response.json();
-      
-      const root = document.documentElement;
-      Object.entries(colors).forEach(([key, value]) => {
-        const hex = value as string;
-        const hsl = hexToHsl(hex);
-        root.style.setProperty(`--${key}`, hsl);
-      });
-      
-      // Update body class for theme-specific styles
-      document.body.className = themeName === 'dark' ? 'dark' : '';
-    } catch (error) {
-      console.error('Failed to load theme:', error);
-    }
-  };
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved === 'dark';
+  });
 
   const hexToHsl = (hex: string): string => {
     const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -58,11 +87,28 @@ export default function ThemeSwitcher() {
     return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
   };
 
+  const applyTheme = (themeName: 'paper' | 'dark') => {
+    const colors = themes[themeName];
+    const root = document.documentElement;
+    
+    Object.entries(colors).forEach(([key, value]) => {
+      const hsl = hexToHsl(value);
+      root.style.setProperty(`--${key}`, hsl);
+    });
+    
+    document.body.className = themeName === 'dark' ? 'dark' : '';
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'paper' | 'dark' || 'paper';
+    applyTheme(savedTheme);
+  }, []);
+
   const toggleTheme = () => {
     const newTheme = isDark ? 'paper' : 'dark';
     setIsDark(!isDark);
     localStorage.setItem('theme', newTheme);
-    loadTheme(newTheme);
+    applyTheme(newTheme);
   };
 
   return (

@@ -1,16 +1,13 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { useAuth, authManager } from "@/lib/auth";
-import { useTheme } from "@/components/theme-provider";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 import type { Workout, Meal } from "@shared/schema";
 import {
   User,
   Bell,
-  Moon,
   Settings,
   LogOut,
   ChevronRight,
@@ -22,7 +19,6 @@ import {
 
 export default function ProfilePage() {
   const { user } = useAuth();
-  const { theme, setTheme } = useTheme();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
 
@@ -49,13 +45,6 @@ export default function ProfilePage() {
     setLocation("/auth");
   };
 
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-    toast({
-      title: "Theme changed",
-      description: `Switched to ${theme === "light" ? "dark" : "light"} mode.`
-    });
-  };
 
   if (!user) {
     return (
@@ -160,21 +149,6 @@ export default function ProfilePage() {
           </Button>
         </Card>
 
-        <Card>
-          <div className="p-4 flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center">
-                <Moon className="w-5 h-5 text-secondary" />
-              </div>
-              <span className="font-medium">Dark Mode</span>
-            </div>
-            <Switch
-              checked={theme === "dark"}
-              onCheckedChange={toggleTheme}
-              data-testid="switch-dark-mode"
-            />
-          </div>
-        </Card>
 
         <Card>
           <Button
