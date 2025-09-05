@@ -182,55 +182,8 @@
   animation: slideUp 0.3s ease-out;
 }
 
-/* CRITICAL: Bottom navigation must be identical across ALL pages */
-nav.fixed.bottom-0,
-nav[class*="fixed"][class*="bottom-0"] {
-  position: fixed !important;
-  bottom: 0px !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
-  z-index: 999999 !important;
-  pointer-events: auto !important;
-  margin: 0 !important;
-  width: 100% !important;
-  max-width: 448px !important;
-  min-height: auto !important;
-  will-change: auto !important;
-  contain: layout !important;
-}
-
-/* Override any potential interference from parent containers */
-body nav.fixed.bottom-0,
-div nav.fixed.bottom-0,
-main nav.fixed.bottom-0,
-article nav.fixed.bottom-0,
-section nav.fixed.bottom-0 {
-  position: fixed !important;
-  bottom: 0px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  z-index: 999999 !important;
-}
-
-/* Ensure navigation buttons maintain consistent behavior */
-nav.fixed.bottom-0 button,
-nav.fixed.bottom-0 a {
-  pointer-events: auto !important;
-  position: relative !important;
-  z-index: 1 !important;
-}
-
-/* Isolate any page content that could affect navigation */
-.workout-card,
-.meal-card,
-.trainer-card,
-.gym-card {
-  contain: layout style !important;
-  transform-origin: center !important;
-}
-
+/* Simple card hover effects */
 .workout-card:hover {
-  transform: translateY(-2px) !important;
-  transition: transform 0.2s ease !important;
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
 }

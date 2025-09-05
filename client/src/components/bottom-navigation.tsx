@@ -13,7 +13,21 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border max-w-md mx-auto z-[9999] shadow-2xl">
+    <nav 
+      style={{
+        position: 'fixed',
+        bottom: '0px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '100%',
+        maxWidth: '448px',
+        zIndex: 999999,
+        backgroundColor: 'var(--card)',
+        backdropFilter: 'blur(16px)',
+        borderTop: '1px solid var(--border)',
+        boxShadow: '0 -4px 20px rgba(0,0,0,0.1)'
+      }}
+    >
       <div className="flex items-center justify-around py-3 px-2">
         {navItems.map((item) => {
           const Icon = item.icon;
