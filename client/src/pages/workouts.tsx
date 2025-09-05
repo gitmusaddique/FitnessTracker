@@ -293,14 +293,25 @@ export default function WorkoutsPage() {
             />
           </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-            disabled={createWorkoutMutation.isPending}
-            data-testid="button-save-workout"
-          >
-            {createWorkoutMutation.isPending ? "Logging..." : "Complete Workout"}
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => setShowAddForm(false)}
+              data-testid="button-cancel-workout"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+              disabled={createWorkoutMutation.isPending}
+              data-testid="button-save-workout"
+            >
+              {createWorkoutMutation.isPending ? "Logging..." : "Complete Workout"}
+            </Button>
+          </div>
         </form>
       </div>
     );
