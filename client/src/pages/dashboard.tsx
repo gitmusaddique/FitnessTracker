@@ -399,7 +399,7 @@ export default function Dashboard() {
       {/* Quick Action Buttons */}
       <div className="grid grid-cols-2 gap-4 mt-6 mb-20">
         <Button
-          className="h-12 flex flex-col items-center justify-center space-y-1 rounded-full"
+          className="h-12 flex items-center justify-center space-x-2 rounded-full px-6"
           asChild
           data-testid="button-log-meal"
         >
@@ -410,7 +410,7 @@ export default function Dashboard() {
         </Button>
         
         <Button
-          className="h-12 flex flex-col items-center justify-center space-y-1 rounded-full"
+          className="h-12 flex items-center justify-center space-x-2 rounded-full px-6"
           variant="outline"
           asChild
           data-testid="button-start-workout"
