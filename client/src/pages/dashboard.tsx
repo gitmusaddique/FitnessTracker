@@ -1,23 +1,54 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/lib/auth";
 import { Link } from "wouter";
+import type { Workout, Meal, User } from "@shared/schema";
 import { 
+  TrendingUp, 
+  Calendar, 
+  Target, 
+  Flame, 
   Dumbbell, 
-  Utensils, 
-  Users, 
-  MapPin, 
-  Plus,
+  Clock,
+  Trophy,
+  Zap,
   Activity,
-  Flame,
-  Target,
+  Apple,
+  Heart,
+  BarChart3,
+  Star,
   Award,
-  Clock
+  ChevronRight,
+  Timer,
+  MapPin,
+  Users,
+  PlayCircle,
+  CheckCircle2,
+  ArrowUp,
+  ArrowDown,
+  Minus,
+  Plus,
+  Utensils,
+  Footprints,
+  Sunrise,
+  Crown
 } from "lucide-react";
-import type { Workout, Meal } from "@shared/schema";
+
+const achievementBadges = [
+  { id: "first_workout", title: "First Steps", icon: Footprints, description: "Complete your first workout" },
+  { id: "week_streak", title: "Week Warrior", icon: Flame, description: "7-day workout streak" },
+  { id: "month_streak", title: "Monthly Master", icon: Calendar, description: "30-day workout streak" },
+  { id: "early_bird", title: "Early Bird", icon: Sunrise, description: "5 AM workout completed" },
+  { id: "calorie_crusher", title: "Calorie Crusher", icon: Dumbbell, description: "Burn 500+ calories in one workout" },
+  { id: "consistency_king", title: "Consistency King", icon: Crown, description: "Workout 20 days this month" },
+];
 
 export default function Dashboard() {
+  const [selectedPeriod, setSelectedPeriod] = useState("week");
   const { user } = useAuth();
 
   const { data: workouts = [] } = useQuery<Workout[]>({
@@ -28,284 +59,396 @@ export default function Dashboard() {
     queryKey: ["/api/meals"],
   });
 
-  // Calculate today's stats
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  // Calculate date ranges
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const weekAgo = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 
+  const getDateRange = () => {
+    switch (selectedPeriod) {
+      case "week": return weekAgo;
+      case "month": return monthAgo;
+      default: return weekAgo;
+    }
+  };
+
+  const filterByPeriod = (items: any[]) => {
+    const startDate = getDateRange();
+    return items.filter(item => new Date(item.date!) >= startDate);
+  };
+
+  // Calculate stats
+  const periodWorkouts = filterByPeriod(workouts);
+  const periodMeals = filterByPeriod(meals);
   const todayWorkouts = workouts.filter(w => {
     const workoutDate = new Date(w.date!);
-    workoutDate.setHours(0, 0, 0, 0);
-    return workoutDate.getTime() === today.getTime();
+    return workoutDate.toDateString() === today.toDateString();
   });
-
   const todayMeals = meals.filter(m => {
     const mealDate = new Date(m.date!);
-    mealDate.setHours(0, 0, 0, 0);
-    return mealDate.getTime() === today.getTime();
+    return mealDate.toDateString() === today.toDateString();
   });
 
-  const todayCalories = todayMeals.reduce((sum, meal) => sum + meal.calories, 0);
-  const weeklyWorkouts = workouts.filter(w => {
-    const weekAgo = new Date();
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    return new Date(w.date!) > weekAgo;
-  }).length;
+  const stats = {
+    totalWorkouts: periodWorkouts.length,
+    totalDuration: periodWorkouts.reduce((sum, w) => sum + w.duration, 0),
+    totalCalories: periodWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0),
+    averageIntensity: periodWorkouts.length > 0 ? 
+      periodWorkouts.filter(w => w.intensity === "high").length / periodWorkouts.length * 100 : 0,
+    personalRecords: periodWorkouts.filter(w => w.personalRecord).length,
+    workoutStreak: user?.workoutStreak || 0,
+    todayCaloriesEaten: todayMeals.reduce((sum, m) => sum + m.calories, 0),
+    calorieGoal: user?.dailyCalorieGoal || 2000
+  };
 
-  const recentActivities = [
-    ...workouts.slice(0, 2).map(w => ({
-      id: w.id,
-      type: 'workout' as const,
-      title: w.type.charAt(0).toUpperCase() + w.type.slice(1),
-      subtitle: `${w.duration} min`,
-      time: new Date(w.date!).toLocaleString('en-US', { 
-        hour: 'numeric', 
-        minute: '2-digit',
-        hour12: true 
-      }),
-      icon: Dumbbell,
-      color: 'text-primary'
-    })),
-    ...meals.slice(0, 1).map(m => ({
-      id: m.id,
-      type: 'meal' as const,
-      title: 'Meal Logged',
-      subtitle: `${m.name} • ${m.calories} calories`,
-      time: new Date(m.date!).toLocaleString('en-US', { 
-        hour: 'numeric', 
-        minute: '2-digit',
-        hour12: true 
-      }),
-      icon: Utensils,
-      color: 'text-secondary'
-    }))
-  ].sort((a, b) => {
-    const aWorkout = workouts.find(w => w.id === a.id);
-    const aMeal = meals.find(m => m.id === a.id);
-    const bWorkout = workouts.find(w => w.id === b.id);
-    const bMeal = meals.find(m => m.id === b.id);
-    
-    const aDate = aWorkout?.date || aMeal?.date || new Date(0);
-    const bDate = bWorkout?.date || bMeal?.date || new Date(0);
-    
-    return new Date(bDate).getTime() - new Date(aDate).getTime();
-  });
+  // Get recent activity
+  const recentWorkouts = workouts.slice(0, 3);
+  const recentMeals = meals.slice(0, 3);
+
+  // Calculate weekly progress
+  const getWeeklyData = () => {
+    const weekData = [];
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today.getTime() - i * 24 * 60 * 60 * 1000);
+      const dayWorkouts = workouts.filter(w => {
+        const workoutDate = new Date(w.date!);
+        return workoutDate.toDateString() === date.toDateString();
+      });
+      weekData.push({
+        day: date.toLocaleDateString('en', { weekday: 'short' }),
+        workouts: dayWorkouts.length,
+        calories: dayWorkouts.reduce((sum, w) => sum + (w.calories || 0), 0),
+        duration: dayWorkouts.reduce((sum, w) => sum + w.duration, 0)
+      });
+    }
+    return weekData;
+  };
+
+  const weeklyData = getWeeklyData();
+  const maxWorkouts = Math.max(...weeklyData.map(d => d.workouts), 1);
+
+  // Mock challenges (in real app, these would come from API)
+  const activeChallenges = [
+    { id: 1, title: "January Fitness Challenge", progress: 65, target: "Work out 20 times", icon: Target },
+    { id: 2, title: "10K Steps Daily", progress: 80, target: "7 days in a row", icon: Footprints },
+    { id: 3, title: "Strength Builder", progress: 45, target: "Complete 15 strength workouts", icon: Dumbbell }
+  ];
 
   return (
     <div className="p-4 pb-20 max-w-md mx-auto">
-      {/* Welcome Section */}
-      <Card className="bg-gradient-to-r from-primary to-accent text-primary-foreground mb-6 slide-up">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-bold" data-testid="text-welcome">
-                Welcome back, {user?.name || 'User'}!
-              </h2>
-              <p className="opacity-90 mt-1">Ready to crush your goals today?</p>
-            </div>
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-              <Flame className="w-8 h-8" />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="md-headline-medium mb-2" data-testid="text-welcome">
+          Good {new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 17 ? 'afternoon' : 'evening'}, {user?.name?.split(' ')[0]}!
+        </h1>
+        <p className="md-body-medium" style={{ color: 'hsl(var(--md-sys-color-on-surface-variant))' }}>
+          Ready to crush your fitness goals today?
+        </p>
+      </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <Card className="stat-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">Today's Workouts</p>
-                <p className="text-2xl font-bold text-primary" data-testid="text-workouts-today">
-                  {todayWorkouts.length}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                <Activity className="w-6 h-6 text-primary" />
-              </div>
+      {/* Quick Stats Cards */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <Card className="workout-card md-elevation-1">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center mb-2">
+              <Flame className="w-5 h-5 mr-1" style={{ color: 'hsl(var(--md-custom-workout))' }} />
+              <span className="md-label-small" style={{ color: 'hsl(var(--md-sys-color-on-surface-variant))' }}>Streak</span>
             </div>
+            <p className="md-display-small" style={{ color: 'hsl(var(--md-custom-workout))' }}>{stats.workoutStreak}</p>
+            <p className="md-body-small" style={{ color: 'hsl(var(--md-sys-color-on-surface-variant))' }}>Days</p>
           </CardContent>
         </Card>
-
-        <Card className="stat-card">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">Calories Today</p>
-                <p className="text-2xl font-bold text-accent" data-testid="text-calories-today">
-                  {todayCalories}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center">
-                <Flame className="w-6 h-6 text-accent" />
-              </div>
+        <Card className="achievement-card md-elevation-1">
+          <CardContent className="p-4 text-center">
+            <div className="flex items-center justify-center mb-2">
+              <Trophy className="w-5 h-5 mr-1" style={{ color: 'hsl(var(--md-custom-achievement))' }} />
+              <span className="md-label-small" style={{ color: 'hsl(var(--md-sys-color-on-surface-variant))' }}>PRs</span>
             </div>
+            <p className="md-display-small" style={{ color: 'hsl(var(--md-custom-achievement))' }}>{stats.personalRecords}</p>
+            <p className="md-body-small" style={{ color: 'hsl(var(--md-sys-color-on-surface-variant))' }}>This {selectedPeriod}</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Weekly Progress */}
+      {/* Today's Progress */}
       <Card className="mb-6">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold">Weekly Progress</h3>
-            <span className="text-sm text-accent font-medium">
-              {Math.round((weeklyWorkouts / 6) * 100)}% Complete
-            </span>
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center text-lg">
+            <Target className="w-5 h-5 mr-2" />
+            Today's Progress
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Calories */}
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium">Calories Consumed</span>
+              <span className="text-sm">
+                <span className="font-bold" data-testid="text-calories-today">{stats.todayCaloriesEaten.toLocaleString()}</span>
+                <span className="text-muted-foreground"> / {stats.calorieGoal.toLocaleString()}</span>
+              </span>
+            </div>
+            <Progress 
+              value={(stats.todayCaloriesEaten / stats.calorieGoal) * 100} 
+              className="h-2"
+            />
           </div>
 
-          <div className="flex items-center justify-center mb-4">
-            <div className="relative w-32 h-32">
-              <svg className="w-32 h-32 progress-ring" viewBox="0 0 120 120">
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  stroke="currentColor"
-                  strokeWidth="8"
-                  fill="none"
-                  className="text-muted opacity-20"
+          {/* Today's Workouts */}
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium">Workouts Completed</span>
+              <span className="text-sm font-bold" data-testid="text-workouts-today">{todayWorkouts.length}</span>
+            </div>
+            <div className="flex space-x-2">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`flex-1 h-2 rounded ${
+                    i < todayWorkouts.length ? 'bg-green-500' : 'bg-muted'
+                  }`}
                 />
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  stroke="url(#gradient)"
-                  strokeWidth="8"
-                  fill="none"
-                  className="progress-ring-circle"
-                  strokeLinecap="round"
-                  strokeDasharray={`${(weeklyWorkouts / 6) * 339} 339`}
-                  strokeDashoffset="0"
-                />
-                <defs>
-                  <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style={{ stopColor: "hsl(18 100% 60%)", stopOpacity: 1 }} />
-                    <stop offset="100%" style={{ stopColor: "hsl(166 76% 37%)", stopOpacity: 1 }} />
-                  </linearGradient>
-                </defs>
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center flex-col">
-                <span className="text-2xl font-bold" data-testid="text-weekly-workouts">
-                  {weeklyWorkouts}/6
-                </span>
-                <span className="text-sm text-muted-foreground">Workouts</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-lg font-semibold text-primary">{weeklyWorkouts}</p>
-              <p className="text-xs text-muted-foreground">Workouts</p>
-            </div>
-            <div>
-              <p className="text-lg font-semibold text-accent">
-                {Math.round(workouts.reduce((sum, w) => sum + w.duration, 0) / 60 * 10) / 10}h
-              </p>
-              <p className="text-xs text-muted-foreground">Hours</p>
-            </div>
-            <div>
-              <p className="text-lg font-semibold text-secondary">7</p>
-              <p className="text-xs text-muted-foreground">Day Streak</p>
+              ))}
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Recent Activities */}
-      {recentActivities.length > 0 && (
-        <Card className="mb-6">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4">Recent Activities</h3>
-            <div className="space-y-3">
-              {recentActivities.map((activity) => {
-                const Icon = activity.icon;
-                return (
-                  <div
-                    key={activity.id}
-                    className="flex items-center space-x-4 p-3 bg-muted/30 rounded-lg"
-                    data-testid={`activity-${activity.type}`}
-                  >
-                    <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
-                      <Icon className={`w-5 h-5 ${activity.color}`} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium">{activity.title}</p>
-                      <p className="text-sm text-muted-foreground">{activity.subtitle}</p>
-                    </div>
-                    <span className="text-sm text-muted-foreground">{activity.time}</span>
-                  </div>
-                );
-              })}
+      {/* Period Stats */}
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg">
+              {selectedPeriod === "week" ? "This Week" : "This Month"}
+            </CardTitle>
+            <div className="flex space-x-1">
+              <Button
+                variant={selectedPeriod === "week" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedPeriod("week")}
+                className="text-xs"
+              >
+                Week
+              </Button>
+              <Button
+                variant={selectedPeriod === "month" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedPeriod("month")}
+                className="text-xs"
+              >
+                Month
+              </Button>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-2xl font-bold text-blue-500" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
+              <p className="text-xs text-muted-foreground">Workouts</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-green-500">{Math.round(stats.totalDuration / 60)}h</p>
+              <p className="text-xs text-muted-foreground">Hours</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-orange-500">{(stats.totalCalories / 1000).toFixed(1)}k</p>
+              <p className="text-xs text-muted-foreground">Calories</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Weekly Activity Chart */}
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center text-lg">
+            <BarChart3 className="w-5 h-5 mr-2" />
+            Weekly Activity
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-end justify-between h-24 mb-3">
+            {weeklyData.map((day, index) => (
+              <div key={index} className="flex flex-col items-center space-y-2">
+                <div
+                  className="w-6 bg-blue-500 rounded-t min-h-[4px] transition-all"
+                  style={{
+                    height: `${(day.workouts / maxWorkouts) * 60}px`,
+                    opacity: day.workouts > 0 ? 1 : 0.3
+                  }}
+                />
+                <span className="text-xs text-muted-foreground">{day.day}</span>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground text-center">
+            Workout frequency over the last 7 days
+          </p>
+        </CardContent>
+      </Card>
+
+      {/* Active Challenges */}
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center text-lg">
+            <Award className="w-5 h-5 mr-2" />
+            Active Challenges
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {activeChallenges.map((challenge) => (
+            <div key={challenge.id} className="p-3 bg-muted/30 rounded-lg">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <challenge.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-sm">{challenge.title}</h4>
+                    <p className="text-xs text-muted-foreground">{challenge.target}</p>
+                  </div>
+                </div>
+                <span className="text-sm font-bold">{challenge.progress}%</span>
+              </div>
+              <Progress value={challenge.progress} className="h-2" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
-      <Card>
-        <CardContent className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Quick Actions</CardTitle>
+        </CardHeader>
+        <CardContent>
           <div className="grid grid-cols-2 gap-3">
             <Link href="/workouts">
-              <Button
-                variant="ghost"
-                className="flex flex-col items-center p-4 h-auto bg-primary/10 hover:bg-primary/20 transition-colors"
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
                 data-testid="button-log-workout"
               >
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-2">
-                  <Plus className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="text-sm font-medium">Log Workout</span>
+                <PlayCircle className="w-6 h-6 text-blue-500" />
+                <span className="text-sm">Start Workout</span>
               </Button>
             </Link>
-
             <Link href="/meals">
-              <Button
-                variant="ghost"
-                className="flex flex-col items-center p-4 h-auto bg-accent/10 hover:bg-accent/20 transition-colors"
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
                 data-testid="button-log-meal"
               >
-                <div className="w-12 h-12 bg-accent rounded-full flex items-center justify-center mb-2">
-                  <Utensils className="w-6 h-6 text-accent-foreground" />
-                </div>
-                <span className="text-sm font-medium">Log Meal</span>
+                <Apple className="w-6 h-6 text-green-500" />
+                <span className="text-sm">Log Meal</span>
               </Button>
             </Link>
-
             <Link href="/trainers">
-              <Button
-                variant="ghost"
-                className="flex flex-col items-center p-4 h-auto bg-secondary/10 hover:bg-secondary/20 transition-colors"
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
                 data-testid="button-find-trainer"
               >
-                <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mb-2">
-                  <Users className="w-6 h-6 text-secondary-foreground" />
-                </div>
-                <span className="text-sm font-medium">Find Trainer</span>
+                <Users className="w-6 h-6 text-purple-500" />
+                <span className="text-sm">Find Trainer</span>
               </Button>
             </Link>
-
             <Link href="/gyms">
-              <Button
-                variant="ghost"
-                className="flex flex-col items-center p-4 h-auto bg-warning/10 hover:bg-warning/20 transition-colors"
+              <Button 
+                variant="outline" 
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
                 data-testid="button-find-gym"
               >
-                <div className="w-12 h-12 bg-warning rounded-full flex items-center justify-center mb-2">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-sm font-medium">Find Gym</span>
+                <MapPin className="w-6 h-6 text-orange-500" />
+                <span className="text-sm">Find Gym</span>
               </Button>
             </Link>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Achievements */}
+      <Card className="mb-6">
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center text-lg">
+              <Star className="w-5 h-5 mr-2" />
+              Achievements
+            </CardTitle>
+            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-3 gap-3">
+            {achievementBadges.slice(0, 6).map((badge, index) => (
+              <div
+                key={badge.id}
+                className={`p-3 rounded-lg text-center ${
+                  index < 2 ? 'bg-yellow-500/10 border border-yellow-500/20' : 'bg-muted/30'
+                }`}
+              >
+                <div className="text-2xl mb-1">{badge.icon}</div>
+                <h4 className="font-medium text-xs mb-1">{badge.title}</h4>
+                {index < 2 && (
+                  <CheckCircle2 className="w-4 h-4 text-yellow-500 mx-auto" />
+                )}
+              </div>
+            ))}
+          </div>
+          <Button variant="ghost" className="w-full mt-3 text-sm">
+            View All Achievements
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Recent Activity */}
+      <Card>
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center text-lg">
+            <Activity className="w-5 h-5 mr-2" />
+            Recent Activity
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {recentWorkouts.slice(0, 2).map((workout) => (
+            <div key={workout.id} className="flex items-center space-x-3 p-2 bg-muted/20 rounded-lg" data-testid="activity-workout">
+              <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center">
+                <Dumbbell className="w-5 h-5 text-blue-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-medium text-sm">{workout.name || workout.type}</h4>
+                <p className="text-xs text-muted-foreground">
+                  {workout.duration}min • {workout.calories || 0} cal • {new Date(workout.date!).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          ))}
+          {recentMeals.slice(0, 1).map((meal) => (
+            <div key={meal.id} className="flex items-center space-x-3 p-2 bg-muted/20 rounded-lg" data-testid="activity-meal">
+              <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
+                <Apple className="w-5 h-5 text-green-500" />
+              </div>
+              <div className="flex-1">
+                <h4 className="font-medium text-sm">{meal.name}</h4>
+                <p className="text-xs text-muted-foreground">
+                  {meal.calories} cal • {new Date(meal.date!).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          ))}
+          <Button variant="ghost" className="w-full text-sm">
+            View All Activity
+            <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
         </CardContent>
       </Card>
 
       {/* Floating Action Button */}
       <Button
-        className="floating-btn w-14 h-14 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-shadow"
+        className="fixed bottom-20 right-4 w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full shadow-lg hover:shadow-xl transition-shadow z-40"
         asChild
         data-testid="button-floating-add"
       >

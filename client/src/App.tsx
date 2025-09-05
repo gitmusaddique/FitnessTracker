@@ -66,7 +66,7 @@ function Router() {
         </PublicRoute>
       </Route>
       
-      <Route path="/" exact>
+      <Route path="/">
         <ProtectedRoute>
           <Dashboard />
         </ProtectedRoute>

@@ -149,9 +149,9 @@ export default function GymsPage() {
                   </span>
                 </div>
 
-                {gym.amenities && gym.amenities.length > 0 && (
+                {gym.amenities && (
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {gym.amenities.slice(0, 3).map((amenity, index) => (
+                    {gym.amenities.split(',').slice(0, 3).map((amenity: string, index: number) => (
                       <Badge
                         key={index}
                         variant="secondary"
@@ -161,9 +161,9 @@ export default function GymsPage() {
                         {amenity}
                       </Badge>
                     ))}
-                    {gym.amenities.length > 3 && (
+                    {gym.amenities.split(',').length > 3 && (
                       <Badge variant="outline" className="text-xs">
-                        +{gym.amenities.length - 3} more
+                        +{gym.amenities.split(',').length - 3} more
                       </Badge>
                     )}
                   </div>
