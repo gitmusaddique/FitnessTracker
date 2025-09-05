@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { authManager } from "@/lib/auth";
 import { useEffect, useState } from "react";
 import BottomNavigation from "@/components/bottom-navigation";
+import Header from "@/components/header";
 
 // Pages
 import AuthPage from "@/pages/auth";
@@ -34,7 +35,10 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-w-md mx-auto bg-background min-h-screen">
-      {children}
+      <Header />
+      <div className="pb-20">
+        {children}
+      </div>
       <BottomNavigation />
     </div>
   );
@@ -54,7 +58,12 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
     return <Redirect to="/" />;
   }
 
-  return <>{children}</>;
+  return (
+    <div className="max-w-md mx-auto bg-background min-h-screen">
+      <Header />
+      {children}
+    </div>
+  );
 }
 
 function Router() {

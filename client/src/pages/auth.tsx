@@ -99,7 +99,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-primary/10 to-accent/10">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-background">
       <div className="w-full max-w-sm">
         {/* Hero Image */}
         <div className="text-center mb-8">
@@ -108,7 +108,7 @@ export default function AuthPage() {
             alt="Fitness motivation"
             className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg"
           />
-          <h1 className="text-3xl font-bold mt-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold mt-6 text-foreground">
             FitTracker Pro
           </h1>
           <p className="text-muted-foreground mt-2">Transform your fitness journey</p>
@@ -157,7 +157,7 @@ export default function AuthPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                  className="w-full bg-primary text-primary-foreground hover:opacity-90"
                   disabled={loginMutation.isPending}
                   data-testid="button-login"
                 >
@@ -231,7 +231,7 @@ export default function AuthPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90"
+                  className="w-full bg-primary text-primary-foreground hover:opacity-90"
                   disabled={registerMutation.isPending}
                   data-testid="button-register"
                 >
