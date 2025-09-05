@@ -1,8 +1,11 @@
 import bcrypt from "bcryptjs";
-import { adminDb } from './admin-db';
+import Database from 'better-sqlite3';
 import { storage } from './storage';
 import type { AdminUser, AdminLoginData } from '@shared/admin-schema';
 import type { Trainer, InsertTrainer, Gym, InsertGym, User } from '@shared/schema';
+
+// Direct SQLite connection for admin operations
+const adminSqlite = new Database('./admin.sqlite');
 
 export class AdminStorage {
   constructor() {
@@ -16,7 +19,7 @@ export class AdminStorage {
       if (!existingAdmin) {
         // Create super admin with specified credentials
         const hashedPassword = await bcrypt.hash('785685@aA', 10);
-        adminDb.prepare(`
+        adminSqlite.prepare(`
           INSERT INTO admin_users (username, password, role)
           VALUES (?, ?, ?)
         `).run('administrator', hashedPassword, 'super_admin');
@@ -30,7 +33,7 @@ export class AdminStorage {
 
   async getAdminByUsername(username: string): Promise<AdminUser | null> {
     try {
-      const result = adminDb.prepare(`
+      const result = adminSqlite.prepare(`
         SELECT id, username, role, created_at as createdAt
         FROM admin_users WHERE username = ?
       `).get(username) as any;
@@ -50,7 +53,7 @@ export class AdminStorage {
 
   async validateAdmin(credentials: AdminLoginData): Promise<AdminUser | null> {
     try {
-      const admin = adminDb.prepare(`
+      const admin = adminSqlite.prepare(`
         SELECT id, username, password, role, created_at as createdAt
         FROM admin_users WHERE username = ?
       `).get(credentials.username) as any;
