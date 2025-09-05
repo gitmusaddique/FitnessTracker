@@ -389,7 +389,7 @@ export default function Dashboard() {
                   index < 2 ? 'bg-yellow-500/10 border border-yellow-500/20' : 'bg-muted/30'
                 }`}
               >
-                <div className="text-2xl mb-1">{badge.icon}</div>
+                <div className="text-2xl mb-1">{<badge.icon className="w-6 h-6 mx-auto" />}</div>
                 <h4 className="font-medium text-xs mb-1">{badge.title}</h4>
                 {index < 2 && (
                   <CheckCircle2 className="w-4 h-4 text-yellow-500 mx-auto" />
