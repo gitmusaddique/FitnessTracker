@@ -508,10 +508,10 @@ export default function MealsPage() {
               </p>
               <Button
                 onClick={() => setShowAddForm(true)}
-                className="bg-primary text-primary-foreground"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 h-auto text-base font-semibold rounded-lg shadow-lg"
                 data-testid="button-add-first-meal"
               >
-                <Plus className="w-4 h-4 mr-2" />
+                <Plus className="w-5 h-5 mr-2" />
                 Log Your First Meal
               </Button>
             </CardContent>
