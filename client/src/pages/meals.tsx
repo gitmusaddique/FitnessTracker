@@ -136,7 +136,7 @@ export default function MealsPage() {
 
   if (showAddForm) {
     return (
-      <div className="p-4 pb-24 max-w-md mx-auto">
+      <div className="p-4 pb-20 max-w-md mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">Add Meal</h2>
           <Button
