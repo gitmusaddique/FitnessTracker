@@ -157,7 +157,7 @@ export default function AuthPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground hover:opacity-90"
+                  className="w-full h-12 bg-primary text-primary-foreground border-2 border-primary hover:bg-primary/90 font-semibold"
                   disabled={loginMutation.isPending}
                   data-testid="button-login"
                 >
@@ -231,7 +231,7 @@ export default function AuthPage() {
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-primary text-primary-foreground hover:opacity-90"
+                  className="w-full h-12 bg-primary text-primary-foreground border-2 border-primary hover:bg-primary/90 font-semibold"
                   disabled={registerMutation.isPending}
                   data-testid="button-register"
                 >
@@ -245,9 +245,9 @@ export default function AuthPage() {
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
               </p>
               <Button
-                variant="link"
+                variant="outline"
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-primary font-semibold mt-1 hover:underline p-0"
+                className="text-foreground border-border hover:bg-muted font-semibold mt-2 px-4 py-2"
                 data-testid="button-toggle-auth"
               >
                 {isLogin ? "Create Account" : "Sign In"}

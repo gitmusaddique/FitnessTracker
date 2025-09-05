@@ -58,12 +58,7 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
     return <Redirect to="/" />;
   }
 
-  return (
-    <div className="max-w-md mx-auto bg-background min-h-screen">
-      <Header />
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }
 
 function Router() {

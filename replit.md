@@ -1,88 +1,72 @@
-# Overview
+# FitTracker Pro
 
-This is a fitness tracking mobile-first web application built with React, TypeScript, and Express. The app provides comprehensive fitness management features including workout tracking, meal logging with photo uploads, trainer discovery and booking, and gym search functionality. The application uses a modern tech stack with shadcn/ui components for a polished user interface and follows a full-stack architecture with JWT authentication.
+## Overview
 
-# User Preferences
+FitTracker Pro is a comprehensive fitness tracking mobile web application that helps users manage their workouts, meals, and fitness goals. The app provides a complete fitness ecosystem with features for tracking exercises, logging meals, finding trainers and gyms, and monitoring personal progress through an intuitive dashboard interface.
+
+## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
-# System Architecture
+## System Architecture
 
-## Frontend Architecture
-- **React 18** with TypeScript for type safety and modern development
-- **Vite** as the build tool for fast development and optimized production builds
-- **Wouter** for lightweight client-side routing
-- **TanStack Query** for server state management and data fetching
-- **shadcn/ui** component library built on Radix UI primitives for accessible, customizable components
-- **Tailwind CSS** with CSS custom properties for theming and responsive design
-- **Mobile-first design** with bottom navigation pattern optimized for mobile devices
+### Frontend Architecture
+The client-side application is built with React and TypeScript, utilizing a modern component-based architecture. The UI framework leverages shadcn/ui components built on top of Radix UI primitives, providing a consistent design system with Material Design 3 color theming. The application uses Wouter for lightweight client-side routing and TanStack Query for efficient data fetching and state management.
 
-## Backend Architecture
-- **Express.js** server with TypeScript for API endpoints
-- **RESTful API** design with JWT-based authentication using bcryptjs for password hashing
-- **File upload support** using multer for handling meal photo uploads
-- **Middleware-based architecture** with authentication guards and request logging
-- **Error handling** with centralized error middleware
+Key design decisions:
+- **Mobile-first approach**: The app is designed specifically for mobile devices with a bottom navigation pattern and responsive layout constrained to mobile viewport
+- **Component architecture**: Modular UI components promote reusability and maintainability
+- **State management**: TanStack Query handles server state while local component state manages UI interactions
+- **Styling**: Tailwind CSS with CSS custom properties enables consistent theming and responsive design
 
-## Database Design
-- **SQLite3** database with Drizzle ORM for type-safe database operations
-- **Local SQLite file** for data persistence without external dependencies
-- **Schema-first approach** with Zod validation for runtime type checking
-- **Database tables**: users, workouts, meals, trainers, gyms, bookings
-- **Text-based primary keys** with foreign key relationships for data integrity
+### Backend Architecture
+The server follows a REST API architecture built with Express.js and TypeScript. The application implements a clean separation between route handlers, business logic, and data access layers through a storage interface pattern.
 
-## Authentication & Authorization
-- **JWT token-based authentication** stored in localStorage
-- **AuthManager** state management for user sessions with subscription pattern
-- **Protected routes** using route guards that redirect unauthenticated users
-- **Public/private route separation** for secure access control
+Core architectural patterns:
+- **RESTful API design**: Standard HTTP methods and status codes for predictable client-server communication
+- **Middleware pattern**: Authentication, logging, and error handling implemented as Express middleware
+- **Interface-driven storage**: Abstract storage interface allows for flexible data persistence implementations
+- **JWT authentication**: Stateless token-based authentication for secure API access
 
-## State Management
-- **Local state** using React hooks for component-level state
-- **Server state** managed by TanStack Query with caching and synchronization
-- **Authentication state** managed by custom AuthManager with observer pattern
-- **Theme management** using React Context for dark/light mode switching
+### Data Storage Solutions
+The application uses SQLite as the primary database with Drizzle ORM for type-safe database operations. The schema includes comprehensive user profiles, workout tracking, meal logging, trainer/gym directories, and booking systems.
 
-## File Structure
-- **Monorepo structure** with shared types and schemas
-- **Client-server separation** with `client/`, `server/`, and `shared/` directories
-- **Component organization** following shadcn/ui patterns with reusable UI components
-- **Type-safe imports** using TypeScript path mapping for clean imports
+Database design principles:
+- **Relational modeling**: Normalized schema with proper foreign key relationships
+- **Type safety**: Drizzle ORM provides compile-time type checking for database operations
+- **Schema validation**: Zod schemas ensure data integrity at both client and server boundaries
+- **Audit trails**: Timestamps and user attribution for data tracking
 
-# External Dependencies
+### Authentication and Authorization
+The system implements JWT-based authentication with bcrypt for password hashing. User sessions are managed client-side with localStorage persistence and automatic token refresh capabilities.
 
-## Core Framework & Build Tools
-- **Vite** - Frontend build tool and development server
-- **React 18** - Frontend framework with TypeScript support
-- **Express.js** - Backend web framework
+Security considerations:
+- **Password security**: BCrypt hashing with salt for secure password storage
+- **Token management**: JWT tokens with configurable expiration and refresh mechanisms
+- **Route protection**: Authentication middleware guards protected API endpoints
+- **Client-side auth**: AuthManager pattern for centralized authentication state management
 
-## Database & ORM
-- **SQLite3 (better-sqlite3)** - Local embedded database
-- **Drizzle ORM** - Type-safe database toolkit with SQLite dialect
-- **Drizzle-kit** - Database migration and schema management tool
+## External Dependencies
 
-## UI & Styling
-- **Radix UI** - Unstyled, accessible UI primitives for components
-- **Tailwind CSS** - Utility-first CSS framework with custom theme configuration
-- **Lucide React** - Icon library for consistent iconography
-- **shadcn/ui** - Pre-built component system based on Radix UI
+### UI and Component Libraries
+- **Radix UI**: Headless UI primitives for accessible component foundations
+- **shadcn/ui**: Pre-built component library with consistent design patterns
+- **Lucide React**: Icon library for consistent visual elements
+- **Tailwind CSS**: Utility-first CSS framework for rapid styling
 
-## Authentication & Security
-- **JWT (jsonwebtoken)** - Token-based authentication
-- **bcryptjs** - Password hashing and comparison
+### Data Management
+- **TanStack Query**: Server state management with caching, background updates, and optimistic updates
+- **React Hook Form**: Form management with validation and performance optimization
+- **Zod**: Schema validation for type-safe data handling across client and server
 
-## Data Management
-- **TanStack Query** - Server state management and data fetching
-- **React Hook Form** - Form state management with validation
-- **Zod** - Runtime type validation and schema definition
-- **date-fns** - Date manipulation and formatting utilities
+### Backend Infrastructure
+- **Express.js**: Web framework for REST API implementation
+- **Drizzle ORM**: Type-safe database query builder and migrations
+- **Better SQLite3**: Embedded database for local development and deployment
+- **Multer**: Middleware for handling file uploads (profile pictures, meal photos)
 
-## File Upload & Processing
-- **Multer** - File upload middleware for handling multipart/form-data
-- **Image upload support** - For meal photo functionality
-
-## Development & Tooling
-- **TypeScript** - Static type checking and development experience
-- **Wouter** - Lightweight client-side routing
-- **Class Variance Authority** - Utility for managing CSS class variants
-- **clsx** - Conditional CSS class composition utility
+### Development and Build Tools
+- **Vite**: Fast build tool with hot module replacement for development
+- **TypeScript**: Static typing for improved developer experience and code quality
+- **ESBuild**: Fast JavaScript bundler for production builds
+- **PostCSS**: CSS processing with Tailwind CSS integration
