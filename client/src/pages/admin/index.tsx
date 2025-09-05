@@ -100,20 +100,18 @@ function AdminDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="p-4">
-            <div className="space-y-4">
-              <Link href="/admin/trainers/add">
-                <Button className="w-full justify-start" data-testid="button-add-trainer">
-                  <Users className="w-4 h-4 mr-2" />
-                  Add New Trainer
-                </Button>
-              </Link>
-              <Link href="/admin/gyms/add">
-                <Button className="w-full justify-start" variant="outline" data-testid="button-add-gym">
-                  <MapPin className="w-4 h-4 mr-2" />
-                  Add New Gym
-                </Button>
-              </Link>
-            </div>
+            <Link href="/admin/trainers/add" className="block mb-4">
+              <Button className="w-full justify-start" data-testid="button-add-trainer">
+                <Users className="w-4 h-4 mr-2" />
+                Add New Trainer
+              </Button>
+            </Link>
+            <Link href="/admin/gyms/add" className="block">
+              <Button className="w-full justify-start" variant="outline" data-testid="button-add-gym">
+                <MapPin className="w-4 h-4 mr-2" />
+                Add New Gym
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 
