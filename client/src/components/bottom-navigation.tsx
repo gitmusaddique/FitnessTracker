@@ -14,14 +14,14 @@ export default function BottomNavigation() {
 
   return (
     <div className="md-navigation-bar bottom-nav">
-      <div className="flex items-center justify-around h-14 max-w-md mx-auto px-4 mobile-safe-area">
+      <div className="flex items-center justify-around h-16 max-w-md mx-auto px-4 mobile-safe-area">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;
           
           return (
             <Link key={item.path} href={item.path}>
-              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-12 h-12 rounded-xl native-transition touch-target ${
+              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-14 h-14 rounded-xl native-transition touch-target ${
                 isActive ? 'active' : ''
               }`} style={{ 
                 transform: isActive ? 'scale(1.05)' : 'scale(1)',

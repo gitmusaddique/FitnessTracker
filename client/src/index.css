@@ -169,6 +169,30 @@ header {
   scroll-behavior: smooth;
 }
 
+/* Solid backgrounds for dropdowns and popovers */
+[data-radix-popper-content-wrapper] {
+  z-index: 50;
+}
+
+.dropdown-menu-content,
+.popover-content {
+  background-color: hsl(var(--background)) !important;
+  backdrop-filter: none !important;
+  border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 4px 16px hsl(var(--foreground) / 0.1) !important;
+}
+
+/* Make bottom navigation bigger */
+.md-navigation-bar .flex {
+  height: 4rem !important; /* Increased from 3.5rem (h-14) to 4rem (h-16) */
+}
+
+.md-navigation-item {
+  padding: 16px !important; /* Increased padding */
+  width: 3.5rem !important; /* Increased width */
+  height: 3.5rem !important; /* Increased height */
+}
+
 /* Touch-friendly interactions */
 @media (hover: none) and (pointer: coarse) {
   button:active, .btn:active {
