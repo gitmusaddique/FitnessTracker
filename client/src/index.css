@@ -4,132 +4,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Authentic Material 3 Color System - Light Theme */
+/* Dracula Theme Color Scheme */
 :root {
-  /* Primary - Material Blue */
-  --md-sys-color-primary: 103 80 164; /* Deep Purple */
-  --md-sys-color-on-primary: 255 255 255;
-  --md-sys-color-primary-container: 234 221 255; /* Light Purple */
-  --md-sys-color-on-primary-container: 33 0 93;
-
-  /* Secondary - Material Teal */
-  --md-sys-color-secondary: 98 91 113;
-  --md-sys-color-on-secondary: 255 255 255;
-  --md-sys-color-secondary-container: 232 222 248;
-  --md-sys-color-on-secondary-container: 29 25 43;
-
-  /* Tertiary - Material Green */
-  --md-sys-color-tertiary: 125 82 96;
-  --md-sys-color-on-tertiary: 255 255 255;
-  --md-sys-color-tertiary-container: 255 216 228;
-  --md-sys-color-on-tertiary-container: 55 11 30;
-
-  /* Error Colors */
-  --md-sys-color-error: 186 26 26;
-  --md-sys-color-on-error: 255 255 255;
-  --md-sys-color-error-container: 255 218 214;
-  --md-sys-color-on-error-container: 65 0 2;
-
-  /* Surface Colors */
-  --md-sys-color-surface-dim: 222 216 225;
-  --md-sys-color-surface: 255 251 255;
-  --md-sys-color-surface-bright: 255 251 255;
-  --md-sys-color-on-surface: 28 27 31;
-  --md-sys-color-on-surface-variant: 73 69 79;
-  --md-sys-color-surface-container-lowest: 255 255 255;
-  --md-sys-color-surface-container-low: 247 242 250;
-  --md-sys-color-surface-container: 243 237 247;
-  --md-sys-color-surface-container-high: 236 230 240;
-  --md-sys-color-surface-container-highest: 230 224 233;
-
-  /* Outline Colors */
-  --md-sys-color-outline: 121 116 126;
-  --md-sys-color-outline-variant: 196 199 197;
-
-  /* Additional Colors */
-  --md-sys-color-inverse-surface: 49 48 51;
-  --md-sys-color-inverse-on-surface: 244 239 244;
-  --md-sys-color-inverse-primary: 208 188 255;
-  --md-sys-color-shadow: 0 0 0;
-  --md-sys-color-scrim: 0 0 0;
-  --md-sys-color-surface-tint: 103 80 164;
-
-  /* Semantic Mappings */
-  --background: var(--md-sys-color-surface);
-  --foreground: var(--md-sys-color-on-surface);
-  --card: var(--md-sys-color-surface-container);
-  --card-foreground: var(--md-sys-color-on-surface);
-  --popover: var(--md-sys-color-surface-container);
-  --popover-foreground: var(--md-sys-color-on-surface);
-  --primary: var(--md-sys-color-primary);
-  --primary-foreground: var(--md-sys-color-on-primary);
-  --secondary: var(--md-sys-color-secondary);
-  --secondary-foreground: var(--md-sys-color-on-secondary);
-  --muted: var(--md-sys-color-surface-container-low);
-  --muted-foreground: var(--md-sys-color-on-surface-variant);
-  --accent: var(--md-sys-color-tertiary);
-  --accent-foreground: var(--md-sys-color-on-tertiary);
-  --destructive: var(--md-sys-color-error);
-  --destructive-foreground: var(--md-sys-color-on-error);
-  --border: var(--md-sys-color-outline-variant);
-  --input: var(--md-sys-color-surface-container-highest);
-  --ring: var(--md-sys-color-primary);
-  --primary-container: var(--md-sys-color-primary-container);
-  --on-primary-container: var(--md-sys-color-on-primary-container);
-  --secondary-container: var(--md-sys-color-secondary-container);
-  --tertiary-container: var(--md-sys-color-tertiary-container);
+  /* Dracula Core Colors */
+  --dracula-background: 40 42 54; /* #282a36 */
+  --dracula-current-line: 68 71 90; /* #44475a */
+  --dracula-foreground: 248 248 242; /* #f8f8f2 */
+  --dracula-comment: 98 114 164; /* #6272a4 */
+  --dracula-cyan: 139 233 253; /* #8be9fd */
+  --dracula-green: 80 250 123; /* #50fa7b */
+  --dracula-orange: 255 184 108; /* #ffb86c */
+  --dracula-pink: 255 121 198; /* #ff79c6 */
+  --dracula-purple: 189 147 249; /* #bd93f9 */
+  --dracula-red: 255 85 85; /* #ff5555 */
+  --dracula-yellow: 241 250 140; /* #f1fa8c */
+  
+  /* Semantic Mappings for Dracula */
+  --background: var(--dracula-background);
+  --foreground: var(--dracula-foreground);
+  --card: 68 71 90; /* Current line for cards */
+  --card-foreground: var(--dracula-foreground);
+  --popover: var(--dracula-current-line);
+  --popover-foreground: var(--dracula-foreground);
+  --primary: var(--dracula-purple); /* Purple as primary */
+  --primary-foreground: var(--dracula-background);
+  --secondary: var(--dracula-pink); /* Pink as secondary */
+  --secondary-foreground: var(--dracula-background);
+  --muted: var(--dracula-current-line);
+  --muted-foreground: var(--dracula-comment);
+  --accent: var(--dracula-cyan); /* Cyan as accent */
+  --accent-foreground: var(--dracula-background);
+  --destructive: var(--dracula-red);
+  --destructive-foreground: var(--dracula-foreground);
+  --border: var(--dracula-current-line);
+  --input: var(--dracula-current-line);
+  --ring: var(--dracula-purple);
+  --primary-container: 68 53 91; /* Darker purple */
+  --on-primary-container: var(--dracula-purple);
+  --secondary-container: 91 44 73; /* Darker pink */
+  --tertiary: var(--dracula-green);
+  --tertiary-foreground: var(--dracula-background);
+  --tertiary-container: 29 91 44; /* Darker green */
+  --success: var(--dracula-green);
+  --warning: var(--dracula-yellow);
+  --info: var(--dracula-cyan);
   --radius: 0.75rem;
 }
 
-/* Material 3 Dark Theme */
 .dark {
-  /* Primary Colors - Dark */
-  --md-sys-color-primary: 208 188 255;
-  --md-sys-color-on-primary: 54 44 63;
-  --md-sys-color-primary-container: 79 55 139;
-  --md-sys-color-on-primary-container: 234 221 255;
-
-  /* Secondary Colors - Dark */
-  --md-sys-color-secondary: 204 194 220;
-  --md-sys-color-on-secondary: 50 45 65;
-  --md-sys-color-secondary-container: 73 68 88;
-  --md-sys-color-on-secondary-container: 232 222 248;
-
-  /* Tertiary Colors - Dark */
-  --md-sys-color-tertiary: 227 187 200;
-  --md-sys-color-on-tertiary: 76 37 50;
-  --md-sys-color-tertiary-container: 101 58 72;
-  --md-sys-color-on-tertiary-container: 255 216 228;
-
-  /* Error Colors - Dark */
-  --md-sys-color-error: 255 180 171;
-  --md-sys-color-on-error: 105 0 5;
-  --md-sys-color-error-container: 147 0 10;
-  --md-sys-color-on-error-container: 255 218 214;
-
-  /* Surface Colors - Dark */
-  --md-sys-color-surface-dim: 16 16 20;
-  --md-sys-color-surface: 16 16 20;
-  --md-sys-color-surface-bright: 54 54 59;
-  --md-sys-color-on-surface: 230 225 229;
-  --md-sys-color-on-surface-variant: 196 199 197;
-  --md-sys-color-surface-container-lowest: 10 10 13;
-  --md-sys-color-surface-container-low: 22 22 26;
-  --md-sys-color-surface-container: 30 29 32;
-  --md-sys-color-surface-container-high: 40 40 44;
-  --md-sys-color-surface-container-highest: 51 50 54;
-
-  /* Outline Colors - Dark */
-  --md-sys-color-outline: 147 143 153;
-  --md-sys-color-outline-variant: 73 69 79;
-
-  /* Additional Colors - Dark */
-  --md-sys-color-inverse-surface: 230 225 229;
-  --md-sys-color-inverse-on-surface: 49 48 51;
-  --md-sys-color-inverse-primary: 103 80 164;
-  --md-sys-color-shadow: 0 0 0;
-  --md-sys-color-scrim: 0 0 0;
-  --md-sys-color-surface-tint: 208 188 255;
+  /* Dracula is primarily a dark theme, keeping same values */
+  --background: var(--dracula-background);
+  --foreground: var(--dracula-foreground);
+  --card: var(--dracula-current-line);
+  --card-foreground: var(--dracula-foreground);
+  --popover: var(--dracula-current-line);
+  --popover-foreground: var(--dracula-foreground);
+  --primary: var(--dracula-purple);
+  --primary-foreground: var(--dracula-background);
+  --secondary: var(--dracula-pink);
+  --secondary-foreground: var(--dracula-background);
+  --muted: var(--dracula-current-line);
+  --muted-foreground: var(--dracula-comment);
+  --accent: var(--dracula-cyan);
+  --accent-foreground: var(--dracula-background);
+  --destructive: var(--dracula-red);
+  --destructive-foreground: var(--dracula-foreground);
+  --border: var(--dracula-current-line);
+  --input: var(--dracula-current-line);
+  --ring: var(--dracula-purple);
 }
 
 * {
@@ -163,54 +105,59 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Material 3 Card Styles */
+/* Dracula Card Styles */
 .card {
-  border-radius: 12px !important;
+  border-radius: 16px !important;
   background-color: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   color: hsl(var(--card-foreground));
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px hsl(var(--dracula-background) / 0.3);
 }
 
 .card:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 8px hsl(var(--md-sys-color-shadow) / 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px hsl(var(--dracula-purple) / 0.2);
+  border-color: hsl(var(--dracula-purple) / 0.3);
 }
 
-/* Material 3 Button Styles */
+/* Dracula Button Styles */
 button, .btn {
-  border-radius: 20px !important;
-  font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  border-radius: 12px !important;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 button:active, .btn:active {
   transform: scale(0.98);
 }
 
-/* Material 3 Filled Button */
+/* Dracula Primary Button */
 .bg-primary {
-  background-color: hsl(var(--primary)) !important;
-  color: hsl(var(--primary-foreground)) !important;
+  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%) !important;
+  color: hsl(var(--dracula-background)) !important;
+  border: none;
 }
 
 .bg-primary:hover {
-  box-shadow: 0 1px 3px hsl(var(--md-sys-color-shadow) / 0.3);
+  box-shadow: 0 4px 16px hsl(var(--dracula-purple) / 0.4);
+  transform: translateY(-1px);
 }
 
-/* Material 3 Input Styles */
+/* Dracula Input Styles */
 input, textarea, select {
-  border-radius: 4px !important;
+  border-radius: 12px !important;
   font-size: 16px !important;
   background-color: hsl(var(--input));
   color: hsl(var(--foreground));
-  border: 1px solid hsl(var(--border));
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  border: 2px solid hsl(var(--border));
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus, textarea:focus, select:focus {
-  border-color: hsl(var(--primary));
-  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+  border-color: hsl(var(--dracula-cyan));
+  box-shadow: 0 0 0 3px hsl(var(--dracula-cyan) / 0.2);
+  background-color: hsl(var(--dracula-background));
 }
 
 /* Fixed header spacing */
@@ -218,32 +165,38 @@ body {
   padding-top: 72px;
 }
 
-/* Material 3 Navigation */
+/* Dracula Navigation */
 .md-navigation-bar {
-  background-color: hsl(var(--md-sys-color-surface-container));
-  border-top: 1px solid hsl(var(--md-sys-color-outline-variant) / 0.12);
+  background-color: hsl(var(--card));
+  border-top: 2px solid hsl(var(--dracula-purple) / 0.3);
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 50;
   padding-bottom: env(safe-area-inset-bottom);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 -4px 16px hsl(var(--dracula-background) / 0.5);
 }
 
 .md-navigation-item {
-  color: hsl(var(--md-sys-color-on-surface-variant));
-  transition: color 0.2s cubic-bezier(0.2, 0, 0, 1);
-  border-radius: 16px;
+  color: hsl(var(--dracula-comment));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
   padding: 12px;
 }
 
 .md-navigation-item.active {
-  color: hsl(var(--md-sys-color-on-secondary-container));
-  background-color: hsl(var(--md-sys-color-secondary-container));
+  color: hsl(var(--dracula-background));
+  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px hsl(var(--dracula-purple) / 0.4);
 }
 
 .md-navigation-item:hover:not(.active) {
-  background-color: hsl(var(--md-sys-color-surface-container-high));
+  color: hsl(var(--dracula-cyan));
+  background-color: hsl(var(--dracula-current-line) / 0.5);
+  transform: scale(1.02);
 }
 
 .mobile-safe-area {
@@ -259,34 +212,92 @@ body {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Material 3 Surface Variants */
-.md-surface {
-  background-color: hsl(var(--md-sys-color-surface-container));
-  border-radius: 12px;
+/* Dracula Workout Cards */
+.workout-card {
+  background: linear-gradient(135deg, 
+    hsl(var(--dracula-purple) / 0.1) 0%, 
+    hsl(var(--dracula-pink) / 0.1) 100%);
+  border: 1px solid hsl(var(--dracula-purple) / 0.3);
 }
 
-.md-surface-variant {
-  background-color: hsl(var(--md-sys-color-surface-container-high));
-  border-radius: 12px;
+.nutrition-card {
+  background: linear-gradient(135deg, 
+    hsl(var(--dracula-green) / 0.1) 0%, 
+    hsl(var(--dracula-cyan) / 0.1) 100%);
+  border: 1px solid hsl(var(--dracula-green) / 0.3);
 }
 
-/* Material 3 Container Colors */
-.md-primary-container {
-  background-color: hsl(var(--md-sys-color-primary-container));
-  color: hsl(var(--md-sys-color-on-primary-container));
-  border-radius: 12px;
+/* Dracula Progress Bars */
+.progress-bar {
+  background: linear-gradient(90deg, 
+    hsl(var(--dracula-purple)) 0%, 
+    hsl(var(--dracula-pink)) 50%, 
+    hsl(var(--dracula-cyan)) 100%);
+  border-radius: 8px;
+  height: 8px;
 }
 
-.md-secondary-container {
-  background-color: hsl(var(--md-sys-color-secondary-container));
-  color: hsl(var(--md-sys-color-on-secondary-container));
-  border-radius: 12px;
+/* Dracula Badges */
+.badge-primary {
+  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%);
+  color: hsl(var(--dracula-background));
+  border-radius: 16px;
 }
 
-.md-tertiary-container {
-  background-color: hsl(var(--md-sys-color-tertiary-container));
-  color: hsl(var(--md-sys-color-on-tertiary-container));
-  border-radius: 12px;
+.badge-success {
+  background-color: hsl(var(--dracula-green));
+  color: hsl(var(--dracula-background));
+  border-radius: 16px;
+}
+
+.badge-warning {
+  background-color: hsl(var(--dracula-yellow));
+  color: hsl(var(--dracula-background));
+  border-radius: 16px;
+}
+
+.badge-error {
+  background-color: hsl(var(--dracula-red));
+  color: hsl(var(--dracula-foreground));
+  border-radius: 16px;
+}
+
+/* Dracula Header */
+header {
+  background: linear-gradient(135deg, 
+    hsl(var(--dracula-background)) 0%, 
+    hsl(var(--dracula-current-line)) 100%) !important;
+  border-bottom: 2px solid hsl(var(--dracula-purple) / 0.3);
+  backdrop-filter: blur(20px);
+}
+
+/* Dracula Special Effects */
+.dracula-glow {
+  box-shadow: 0 0 20px hsl(var(--dracula-purple) / 0.5);
+}
+
+.dracula-text-primary {
+  color: hsl(var(--dracula-purple));
+}
+
+.dracula-text-secondary {
+  color: hsl(var(--dracula-pink));
+}
+
+.dracula-text-accent {
+  color: hsl(var(--dracula-cyan));
+}
+
+.dracula-text-success {
+  color: hsl(var(--dracula-green));
+}
+
+.dracula-text-warning {
+  color: hsl(var(--dracula-yellow));
+}
+
+.dracula-text-error {
+  color: hsl(var(--dracula-red));
 }
 
 /* Mobile optimizations */
