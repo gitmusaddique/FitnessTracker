@@ -24,7 +24,7 @@ export default function TrainersPage() {
   const { toast } = useToast();
 
   const { data: trainers = [], isLoading } = useQuery<Trainer[]>({
-    queryKey: ["/api/trainers", { search: searchQuery || undefined }],
+    queryKey: searchQuery ? ["/api/trainers", "search", searchQuery] : ["/api/trainers"],
   });
 
   const bookTrainerMutation = useMutation({
