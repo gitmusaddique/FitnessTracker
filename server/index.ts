@@ -1,7 +1,9 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
+import { registerAdminRoutes } from "./admin-routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { initializeDatabase } from "./db";
+import { initializeAdminDatabase } from "./admin-db";
 
 const app = express();
 app.use(express.json());
@@ -38,10 +40,14 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Initialize SQLite database
+  // Initialize SQLite databases
   initializeDatabase();
+  initializeAdminDatabase();
   
   const server = await registerRoutes(app);
+  
+  // Register admin routes
+  await registerAdminRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;

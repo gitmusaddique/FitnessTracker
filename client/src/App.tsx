@@ -17,6 +17,7 @@ import MealsPage from "@/pages/meals";
 import TrainersPage from "@/pages/trainers";
 import GymsPage from "@/pages/gyms";
 import ProfilePage from "@/pages/profile";
+import AdminPage from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -104,6 +105,11 @@ function Router() {
         <ProtectedRoute>
           <ProfilePage />
         </ProtectedRoute>
+      </Route>
+      
+      {/* Admin route - accessible via URL only */}
+      <Route path="/admin">
+        <AdminPage />
       </Route>
       
       {/* Fallback to 404 */}

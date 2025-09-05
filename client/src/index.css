@@ -197,20 +197,16 @@ header {
   background-color: inherit !important;
 }
 
-/* Solid backgrounds for toast notifications - override all variants */
-[data-radix-toast-root] {
-  background-color: hsl(var(--card)) !important;
-  border: 1px solid hsl(var(--border)) !important;
-  backdrop-filter: none !important;
-  opacity: 1 !important;
-  box-shadow: 0 4px 16px hsl(var(--foreground) / 0.1) !important;
-}
-
-/* Additional specificity for all toast states */
+/* Solid backgrounds for toast notifications - same as dropdowns */
+[data-radix-toast-root],
 [data-radix-toast-root][data-state="open"],
-[data-radix-toast-root][data-state="closed"] {
+[data-radix-toast-root][data-state="closed"],
+.toast-content {
   background-color: hsl(var(--card)) !important;
+  backdrop-filter: none !important;
   border: 1px solid hsl(var(--border)) !important;
+  box-shadow: 0 4px 16px hsl(var(--foreground) / 0.1) !important;
+  opacity: 1 !important;
 }
 
 /* Make bottom navigation bigger */
