@@ -529,6 +529,182 @@ body::-webkit-scrollbar {
   transition: all 0.5s cubic-bezier(0.05, 0.7, 0.1, 1);
 }
 
+/* Native Mobile UI Enhancements */
+.native-transition {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.native-bounce {
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.native-card {
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 1px 3px hsl(var(--shadow) / 0.12),
+    0 1px 2px hsl(var(--shadow) / 0.24),
+    inset 0 1px 0 hsl(var(--border) / 0.1);
+}
+
+/* Enhanced Card Components */
+.card {
+  border-radius: 16px !important;
+  border: 1px solid hsl(var(--border) / 0.8);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 1px 3px hsl(var(--shadow) / 0.08),
+    0 1px 2px hsl(var(--shadow) / 0.16);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px hsl(var(--shadow) / 0.12),
+    0 2px 4px hsl(var(--shadow) / 0.24);
+}
+
+.native-button {
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  backdrop-filter: blur(20px);
+}
+
+/* Enhanced Button Components */
+.btn, button {
+  border-radius: 12px !important;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.btn:active, button:active {
+  transform: scale(0.98);
+}
+
+/* Enhanced Input Components */
+input, textarea, select {
+  border-radius: 12px !important;
+  font-size: 16px !important; /* Prevents zoom on iOS */
+  backdrop-filter: blur(20px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:focus, textarea:focus, select:focus {
+  transform: scale(1.02);
+  box-shadow: 
+    0 0 0 2px hsl(var(--primary) / 0.2),
+    0 4px 8px hsl(var(--shadow) / 0.12);
+}
+
+/* Native scrolling enhancements */
+* {
+  scroll-behavior: smooth;
+}
+
+/* iOS/Android style haptic feedback simulation */
+@media (hover: none) and (pointer: coarse) {
+  .native-transition:active {
+    transform: scale(0.95);
+  }
+  
+  .touch-target:active {
+    background-color: hsl(var(--primary) / 0.1);
+  }
+}
+
+/* Native mobile enhancements */
+.native-glass {
+  backdrop-filter: blur(20px) saturate(180%);
+  background-color: hsl(var(--background) / 0.85);
+  border: 1px solid hsl(var(--border) / 0.5);
+}
+
+/* Enhanced visual depth */
+.depth-1 {
+  box-shadow: 
+    0 1px 3px hsl(var(--shadow) / 0.08),
+    0 1px 2px hsl(var(--shadow) / 0.16);
+}
+
+.depth-2 {
+  box-shadow: 
+    0 4px 8px hsl(var(--shadow) / 0.12),
+    0 2px 4px hsl(var(--shadow) / 0.24);
+}
+
+.depth-3 {
+  box-shadow: 
+    0 8px 16px hsl(var(--shadow) / 0.16),
+    0 4px 8px hsl(var(--shadow) / 0.32);
+}
+
+/* Refined typography for mobile */
+.mobile-heading {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.mobile-body {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.5;
+}
+
+/* Native list styling */
+.native-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.native-list-item:hover {
+  background-color: hsl(var(--primary) / 0.05);
+  transform: translateX(4px);
+}
+
+/* Status bar safe area for iOS */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .ios-safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+.native-input {
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px; /* Prevents zoom on iOS */
+  backdrop-filter: blur(20px);
+}
+
+.mobile-safe-area {
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+/* Touch-friendly interactive elements */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Native-style list items */
+.native-list-item {
+  padding: 16px 20px;
+  border-radius: 12px;
+  margin: 0 16px 8px 16px;
+  backdrop-filter: blur(20px);
+}
+
+/* Smooth scroll behavior */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
   body {
@@ -541,10 +717,20 @@ body::-webkit-scrollbar {
     font-size: 16px;
   }
   
-  /* Material Design 3 touch targets */
+  /* Enhanced touch targets for mobile */
   button, [role="button"] {
-    min-height: 48px;
-    min-width: 48px;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Native iOS/Android spacing */
+  .container {
+    padding: 0 16px;
+  }
+  
+  /* Bottom navigation safe area */
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
   }
 }
 

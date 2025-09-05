@@ -13,19 +13,22 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <div className="md-navigation-bar">
-      <div className="flex items-center justify-around h-20 max-w-md mx-auto px-2 safe-area-bottom">
+    <div className="md-navigation-bar bottom-nav">
+      <div className="flex items-center justify-around h-20 max-w-md mx-auto px-4 mobile-safe-area">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;
           
           return (
             <Link key={item.path} href={item.path}>
-              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-16 h-16 rounded-2xl md-transition-standard ${
+              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-16 h-16 rounded-2xl native-transition touch-target ${
                 isActive ? 'active' : ''
-              }`}>
-                <Icon size={24} className="mb-1" />
-                <span className="md-label-medium leading-none">
+              }`} style={{ 
+                transform: isActive ? 'scale(1.05)' : 'scale(1)',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}>
+                <Icon size={isActive ? 26 : 24} className="mb-1 native-transition" />
+                <span className={`md-label-medium leading-none text-xs ${isActive ? 'font-semibold' : 'font-medium'}`}>
                   {item.label}
                 </span>
               </div>

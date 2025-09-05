@@ -328,7 +328,7 @@ export default function Dashboard() {
             <Link href="/workouts">
               <Button 
                 variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
                 data-testid="button-log-workout"
               >
                 <PlayCircle className="w-6 h-6 text-blue-500" />
@@ -338,7 +338,7 @@ export default function Dashboard() {
             <Link href="/meals">
               <Button 
                 variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
                 data-testid="button-log-meal"
               >
                 <Apple className="w-6 h-6 text-green-500" />
@@ -348,7 +348,7 @@ export default function Dashboard() {
             <Link href="/trainers">
               <Button 
                 variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
                 data-testid="button-find-trainer"
               >
                 <Users className="w-6 h-6 text-purple-500" />
@@ -358,7 +358,7 @@ export default function Dashboard() {
             <Link href="/gyms">
               <Button 
                 variant="outline" 
-                className="h-auto p-4 flex flex-col items-center space-y-2 w-full"
+                className="h-auto p-4 flex flex-col items-center space-y-2 w-full native-button native-transition touch-target"
                 data-testid="button-find-gym"
               >
                 <MapPin className="w-6 h-6 text-orange-500" />
@@ -385,7 +385,7 @@ export default function Dashboard() {
             {achievementBadges.slice(0, 6).map((badge, index) => (
               <div
                 key={badge.id}
-                className={`p-3 rounded-lg text-center ${
+                className={`p-3 rounded-xl text-center native-transition ${
                   index < 2 ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-muted/30'
                 }`}
               >
