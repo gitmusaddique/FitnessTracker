@@ -27,7 +27,7 @@ export default function BottomNavigation() {
                 transform: isActive ? 'scale(1.05)' : 'scale(1)',
                 transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
               }}>
-                <Icon size={isActive ? 28 : 24} className="mb-0.5 native-transition" />
+                <Icon size={isActive ? 32 : 28} className="mb-0.5 native-transition" />
                 <span className={`md-label-medium leading-none text-[10px] ${isActive ? 'font-semibold' : 'font-medium'}`}>
                   {item.label}
                 </span>
