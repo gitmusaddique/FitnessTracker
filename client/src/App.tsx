@@ -18,6 +18,12 @@ import TrainersPage from "@/pages/trainers";
 import GymsPage from "@/pages/gyms";
 import ProfilePage from "@/pages/profile";
 import AdminPage from "@/pages/admin";
+import AdminTrainersPage from "@/pages/admin/trainers";
+import AdminAddTrainerPage from "@/pages/admin/add-trainer";
+import AdminEditTrainerPage from "@/pages/admin/edit-trainer";
+import AdminGymsPage from "@/pages/admin/gyms";
+import AdminAddGymPage from "@/pages/admin/add-gym";
+import AdminEditGymPage from "@/pages/admin/edit-gym";
 import NotFound from "@/pages/not-found";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -107,10 +113,14 @@ function Router() {
         </ProtectedRoute>
       </Route>
       
-      {/* Admin route - accessible via URL only */}
-      <Route path="/admin">
-        <AdminPage />
-      </Route>
+      {/* Admin routes - accessible via URL only */}
+      <Route path="/admin" component={AdminPage} />
+      <Route path="/admin/trainers" component={AdminTrainersPage} />
+      <Route path="/admin/trainers/add" component={AdminAddTrainerPage} />
+      <Route path="/admin/trainers/edit/:id" component={AdminEditTrainerPage} />
+      <Route path="/admin/gyms" component={AdminGymsPage} />
+      <Route path="/admin/gyms/add" component={AdminAddGymPage} />
+      <Route path="/admin/gyms/edit/:id" component={AdminEditGymPage} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />

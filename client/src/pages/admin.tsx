@@ -867,6 +867,9 @@ function GymManagement({ gyms, onDelete }: { gyms: Gym[], onDelete: (id: string)
   );
 }
 
+// Export AdminLogin for use in other admin pages
+export { AdminLogin };
+
 // Main Admin Component
 export default function AdminPage() {
   const { isAuthenticated } = useAdminAuth();
