@@ -5,55 +5,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Gothic Black & White Theme */
+/* Black and White Light Theme */
 :root {
-  /* Primary Colors - Pure White */
-  --md-sys-color-primary: 255 255 255; /* Pure White */
-  --md-sys-color-on-primary: 0 0 0; /* Pure Black */
-  --md-sys-color-primary-container: 40 40 40; /* Dark Grey */
-  --md-sys-color-on-primary-container: 255 255 255; /* Pure White */
+  /* Primary Colors - Black */
+  --md-sys-color-primary: 0 0 0; /* #000000 */
+  --md-sys-color-on-primary: 255 255 255; /* #FFFFFF */
+  --md-sys-color-primary-container: 245 245 245; /* #F5F5F5 */
+  --md-sys-color-on-primary-container: 0 0 0; /* #000000 */
 
-  /* Secondary Colors - Light Grey */
-  --md-sys-color-secondary: 200 200 200; /* Light Grey */
-  --md-sys-color-on-secondary: 0 0 0; /* Pure Black */
-  --md-sys-color-secondary-container: 80 80 80; /* Medium Grey */
-  --md-sys-color-on-secondary-container: 255 255 255; /* Pure White */
+  /* Secondary Colors - Grey */
+  --md-sys-color-secondary: 128 128 128; /* #808080 */
+  --md-sys-color-on-secondary: 255 255 255; /* #FFFFFF */
+  --md-sys-color-secondary-container: 240 240 240; /* #F0F0F0 */
+  --md-sys-color-on-secondary-container: 0 0 0; /* #000000 */
 
-  /* Tertiary Colors - Medium Grey */
-  --md-sys-color-tertiary: 160 160 160; /* Medium-Light Grey */
-  --md-sys-color-on-tertiary: 0 0 0; /* Pure Black */
-  --md-sys-color-tertiary-container: 60 60 60; /* Dark Grey */
-  --md-sys-color-on-tertiary-container: 255 255 255; /* Pure White */
+  /* Tertiary Colors - Dark Grey */
+  --md-sys-color-tertiary: 64 64 64; /* #404040 */
+  --md-sys-color-on-tertiary: 255 255 255; /* #FFFFFF */
+  --md-sys-color-tertiary-container: 230 230 230; /* #E6E6E6 */
+  --md-sys-color-on-tertiary-container: 0 0 0; /* #000000 */
 
-  /* Error Colors - White on Black */
-  --md-sys-color-error: 255 255 255; /* Pure White */
-  --md-sys-color-on-error: 0 0 0; /* Pure Black */
-  --md-sys-color-error-container: 120 120 120; /* Medium Grey */
-  --md-sys-color-on-error-container: 255 255 255; /* Pure White */
+  /* Error Colors - Black */
+  --md-sys-color-error: 0 0 0; /* #000000 */
+  --md-sys-color-on-error: 255 255 255; /* #FFFFFF */
+  --md-sys-color-error-container: 240 240 240; /* #F0F0F0 */
+  --md-sys-color-on-error-container: 0 0 0; /* #000000 */
 
-  /* Surface Colors - Pure Black */
-  --md-sys-color-surface-dim: 0 0 0; /* Pure Black */
-  --md-sys-color-surface: 0 0 0; /* Pure Black Background */
-  --md-sys-color-surface-bright: 20 20 20; /* Very Dark Grey */
-  --md-sys-color-on-surface: 255 255 255; /* Pure White Text */
-  --md-sys-color-on-surface-variant: 255 255 255; /* Pure White */
-  --md-sys-color-surface-container-lowest: 0 0 0; /* Pure Black */
-  --md-sys-color-surface-container-low: 10 10 10; /* Very Dark */
-  --md-sys-color-surface-container: 20 20 20; /* Dark */
-  --md-sys-color-surface-container-high: 30 30 30; /* Medium Dark */
-  --md-sys-color-surface-container-highest: 40 40 40; /* Lightest Dark */
+  /* Surface Colors - White */
+  --md-sys-color-surface-dim: 250 250 250; /* #FAFAFA */
+  --md-sys-color-surface: 255 255 255; /* #FFFFFF */
+  --md-sys-color-surface-bright: 255 255 255; /* #FFFFFF */
+  --md-sys-color-on-surface: 0 0 0; /* #000000 */
+  --md-sys-color-on-surface-variant: 128 128 128; /* #808080 */
+  --md-sys-color-surface-container-lowest: 255 255 255; /* #FFFFFF */
+  --md-sys-color-surface-container-low: 250 250 250; /* #FAFAFA */
+  --md-sys-color-surface-container: 245 245 245; /* #F5F5F5 */
+  --md-sys-color-surface-container-high: 240 240 240; /* #F0F0F0 */
+  --md-sys-color-surface-container-highest: 235 235 235; /* #EBEBEB */
 
-  /* Outline Colors - Gothic Grey */
-  --md-sys-color-outline: 100 100 100; /* Medium Grey Outline */
-  --md-sys-color-outline-variant: 60 60 60; /* Dark Grey Outline */
+  /* Outline Colors - Grey */
+  --md-sys-color-outline: 128 128 128; /* #808080 */
+  --md-sys-color-outline-variant: 200 200 200; /* #C8C8C8 */
 
-  /* Additional System Colors - Gothic */
-  --md-sys-color-inverse-surface: 255 255 255; /* Pure White */
-  --md-sys-color-inverse-on-surface: 0 0 0; /* Pure Black */
-  --md-sys-color-inverse-primary: 0 0 0; /* Pure Black */
-  --md-sys-color-shadow: 0 0 0; /* Pure Black Shadow */
-  --md-sys-color-scrim: 0 0 0; /* Pure Black Scrim */
-  --md-sys-color-surface-tint: 255 255 255; /* Pure White */
+  /* Additional System Colors */
+  --md-sys-color-inverse-surface: 0 0 0; /* #000000 */
+  --md-sys-color-inverse-on-surface: 255 255 255; /* #FFFFFF */
+  --md-sys-color-inverse-primary: 255 255 255; /* #FFFFFF */
+  --md-sys-color-shadow: 0 0 0; /* #000000 */
+  --md-sys-color-scrim: 0 0 0; /* #000000 */
+  --md-sys-color-surface-tint: 0 0 0; /* #000000 */
 
   /* Semantic Mappings */
   --background: var(--md-sys-color-surface);
@@ -75,13 +75,13 @@
   --border: var(--md-sys-color-outline-variant);
   --input: var(--md-sys-color-surface-container-highest);
   --ring: var(--md-sys-color-primary);
-  --success: 255 255 255; /* Pure White */
-  --warning: 200 200 200; /* Light Grey */
+  --success: 0 0 0; /* Black */
+  --warning: 128 128 128; /* Grey */
   --chart-1: var(--md-sys-color-primary);
   --chart-2: var(--md-sys-color-secondary);
   --chart-3: var(--md-sys-color-tertiary);
   --chart-4: var(--md-sys-color-error);
-  --chart-5: 180 180 180; /* Medium Light Grey */
+  --chart-5: 160 160 160; /* Light Grey */
   --sidebar: var(--md-sys-color-surface-container);
   --sidebar-foreground: var(--md-sys-color-on-surface);
   --sidebar-primary: var(--md-sys-color-primary);
@@ -93,55 +93,55 @@
   --radius: 0.75rem;
 }
 
-/* Dracula Theme Alternative - Deeper Dark */
+/* Black and White Dark Theme */
 .dark {
-  /* Primary Colors - Enhanced Dracula Purple */
-  --md-sys-color-primary: 189 147 249; /* #bd93f9 - Dracula Purple Light */
-  --md-sys-color-on-primary: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-primary-container: 139 69 244; /* #8b45f4 - Dracula Purple */
-  --md-sys-color-on-primary-container: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  /* Primary Colors - White */
+  --md-sys-color-primary: 255 255 255; /* #FFFFFF */
+  --md-sys-color-on-primary: 0 0 0; /* #000000 */
+  --md-sys-color-primary-container: 32 32 32; /* #202020 */
+  --md-sys-color-on-primary-container: 255 255 255; /* #FFFFFF */
 
-  /* Secondary Colors - Dracula Green */
-  --md-sys-color-secondary: 80 250 123; /* #50fa7b - Dracula Green */
-  --md-sys-color-on-secondary: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-secondary-container: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-on-secondary-container: 80 250 123; /* #50fa7b - Dracula Green */
+  /* Secondary Colors - Light Grey */
+  --md-sys-color-secondary: 192 192 192; /* #C0C0C0 */
+  --md-sys-color-on-secondary: 0 0 0; /* #000000 */
+  --md-sys-color-secondary-container: 48 48 48; /* #303030 */
+  --md-sys-color-on-secondary-container: 255 255 255; /* #FFFFFF */
 
-  /* Tertiary Colors - Dracula Yellow */
-  --md-sys-color-tertiary: 241 250 140; /* #f1fa8c - Dracula Yellow */
-  --md-sys-color-on-tertiary: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-tertiary-container: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-on-tertiary-container: 241 250 140; /* #f1fa8c - Dracula Yellow */
+  /* Tertiary Colors - Medium Grey */
+  --md-sys-color-tertiary: 160 160 160; /* #A0A0A0 */
+  --md-sys-color-on-tertiary: 0 0 0; /* #000000 */
+  --md-sys-color-tertiary-container: 64 64 64; /* #404040 */
+  --md-sys-color-on-tertiary-container: 255 255 255; /* #FFFFFF */
 
-  /* Error Colors - Dracula Red Enhanced */
-  --md-sys-color-error: 255 85 85; /* #ff5555 - Dracula Red */
-  --md-sys-color-on-error: 248 248 242; /* #f8f8f2 - Dracula Foreground */
-  --md-sys-color-error-container: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-on-error-container: 255 85 85; /* #ff5555 - Dracula Red */
+  /* Error Colors - White */
+  --md-sys-color-error: 255 255 255; /* #FFFFFF */
+  --md-sys-color-on-error: 0 0 0; /* #000000 */
+  --md-sys-color-error-container: 48 48 48; /* #303030 */
+  --md-sys-color-on-error-container: 255 255 255; /* #FFFFFF */
 
-  /* Surface Colors - Deep Dracula */
-  --md-sys-color-surface-dim: 21 22 29; /* #15161d - Darker Background */
-  --md-sys-color-surface: 21 22 29; /* #15161d - Darker Background */
-  --md-sys-color-surface-bright: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-on-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
-  --md-sys-color-on-surface-variant: 189 147 249; /* #bd93f9 - Dracula Purple Light */
-  --md-sys-color-surface-container-lowest: 21 22 29; /* #15161d - Darker Background */
-  --md-sys-color-surface-container-low: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-surface-container: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-surface-container-high: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-surface-container-highest: 98 114 164; /* #6272a4 - Dracula Comment */
+  /* Surface Colors - Black */
+  --md-sys-color-surface-dim: 8 8 8; /* #080808 */
+  --md-sys-color-surface: 0 0 0; /* #000000 */
+  --md-sys-color-surface-bright: 32 32 32; /* #202020 */
+  --md-sys-color-on-surface: 255 255 255; /* #FFFFFF */
+  --md-sys-color-on-surface-variant: 192 192 192; /* #C0C0C0 */
+  --md-sys-color-surface-container-lowest: 0 0 0; /* #000000 */
+  --md-sys-color-surface-container-low: 16 16 16; /* #101010 */
+  --md-sys-color-surface-container: 24 24 24; /* #181818 */
+  --md-sys-color-surface-container-high: 32 32 32; /* #202020 */
+  --md-sys-color-surface-container-highest: 48 48 48; /* #303030 */
 
-  /* Outline Colors - Deep Dracula */
-  --md-sys-color-outline: 68 71 90; /* #44475a - Dracula Current Line */
-  --md-sys-color-outline-variant: 98 114 164; /* #6272a4 - Dracula Comment */
+  /* Outline Colors - Grey */
+  --md-sys-color-outline: 128 128 128; /* #808080 */
+  --md-sys-color-outline-variant: 64 64 64; /* #404040 */
 
-  /* Additional System Colors - Deep Dracula */
-  --md-sys-color-inverse-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
-  --md-sys-color-inverse-on-surface: 40 42 54; /* #282a36 - Dracula Background */
-  --md-sys-color-inverse-primary: 139 69 244; /* #8b45f4 - Dracula Purple */
+  /* Additional System Colors */
+  --md-sys-color-inverse-surface: 255 255 255; /* #FFFFFF */
+  --md-sys-color-inverse-on-surface: 0 0 0; /* #000000 */
+  --md-sys-color-inverse-primary: 0 0 0; /* #000000 */
   --md-sys-color-shadow: 0 0 0; /* #000000 */
   --md-sys-color-scrim: 0 0 0; /* #000000 */
-  --md-sys-color-surface-tint: 189 147 249; /* #bd93f9 - Dracula Purple Light */
+  --md-sys-color-surface-tint: 255 255 255; /* #FFFFFF */
 
   /* Semantic Mappings - Dark Theme */
   --background: var(--md-sys-color-surface);
@@ -163,13 +163,13 @@
   --border: var(--md-sys-color-outline-variant);
   --input: var(--md-sys-color-surface-container-highest);
   --ring: var(--md-sys-color-primary);
-  --success: 255 255 255; /* Pure White */
-  --warning: 200 200 200; /* Light Grey */
+  --success: 255 255 255; /* White */
+  --warning: 192 192 192; /* Light Grey */
   --chart-1: var(--md-sys-color-primary);
   --chart-2: var(--md-sys-color-secondary);
   --chart-3: var(--md-sys-color-tertiary);
   --chart-4: var(--md-sys-color-error);
-  --chart-5: 180 180 180; /* Medium Light Grey */
+  --chart-5: 128 128 128; /* Grey */
   --sidebar: var(--md-sys-color-surface-container);
   --sidebar-foreground: var(--md-sys-color-on-surface);
   --sidebar-primary: var(--md-sys-color-primary);

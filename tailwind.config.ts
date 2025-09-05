@@ -24,10 +24,20 @@ export default {
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
+          container: "var(--md-sys-color-primary-container)",
+          "container-foreground": "var(--md-sys-color-on-primary-container)",
         },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
+          container: "var(--md-sys-color-secondary-container)",
+          "container-foreground": "var(--md-sys-color-on-secondary-container)",
+        },
+        tertiary: {
+          DEFAULT: "var(--md-sys-color-tertiary)",
+          foreground: "var(--md-sys-color-on-tertiary)",
+          container: "var(--md-sys-color-tertiary-container)",
+          "container-foreground": "var(--md-sys-color-on-tertiary-container)",
         },
         muted: {
           DEFAULT: "var(--muted)",
@@ -40,6 +50,30 @@ export default {
         destructive: {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
+        },
+        error: {
+          DEFAULT: "var(--md-sys-color-error)",
+          foreground: "var(--md-sys-color-on-error)",
+          container: "var(--md-sys-color-error-container)",
+          "container-foreground": "var(--md-sys-color-on-error-container)",
+        },
+        surface: {
+          DEFAULT: "var(--md-sys-color-surface)",
+          foreground: "var(--md-sys-color-on-surface)",
+          dim: "var(--md-sys-color-surface-dim)",
+          bright: "var(--md-sys-color-surface-bright)",
+          variant: "var(--md-sys-color-on-surface-variant)",
+          container: {
+            DEFAULT: "var(--md-sys-color-surface-container)",
+            lowest: "var(--md-sys-color-surface-container-lowest)",
+            low: "var(--md-sys-color-surface-container-low)",
+            high: "var(--md-sys-color-surface-container-high)",
+            highest: "var(--md-sys-color-surface-container-highest)",
+          },
+        },
+        outline: {
+          DEFAULT: "var(--md-sys-color-outline)",
+          variant: "var(--md-sys-color-outline-variant)",
         },
         border: "var(--border)",
         input: "var(--input)",

@@ -40,18 +40,18 @@ import {
 } from "lucide-react";
 
 const workoutTypeData = {
-  strength: { icon: Dumbbell, color: "text-blue-500", bg: "bg-blue-500/10" },
-  cardio: { icon: Flame, color: "text-red-500", bg: "bg-red-500/10" },
-  yoga: { icon: Target, color: "text-purple-500", bg: "bg-purple-500/10" },
-  sports: { icon: Activity, color: "text-green-500", bg: "bg-green-500/10" },
-  hiit: { icon: Zap, color: "text-orange-500", bg: "bg-orange-500/10" },
-  flexibility: { icon: RotateCcw, color: "text-pink-500", bg: "bg-pink-500/10" }
+  strength: { icon: Dumbbell, color: "text-primary", bg: "bg-primary-container" },
+  cardio: { icon: Flame, color: "text-error", bg: "bg-error-container" },
+  yoga: { icon: Target, color: "text-tertiary", bg: "bg-tertiary-container" },
+  sports: { icon: Activity, color: "text-secondary", bg: "bg-secondary-container" },
+  hiit: { icon: Zap, color: "text-warning", bg: "bg-warning/10" },
+  flexibility: { icon: RotateCcw, color: "text-accent", bg: "bg-accent/10" }
 };
 
 const intensityLevels = {
-  low: { color: "text-green-500", label: "Low" },
-  moderate: { color: "text-gray-400", label: "Moderate" },
-  high: { color: "text-red-500", label: "High" }
+  low: { color: "text-success", label: "Low" },
+  moderate: { color: "text-surface-variant", label: "Moderate" },
+  high: { color: "text-error", label: "High" }
 };
 
 export default function WorkoutsPage() {
@@ -330,19 +330,19 @@ export default function WorkoutsPage() {
       <div className="grid grid-cols-3 gap-3 mb-6">
         <Card className="p-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-blue-500">{weeklyWorkouts.length}</p>
+            <p className="text-2xl font-bold text-primary">{weeklyWorkouts.length}</p>
             <p className="text-xs text-muted-foreground">This Week</p>
           </div>
         </Card>
         <Card className="p-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-green-500">{Math.round(totalDuration / 60)}h</p>
+            <p className="text-2xl font-bold text-success">{Math.round(totalDuration / 60)}h</p>
             <p className="text-xs text-muted-foreground">Total Time</p>
           </div>
         </Card>
         <Card className="p-4">
           <div className="text-center">
-            <p className="text-2xl font-bold text-orange-500">{personalRecords}</p>
+            <p className="text-2xl font-bold text-warning">{personalRecords}</p>
             <p className="text-xs text-muted-foreground">PRs</p>
           </div>
         </Card>
@@ -354,7 +354,7 @@ export default function WorkoutsPage() {
           onClick={() => setActiveFilter("all")}
           className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
             activeFilter === "all"
-              ? "bg-blue-500 text-white"
+              ? "bg-primary text-primary-foreground"
               : "bg-muted text-muted-foreground hover:bg-muted/80"
           }`}
           data-testid="filter-all"
@@ -367,7 +367,7 @@ export default function WorkoutsPage() {
             onClick={() => setActiveFilter(type)}
             className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all capitalize ${
               activeFilter === type
-                ? "bg-blue-500 text-white"
+                ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
             data-testid={`filter-${type}`}
@@ -481,7 +481,7 @@ export default function WorkoutsPage() {
                         <div className="flex items-center justify-center space-x-1 mb-1">
                           <Flame className="w-3 h-3 text-muted-foreground" />
                         </div>
-                        <p className="text-lg font-bold text-orange-500" data-testid={`workout-calories-${workout.id}`}>
+                        <p className="text-lg font-bold text-warning" data-testid={`workout-calories-${workout.id}`}>
                           {workout.calories || '—'}
                         </p>
                         <p className="text-xs text-muted-foreground">Calories</p>
@@ -490,7 +490,7 @@ export default function WorkoutsPage() {
                         <div className="flex items-center justify-center space-x-1 mb-1">
                           <Target className="w-3 h-3 text-muted-foreground" />
                         </div>
-                        <p className="text-lg font-bold text-blue-500" data-testid={`workout-distance-${workout.id}`}>
+                        <p className="text-lg font-bold text-primary" data-testid={`workout-distance-${workout.id}`}>
                           {workout.distance ? `${workout.distance}km` : '—'}
                         </p>
                         <p className="text-xs text-muted-foreground">Distance</p>

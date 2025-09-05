@@ -206,7 +206,7 @@ export default function Dashboard() {
                 <div
                   key={i}
                   className={`flex-1 h-2 rounded ${
-                    i < todayWorkouts.length ? 'bg-green-500' : 'bg-muted'
+                    i < todayWorkouts.length ? 'bg-success' : 'bg-muted'
                   }`}
                 />
               ))}
@@ -245,15 +245,15 @@ export default function Dashboard() {
         <CardContent>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <p className="text-2xl font-bold text-blue-500" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
+              <p className="text-2xl font-bold text-primary" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
               <p className="text-xs text-muted-foreground">Workouts</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-green-500">{Math.round(stats.totalDuration / 60)}h</p>
+              <p className="text-2xl font-bold text-success">{Math.round(stats.totalDuration / 60)}h</p>
               <p className="text-xs text-muted-foreground">Hours</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-orange-500">{(stats.totalCalories / 1000).toFixed(1)}k</p>
+              <p className="text-2xl font-bold text-warning">{(stats.totalCalories / 1000).toFixed(1)}k</p>
               <p className="text-xs text-muted-foreground">Calories</p>
             </div>
           </div>
@@ -273,7 +273,7 @@ export default function Dashboard() {
             {weeklyData.map((day, index) => (
               <div key={index} className="flex flex-col items-center space-y-2">
                 <div
-                  className="w-6 bg-blue-500 rounded-t min-h-[4px] transition-all"
+                  className="w-6 bg-primary rounded-t min-h-[4px] transition-all"
                   style={{
                     height: `${(day.workouts / maxWorkouts) * 60}px`,
                     opacity: day.workouts > 0 ? 1 : 0.3
@@ -365,8 +365,8 @@ export default function Dashboard() {
         <CardContent className="space-y-3">
           {recentWorkouts.slice(0, 2).map((workout) => (
             <div key={workout.id} className="flex items-center space-x-3 p-2 bg-muted/20 rounded-lg" data-testid="activity-workout">
-              <div className="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center">
-                <Dumbbell className="w-5 h-5 text-blue-500" />
+              <div className="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center">
+                <Dumbbell className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-sm">{workout.name || workout.type}</h4>
@@ -378,8 +378,8 @@ export default function Dashboard() {
           ))}
           {recentMeals.slice(0, 1).map((meal) => (
             <div key={meal.id} className="flex items-center space-x-3 p-2 bg-muted/20 rounded-lg" data-testid="activity-meal">
-              <div className="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
-                <Apple className="w-5 h-5 text-green-500" />
+              <div className="w-10 h-10 bg-success/10 rounded-full flex items-center justify-center">
+                <Apple className="w-5 h-5 text-success" />
               </div>
               <div className="flex-1">
                 <h4 className="font-medium text-sm">{meal.name}</h4>

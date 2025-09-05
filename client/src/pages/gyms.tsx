@@ -40,7 +40,7 @@ export default function GymsPage() {
 
     const remainingStars = 5 - Math.ceil(rating);
     for (let i = 0; i < remainingStars; i++) {
-      stars.push(<Star key={`empty-${i}`} className="w-4 h-4 text-gray-300" />);
+      stars.push(<Star key={`empty-${i}`} className="w-4 h-4 text-outline-variant" />);
     }
 
     return stars;

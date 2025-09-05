@@ -42,17 +42,17 @@ import {
 } from "lucide-react";
 
 const mealTypeData = {
-  breakfast: { icon: Coffee, color: "text-orange-500", bg: "bg-orange-500/10", label: "Breakfast" },
-  lunch: { icon: Sandwich, color: "text-green-500", bg: "bg-green-500/10", label: "Lunch" },
-  dinner: { icon: ChefHat, color: "text-blue-500", bg: "bg-blue-500/10", label: "Dinner" },
-  snack: { icon: Cookie, color: "text-purple-500", bg: "bg-purple-500/10", label: "Snack" }
+  breakfast: { icon: Coffee, color: "text-warning", bg: "bg-warning/10", label: "Breakfast" },
+  lunch: { icon: Sandwich, color: "text-success", bg: "bg-success/10", label: "Lunch" },
+  dinner: { icon: ChefHat, color: "text-primary", bg: "bg-primary-container", label: "Dinner" },
+  snack: { icon: Cookie, color: "text-tertiary", bg: "bg-tertiary-container", label: "Snack" }
 };
 
 const macroColors = {
-  protein: "text-red-500",
-  carbs: "text-blue-500", 
-  fat: "text-gray-400",
-  fiber: "text-green-500"
+  protein: "text-error",
+  carbs: "text-primary", 
+  fat: "text-surface-variant",
+  fiber: "text-success"
 };
 
 export default function MealsPage() {
@@ -457,7 +457,7 @@ export default function MealsPage() {
           onClick={() => setActiveFilter("all")}
           className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
             activeFilter === "all"
-              ? "bg-green-500 text-white"
+              ? "bg-success text-white"
               : "bg-muted text-muted-foreground hover:bg-muted/80"
           }`}
           data-testid="filter-all"
@@ -470,7 +470,7 @@ export default function MealsPage() {
             onClick={() => setActiveFilter(type)}
             className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all capitalize ${
               activeFilter === type
-                ? "bg-green-500 text-white"
+                ? "bg-success text-white"
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
             }`}
             data-testid={`filter-${type}`}
@@ -565,19 +565,19 @@ export default function MealsPage() {
 
                       <div className="grid grid-cols-4 gap-2 text-center mb-3">
                         <div>
-                          <p className="text-lg font-bold text-orange-500">{meal.calories}</p>
+                          <p className="text-lg font-bold text-warning">{meal.calories}</p>
                           <p className="text-xs text-muted-foreground">cal</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-red-500">{Math.round(meal.protein || 0)}g</p>
+                          <p className="text-sm font-bold text-error">{Math.round(meal.protein || 0)}g</p>
                           <p className="text-xs text-muted-foreground">protein</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-blue-500">{Math.round(meal.carbs || 0)}g</p>
+                          <p className="text-sm font-bold text-primary">{Math.round(meal.carbs || 0)}g</p>
                           <p className="text-xs text-muted-foreground">carbs</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-gray-400">{Math.round(meal.fat || 0)}g</p>
+                          <p className="text-sm font-bold text-surface-variant">{Math.round(meal.fat || 0)}g</p>
                           <p className="text-xs text-muted-foreground">fat</p>
                         </div>
                       </div>
