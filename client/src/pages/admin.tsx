@@ -121,7 +121,7 @@ function AdminLogin() {
                 id="username"
                 {...form.register("username")}
                 className="mt-2"
-                placeholder="administrator"
+                placeholder="Enter admin username"
                 data-testid="input-admin-username"
               />
             </div>
