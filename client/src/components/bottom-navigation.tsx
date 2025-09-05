@@ -36,14 +36,60 @@ export default function BottomNavigation() {
           return (
             <Link key={item.path} href={item.path} data-testid={`nav-${item.label.toLowerCase()}`}>
               <button
-                className={`flex flex-col items-center p-2 transition-colors ${
-                  isActive
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                style={{
+                  width: '60px',
+                  height: '52px',
+                  minWidth: '60px',
+                  minHeight: '52px',
+                  maxWidth: '60px',
+                  maxHeight: '52px',
+                  padding: '8px',
+                  border: 'none',
+                  background: 'transparent',
+                  outline: 'none',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'color 0.2s',
+                  color: isActive ? 'var(--primary)' : 'var(--muted-foreground)'
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) {
+                    e.target.style.color = 'var(--foreground)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.target.style.color = 'var(--muted-foreground)';
+                  }
+                }}
+                onFocus={(e) => {
+                  e.target.style.outline = 'none';
+                }}
+                onBlur={(e) => {
+                  e.target.style.outline = 'none';
+                }}
               >
-                <Icon className="w-5 h-5 mb-1" />
-                <span className="text-xs font-medium">{item.label}</span>
+                <Icon 
+                  style={{ 
+                    width: '20px', 
+                    height: '20px', 
+                    marginBottom: '4px',
+                    flexShrink: 0
+                  }} 
+                />
+                <span 
+                  style={{ 
+                    fontSize: '12px', 
+                    fontWeight: '500',
+                    lineHeight: '1',
+                    textAlign: 'center',
+                    flexShrink: 0
+                  }}
+                >
+                  {item.label}
+                </span>
               </button>
             </Link>
           );
