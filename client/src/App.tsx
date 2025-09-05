@@ -33,7 +33,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="max-w-md mx-auto bg-background min-h-screen relative">
+    <div className="max-w-md mx-auto bg-background min-h-screen">
       {children}
       <BottomNavigation />
     </div>
