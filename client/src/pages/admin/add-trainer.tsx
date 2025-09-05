@@ -148,7 +148,7 @@ function AddTrainerForm() {
               )}
               
               <Label htmlFor="trainer-photo" className="cursor-pointer">
-                <div className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 transition-colors text-sm">
+                <div className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors text-sm">
                   <Upload className="w-4 h-4" />
                   <span>{photoPreview ? "Change Photo" : "Upload Photo"}</span>
                 </div>
