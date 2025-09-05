@@ -1,0 +1,29 @@
+{
+  "name": "Material",
+  "type": "light",
+  "colors": {
+    "background": "#ffffff",
+    "foreground": "#1c1b1f",
+    "card": "#f3f7f7",
+    "card-foreground": "#1c1b1f",
+    "popover": "#f3f7f7",
+    "popover-foreground": "#1c1b1f",
+    "primary": "#6750a4",
+    "primary-foreground": "#ffffff",
+    "secondary": "#625b71",
+    "secondary-foreground": "#ffffff",
+    "muted": "#f7f2fa",
+    "muted-foreground": "#49454f",
+    "accent": "#7d5260",
+    "accent-foreground": "#ffffff",
+    "destructive": "#ba1a1a",
+    "destructive-foreground": "#ffffff",
+    "border": "#c4c7c5",
+    "input": "#e6e0e9",
+    "ring": "#6750a4",
+    "success": "#166d2a",
+    "warning": "#755a00",
+    "info": "#0b57d0",
+    "error": "#ba1a1a"
+  }
+}

@@ -4,76 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dracula Theme Color Scheme */
-:root {
-  /* Dracula Core Colors */
-  --dracula-background: 40 42 54; /* #282a36 */
-  --dracula-current-line: 68 71 90; /* #44475a */
-  --dracula-foreground: 248 248 242; /* #f8f8f2 */
-  --dracula-comment: 98 114 164; /* #6272a4 */
-  --dracula-cyan: 139 233 253; /* #8be9fd */
-  --dracula-green: 80 250 123; /* #50fa7b */
-  --dracula-orange: 255 184 108; /* #ffb86c */
-  --dracula-pink: 255 121 198; /* #ff79c6 */
-  --dracula-purple: 189 147 249; /* #bd93f9 */
-  --dracula-red: 255 85 85; /* #ff5555 */
-  --dracula-yellow: 241 250 140; /* #f1fa8c */
-  
-  /* Semantic Mappings for Dracula */
-  --background: var(--dracula-background);
-  --foreground: var(--dracula-foreground);
-  --card: 68 71 90; /* Current line for cards */
-  --card-foreground: var(--dracula-foreground);
-  --popover: var(--dracula-current-line);
-  --popover-foreground: var(--dracula-foreground);
-  --primary: var(--dracula-purple); /* Purple as primary */
-  --primary-foreground: var(--dracula-background);
-  --secondary: var(--dracula-pink); /* Pink as secondary */
-  --secondary-foreground: var(--dracula-background);
-  --muted: var(--dracula-current-line);
-  --muted-foreground: var(--dracula-comment);
-  --accent: var(--dracula-cyan); /* Cyan as accent */
-  --accent-foreground: var(--dracula-background);
-  --destructive: var(--dracula-red);
-  --destructive-foreground: var(--dracula-foreground);
-  --border: var(--dracula-current-line);
-  --input: var(--dracula-current-line);
-  --ring: var(--dracula-purple);
-  --primary-container: 68 53 91; /* Darker purple */
-  --on-primary-container: var(--dracula-purple);
-  --secondary-container: 91 44 73; /* Darker pink */
-  --tertiary: var(--dracula-green);
-  --tertiary-foreground: var(--dracula-background);
-  --tertiary-container: 29 91 44; /* Darker green */
-  --success: var(--dracula-green);
-  --warning: var(--dracula-yellow);
-  --info: var(--dracula-cyan);
-  --radius: 0.75rem;
-}
-
-.dark {
-  /* Dracula is primarily a dark theme, keeping same values */
-  --background: var(--dracula-background);
-  --foreground: var(--dracula-foreground);
-  --card: var(--dracula-current-line);
-  --card-foreground: var(--dracula-foreground);
-  --popover: var(--dracula-current-line);
-  --popover-foreground: var(--dracula-foreground);
-  --primary: var(--dracula-purple);
-  --primary-foreground: var(--dracula-background);
-  --secondary: var(--dracula-pink);
-  --secondary-foreground: var(--dracula-background);
-  --muted: var(--dracula-current-line);
-  --muted-foreground: var(--dracula-comment);
-  --accent: var(--dracula-cyan);
-  --accent-foreground: var(--dracula-background);
-  --destructive: var(--dracula-red);
-  --destructive-foreground: var(--dracula-foreground);
-  --border: var(--dracula-current-line);
-  --input: var(--dracula-current-line);
-  --ring: var(--dracula-purple);
-}
-
+/* Base styles - colors will be set by theme manager */
 * {
   border-color: hsl(var(--border));
   -webkit-font-smoothing: antialiased;
@@ -89,6 +20,7 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding-top: 72px; /* Fixed header spacing */
 }
 
 body::-webkit-scrollbar {
@@ -105,23 +37,22 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Dracula Card Styles */
+/* Card Styles */
 .card {
   border-radius: 16px !important;
   background-color: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   color: hsl(var(--card-foreground));
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px hsl(var(--dracula-background) / 0.3);
+  box-shadow: 0 2px 8px hsl(var(--background) / 0.1);
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px hsl(var(--dracula-purple) / 0.2);
-  border-color: hsl(var(--dracula-purple) / 0.3);
+  box-shadow: 0 4px 16px hsl(var(--primary) / 0.15);
 }
 
-/* Dracula Button Styles */
+/* Button Styles */
 button, .btn {
   border-radius: 12px !important;
   font-weight: 600;
@@ -132,43 +63,36 @@ button:active, .btn:active {
   transform: scale(0.98);
 }
 
-/* Dracula Primary Button */
+/* Primary Button */
 .bg-primary {
-  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%) !important;
-  color: hsl(var(--dracula-background)) !important;
-  border: none;
+  background-color: hsl(var(--primary)) !important;
+  color: hsl(var(--primary-foreground)) !important;
 }
 
 .bg-primary:hover {
-  box-shadow: 0 4px 16px hsl(var(--dracula-purple) / 0.4);
+  box-shadow: 0 4px 16px hsl(var(--primary) / 0.3);
   transform: translateY(-1px);
 }
 
-/* Dracula Input Styles */
+/* Input Styles */
 input, textarea, select {
   border-radius: 12px !important;
   font-size: 16px !important;
   background-color: hsl(var(--input));
   color: hsl(var(--foreground));
-  border: 2px solid hsl(var(--border));
+  border: 1px solid hsl(var(--border));
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus, textarea:focus, select:focus {
-  border-color: hsl(var(--dracula-cyan));
-  box-shadow: 0 0 0 3px hsl(var(--dracula-cyan) / 0.2);
-  background-color: hsl(var(--dracula-background));
+  border-color: hsl(var(--accent));
+  box-shadow: 0 0 0 3px hsl(var(--accent) / 0.2);
 }
 
-/* Fixed header spacing */
-body {
-  padding-top: 72px;
-}
-
-/* Dracula Navigation */
+/* Navigation */
 .md-navigation-bar {
   background-color: hsl(var(--card));
-  border-top: 2px solid hsl(var(--dracula-purple) / 0.3);
+  border-top: 1px solid hsl(var(--border));
   position: fixed;
   bottom: 0;
   left: 0;
@@ -176,29 +100,36 @@ body {
   z-index: 50;
   padding-bottom: env(safe-area-inset-bottom);
   backdrop-filter: blur(20px);
-  box-shadow: 0 -4px 16px hsl(var(--dracula-background) / 0.5);
 }
 
 .md-navigation-item {
-  color: hsl(var(--dracula-comment));
+  color: hsl(var(--muted-foreground));
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 12px;
   padding: 12px;
 }
 
 .md-navigation-item.active {
-  color: hsl(var(--dracula-background));
-  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%);
+  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--primary));
   transform: scale(1.05);
-  box-shadow: 0 4px 12px hsl(var(--dracula-purple) / 0.4);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
 }
 
 .md-navigation-item:hover:not(.active) {
-  color: hsl(var(--dracula-cyan));
-  background-color: hsl(var(--dracula-current-line) / 0.5);
+  color: hsl(var(--accent));
+  background-color: hsl(var(--muted));
   transform: scale(1.02);
 }
 
+/* Header */
+header {
+  background-color: hsl(var(--background) / 0.95) !important;
+  border-bottom: 1px solid hsl(var(--border));
+  backdrop-filter: blur(20px);
+}
+
+/* Utility Classes */
 .mobile-safe-area {
   padding-bottom: env(safe-area-inset-bottom, 20px);
 }
@@ -210,94 +141,6 @@ body {
 
 .native-transition {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Dracula Workout Cards */
-.workout-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--dracula-purple) / 0.1) 0%, 
-    hsl(var(--dracula-pink) / 0.1) 100%);
-  border: 1px solid hsl(var(--dracula-purple) / 0.3);
-}
-
-.nutrition-card {
-  background: linear-gradient(135deg, 
-    hsl(var(--dracula-green) / 0.1) 0%, 
-    hsl(var(--dracula-cyan) / 0.1) 100%);
-  border: 1px solid hsl(var(--dracula-green) / 0.3);
-}
-
-/* Dracula Progress Bars */
-.progress-bar {
-  background: linear-gradient(90deg, 
-    hsl(var(--dracula-purple)) 0%, 
-    hsl(var(--dracula-pink)) 50%, 
-    hsl(var(--dracula-cyan)) 100%);
-  border-radius: 8px;
-  height: 8px;
-}
-
-/* Dracula Badges */
-.badge-primary {
-  background: linear-gradient(135deg, hsl(var(--dracula-purple)) 0%, hsl(var(--dracula-pink)) 100%);
-  color: hsl(var(--dracula-background));
-  border-radius: 16px;
-}
-
-.badge-success {
-  background-color: hsl(var(--dracula-green));
-  color: hsl(var(--dracula-background));
-  border-radius: 16px;
-}
-
-.badge-warning {
-  background-color: hsl(var(--dracula-yellow));
-  color: hsl(var(--dracula-background));
-  border-radius: 16px;
-}
-
-.badge-error {
-  background-color: hsl(var(--dracula-red));
-  color: hsl(var(--dracula-foreground));
-  border-radius: 16px;
-}
-
-/* Dracula Header */
-header {
-  background: linear-gradient(135deg, 
-    hsl(var(--dracula-background)) 0%, 
-    hsl(var(--dracula-current-line)) 100%) !important;
-  border-bottom: 2px solid hsl(var(--dracula-purple) / 0.3);
-  backdrop-filter: blur(20px);
-}
-
-/* Dracula Special Effects */
-.dracula-glow {
-  box-shadow: 0 0 20px hsl(var(--dracula-purple) / 0.5);
-}
-
-.dracula-text-primary {
-  color: hsl(var(--dracula-purple));
-}
-
-.dracula-text-secondary {
-  color: hsl(var(--dracula-pink));
-}
-
-.dracula-text-accent {
-  color: hsl(var(--dracula-cyan));
-}
-
-.dracula-text-success {
-  color: hsl(var(--dracula-green));
-}
-
-.dracula-text-warning {
-  color: hsl(var(--dracula-yellow));
-}
-
-.dracula-text-error {
-  color: hsl(var(--dracula-red));
 }
 
 /* Mobile optimizations */
