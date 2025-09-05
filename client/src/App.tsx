@@ -111,7 +111,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="fitness-app-theme">
+      <ThemeProvider defaultTheme="dark" storageKey="fitness-app-theme">
         <TooltipProvider>
           <Toaster />
           <Router />
