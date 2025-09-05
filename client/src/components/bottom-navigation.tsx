@@ -22,14 +22,12 @@ export default function BottomNavigation() {
         width: '100%',
         maxWidth: '448px',
         zIndex: 999999,
-        backgroundColor: 'var(--card)',
+        backgroundColor: 'hsl(var(--card))',
         backdropFilter: 'blur(16px)',
-        borderTop: '1px solid var(--border)',
+        borderTop: '1px solid hsl(var(--border))',
         boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
-        WebkitTransform: 'translateX(-50%)',
-        WebkitPosition: 'fixed',
-        contain: 'layout size style',
-        willChange: 'auto'
+        padding: '0',
+        margin: '0'
       }}
     >
       <div className="flex items-center justify-around py-3 px-2">
