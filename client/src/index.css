@@ -5,55 +5,55 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Material Design 3 Light Theme - Modern Native Colors */
+/* Dracula Theme - Modern Dark UI */
 :root {
-  /* Primary Colors - Light Theme (Blue-Green Modern) */
-  --md-sys-color-primary: 21 101 192; /* #1565c0 - Modern blue */
-  --md-sys-color-on-primary: 255 255 255; /* #ffffff */
-  --md-sys-color-primary-container: 227 242 253; /* #e3f2fd */
-  --md-sys-color-on-primary-container: 0 30 66; /* #001e42 */
+  /* Primary Colors - Dracula Purple */
+  --md-sys-color-primary: 139 69 244; /* #8b45f4 - Dracula Purple */
+  --md-sys-color-on-primary: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-primary-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-primary-container: 189 147 249; /* #bd93f9 - Dracula Purple Light */
 
-  /* Secondary Colors - Light Theme (Teal Accent) */
-  --md-sys-color-secondary: 0 121 107; /* #00796b */
-  --md-sys-color-on-secondary: 255 255 255; /* #ffffff */
-  --md-sys-color-secondary-container: 178 223 219; /* #b2dfdb */
-  --md-sys-color-on-secondary-container: 0 37 32; /* #002520 */
+  /* Secondary Colors - Dracula Pink */
+  --md-sys-color-secondary: 255 121 198; /* #ff79c6 - Dracula Pink */
+  --md-sys-color-on-secondary: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-secondary-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-secondary-container: 255 184 108; /* #ffb86c - Dracula Orange */
 
-  /* Tertiary Colors - Light Theme (Orange Accent) */
-  --md-sys-color-tertiary: 255 111 97; /* #ff6f61 */
-  --md-sys-color-on-tertiary: 255 255 255; /* #ffffff */
-  --md-sys-color-tertiary-container: 255 235 238; /* #ffebee */
-  --md-sys-color-on-tertiary-container: 65 14 11; /* #410e0b */
+  /* Tertiary Colors - Dracula Cyan */
+  --md-sys-color-tertiary: 139 233 253; /* #8be9fd - Dracula Cyan */
+  --md-sys-color-on-tertiary: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-tertiary-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-tertiary-container: 139 233 253; /* #8be9fd - Dracula Cyan */
 
-  /* Error Colors - Light Theme */
-  --md-sys-color-error: 211 47 47; /* #d32f2f */
-  --md-sys-color-on-error: 255 255 255; /* #ffffff */
-  --md-sys-color-error-container: 255 235 238; /* #ffebee */
-  --md-sys-color-on-error-container: 65 14 11; /* #410e0b */
+  /* Error Colors - Dracula Red */
+  --md-sys-color-error: 255 85 85; /* #ff5555 - Dracula Red */
+  --md-sys-color-on-error: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-error-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-error-container: 255 85 85; /* #ff5555 - Dracula Red */
 
-  /* Surface Colors - Light Theme (Clean Modern) */
-  --md-sys-color-surface-dim: 247 247 247; /* #f7f7f7 */
-  --md-sys-color-surface: 255 255 255; /* #ffffff */
-  --md-sys-color-surface-bright: 255 255 255; /* #ffffff */
-  --md-sys-color-on-surface: 33 33 33; /* #212121 */
-  --md-sys-color-on-surface-variant: 97 97 97; /* #616161 */
-  --md-sys-color-surface-container-lowest: 255 255 255; /* #ffffff */
-  --md-sys-color-surface-container-low: 250 250 250; /* #fafafa */
-  --md-sys-color-surface-container: 245 245 245; /* #f5f5f5 */
-  --md-sys-color-surface-container-high: 238 238 238; /* #eeeeee */
-  --md-sys-color-surface-container-highest: 224 224 224; /* #e0e0e0 */
+  /* Surface Colors - Dracula Dark */
+  --md-sys-color-surface-dim: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-surface: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-surface-bright: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-on-surface-variant: 189 147 249; /* #bd93f9 - Dracula Purple Light */
+  --md-sys-color-surface-container-lowest: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-surface-container-low: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-surface-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-surface-container-high: 98 114 164; /* #6272a4 - Dracula Comment */
+  --md-sys-color-surface-container-highest: 98 114 164; /* #6272a4 - Dracula Comment */
 
-  /* Outline Colors - Light Theme */
-  --md-sys-color-outline: 158 158 158; /* #9e9e9e */
-  --md-sys-color-outline-variant: 189 189 189; /* #bdbdbd */
+  /* Outline Colors - Dracula */
+  --md-sys-color-outline: 98 114 164; /* #6272a4 - Dracula Comment */
+  --md-sys-color-outline-variant: 68 71 90; /* #44475a - Dracula Current Line */
 
-  /* Additional System Colors - Light Theme */
-  --md-sys-color-inverse-surface: 48 48 48; /* #303030 */
-  --md-sys-color-inverse-on-surface: 245 245 245; /* #f5f5f5 */
-  --md-sys-color-inverse-primary: 144 202 249; /* #90caf9 */
+  /* Additional System Colors - Dracula */
+  --md-sys-color-inverse-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-inverse-on-surface: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-inverse-primary: 139 69 244; /* #8b45f4 - Dracula Purple */
   --md-sys-color-shadow: 0 0 0; /* #000000 */
   --md-sys-color-scrim: 0 0 0; /* #000000 */
-  --md-sys-color-surface-tint: 21 101 192; /* #1565c0 */
+  --md-sys-color-surface-tint: 139 69 244; /* #8b45f4 - Dracula Purple */
 
   /* Semantic Mappings */
   --background: var(--md-sys-color-surface);
@@ -75,13 +75,13 @@
   --border: var(--md-sys-color-outline-variant);
   --input: var(--md-sys-color-surface-container-highest);
   --ring: var(--md-sys-color-primary);
-  --success: var(--md-sys-color-tertiary);
-  --warning: 251 188 4; /* #fbbc04 - Material yellow */
+  --success: 80 250 123; /* #50fa7b - Dracula Green */
+  --warning: 255 184 108; /* #ffb86c - Dracula Orange */
   --chart-1: var(--md-sys-color-primary);
   --chart-2: var(--md-sys-color-secondary);
   --chart-3: var(--md-sys-color-tertiary);
   --chart-4: var(--md-sys-color-error);
-  --chart-5: 16 185 129; /* #10b981 - Material green */
+  --chart-5: 80 250 123; /* #50fa7b - Dracula Green */
   --sidebar: var(--md-sys-color-surface-container);
   --sidebar-foreground: var(--md-sys-color-on-surface);
   --sidebar-primary: var(--md-sys-color-primary);
@@ -93,55 +93,55 @@
   --radius: 0.75rem;
 }
 
-/* Material Design 3 Dark Theme - Modern Native Colors */
+/* Dracula Theme Alternative - Deeper Dark */
 .dark {
-  /* Primary Colors - Dark Theme (Blue-Green Modern) */
-  --md-sys-color-primary: 144 202 249; /* #90caf9 */
-  --md-sys-color-on-primary: 0 30 66; /* #001e42 */
-  --md-sys-color-primary-container: 13 71 161; /* #0d47a1 */
-  --md-sys-color-on-primary-container: 227 242 253; /* #e3f2fd */
+  /* Primary Colors - Enhanced Dracula Purple */
+  --md-sys-color-primary: 189 147 249; /* #bd93f9 - Dracula Purple Light */
+  --md-sys-color-on-primary: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-primary-container: 139 69 244; /* #8b45f4 - Dracula Purple */
+  --md-sys-color-on-primary-container: 248 248 242; /* #f8f8f2 - Dracula Foreground */
 
-  /* Secondary Colors - Dark Theme (Teal Accent) */
-  --md-sys-color-secondary: 128 203 196; /* #80cbc4 */
-  --md-sys-color-on-secondary: 0 37 32; /* #002520 */
-  --md-sys-color-secondary-container: 0 77 64; /* #004d40 */
-  --md-sys-color-on-secondary-container: 178 223 219; /* #b2dfdb */
+  /* Secondary Colors - Dracula Green */
+  --md-sys-color-secondary: 80 250 123; /* #50fa7b - Dracula Green */
+  --md-sys-color-on-secondary: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-secondary-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-secondary-container: 80 250 123; /* #50fa7b - Dracula Green */
 
-  /* Tertiary Colors - Dark Theme (Orange Accent) */
-  --md-sys-color-tertiary: 255 183 177; /* #ffb7b1 */
-  --md-sys-color-on-tertiary: 65 14 11; /* #410e0b */
-  --md-sys-color-tertiary-container: 191 54 12; /* #bf360c */
-  --md-sys-color-on-tertiary-container: 255 235 238; /* #ffebee */
+  /* Tertiary Colors - Dracula Yellow */
+  --md-sys-color-tertiary: 241 250 140; /* #f1fa8c - Dracula Yellow */
+  --md-sys-color-on-tertiary: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-tertiary-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-tertiary-container: 241 250 140; /* #f1fa8c - Dracula Yellow */
 
-  /* Error Colors - Dark Theme */
-  --md-sys-color-error: 255 205 210; /* #ffcdd2 */
-  --md-sys-color-on-error: 65 14 11; /* #410e0b */
-  --md-sys-color-error-container: 183 28 28; /* #b71c1c */
-  --md-sys-color-on-error-container: 255 235 238; /* #ffebee */
+  /* Error Colors - Dracula Red Enhanced */
+  --md-sys-color-error: 255 85 85; /* #ff5555 - Dracula Red */
+  --md-sys-color-on-error: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-error-container: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-error-container: 255 85 85; /* #ff5555 - Dracula Red */
 
-  /* Surface Colors - Dark Theme (Modern Dark) */
-  --md-sys-color-surface-dim: 18 18 18; /* #121212 */
-  --md-sys-color-surface: 18 18 18; /* #121212 */
-  --md-sys-color-surface-bright: 55 55 55; /* #373737 */
-  --md-sys-color-on-surface: 224 224 224; /* #e0e0e0 */
-  --md-sys-color-on-surface-variant: 189 189 189; /* #bdbdbd */
-  --md-sys-color-surface-container-lowest: 12 12 12; /* #0c0c0c */
-  --md-sys-color-surface-container-low: 24 24 24; /* #181818 */
-  --md-sys-color-surface-container: 33 33 33; /* #212121 */
-  --md-sys-color-surface-container-high: 48 48 48; /* #303030 */
-  --md-sys-color-surface-container-highest: 66 66 66; /* #424242 */
+  /* Surface Colors - Deep Dracula */
+  --md-sys-color-surface-dim: 21 22 29; /* #15161d - Darker Background */
+  --md-sys-color-surface: 21 22 29; /* #15161d - Darker Background */
+  --md-sys-color-surface-bright: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-on-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-on-surface-variant: 189 147 249; /* #bd93f9 - Dracula Purple Light */
+  --md-sys-color-surface-container-lowest: 21 22 29; /* #15161d - Darker Background */
+  --md-sys-color-surface-container-low: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-surface-container: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-surface-container-high: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-surface-container-highest: 98 114 164; /* #6272a4 - Dracula Comment */
 
-  /* Outline Colors - Dark Theme */
-  --md-sys-color-outline: 117 117 117; /* #757575 */
-  --md-sys-color-outline-variant: 97 97 97; /* #616161 */
+  /* Outline Colors - Deep Dracula */
+  --md-sys-color-outline: 68 71 90; /* #44475a - Dracula Current Line */
+  --md-sys-color-outline-variant: 98 114 164; /* #6272a4 - Dracula Comment */
 
-  /* Additional System Colors - Dark Theme */
-  --md-sys-color-inverse-surface: 224 224 224; /* #e0e0e0 */
-  --md-sys-color-inverse-on-surface: 48 48 48; /* #303030 */
-  --md-sys-color-inverse-primary: 21 101 192; /* #1565c0 */
+  /* Additional System Colors - Deep Dracula */
+  --md-sys-color-inverse-surface: 248 248 242; /* #f8f8f2 - Dracula Foreground */
+  --md-sys-color-inverse-on-surface: 40 42 54; /* #282a36 - Dracula Background */
+  --md-sys-color-inverse-primary: 139 69 244; /* #8b45f4 - Dracula Purple */
   --md-sys-color-shadow: 0 0 0; /* #000000 */
   --md-sys-color-scrim: 0 0 0; /* #000000 */
-  --md-sys-color-surface-tint: 144 202 249; /* #90caf9 */
+  --md-sys-color-surface-tint: 189 147 249; /* #bd93f9 - Dracula Purple Light */
 
   /* Semantic Mappings - Dark Theme */
   --background: var(--md-sys-color-surface);
@@ -163,13 +163,13 @@
   --border: var(--md-sys-color-outline-variant);
   --input: var(--md-sys-color-surface-container-highest);
   --ring: var(--md-sys-color-primary);
-  --success: var(--md-sys-color-tertiary);
-  --warning: 251 188 4; /* #fbbc04 - Material yellow */
+  --success: 80 250 123; /* #50fa7b - Dracula Green */
+  --warning: 255 184 108; /* #ffb86c - Dracula Orange */
   --chart-1: var(--md-sys-color-primary);
   --chart-2: var(--md-sys-color-secondary);
   --chart-3: var(--md-sys-color-tertiary);
   --chart-4: var(--md-sys-color-error);
-  --chart-5: 16 185 129; /* #10b981 - Material green */
+  --chart-5: 80 250 123; /* #50fa7b - Dracula Green */
   --sidebar: var(--md-sys-color-surface-container);
   --sidebar-foreground: var(--md-sys-color-on-surface);
   --sidebar-primary: var(--md-sys-color-primary);
@@ -515,9 +515,9 @@ body::-webkit-scrollbar {
 
 .achievement-card {
   background: linear-gradient(135deg, 
-    hsl(var(--warning) / 0.12) 0%, 
+    hsl(var(--md-sys-color-tertiary) / 0.12) 0%, 
     hsl(var(--md-sys-color-surface-container)) 100%);
-  border: 1px solid hsl(var(--warning) / 0.12);
+  border: 1px solid hsl(var(--md-sys-color-tertiary) / 0.12);
 }
 
 /* Material Motion */

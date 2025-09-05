@@ -31,11 +31,11 @@ export default function GymsPage() {
     const stars = [];
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
+      stars.push(<Star key={i} className="w-4 h-4 fill-cyan-400 text-cyan-400" />);
     }
     
     if (hasHalfStar) {
-      stars.push(<Star key="half" className="w-4 h-4 fill-yellow-400/50 text-yellow-400" />);
+      stars.push(<Star key="half" className="w-4 h-4 fill-cyan-400/50 text-cyan-400" />);
     }
 
     const remainingStars = 5 - Math.ceil(rating);

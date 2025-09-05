@@ -51,7 +51,7 @@ const mealTypeData = {
 const macroColors = {
   protein: "text-red-500",
   carbs: "text-blue-500", 
-  fat: "text-yellow-500",
+  fat: "text-orange-400",
   fiber: "text-green-500"
 };
 
@@ -577,7 +577,7 @@ export default function MealsPage() {
                           <p className="text-xs text-muted-foreground">carbs</p>
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-yellow-500">{Math.round(meal.fat || 0)}g</p>
+                          <p className="text-sm font-bold text-orange-400">{Math.round(meal.fat || 0)}g</p>
                           <p className="text-xs text-muted-foreground">fat</p>
                         </div>
                       </div>
