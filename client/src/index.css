@@ -177,11 +177,24 @@ header {
 .dropdown-menu-content,
 .popover-content,
 [data-radix-select-content],
-[data-radix-dropdown-menu-content] {
-  background-color: hsl(var(--background)) !important;
+[data-radix-dropdown-menu-content],
+[data-radix-select-viewport] {
+  background-color: hsl(var(--card)) !important;
   backdrop-filter: none !important;
   border: 1px solid hsl(var(--border)) !important;
   box-shadow: 0 4px 16px hsl(var(--foreground) / 0.1) !important;
+  opacity: 1 !important;
+}
+
+/* Ensure select content has solid background */
+[data-radix-select-content] {
+  background: hsl(var(--card)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+}
+
+/* Force all Radix select elements to be opaque */
+[data-radix-select-content] * {
+  background-color: inherit !important;
 }
 
 /* Make bottom navigation bigger */
