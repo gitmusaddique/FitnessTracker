@@ -396,16 +396,6 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Floating Action Button */}
-      <Button
-        className="fixed bottom-20 right-4 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-shadow z-40"
-        asChild
-        data-testid="button-floating-add"
-      >
-        <Link href="/workouts">
-          <Plus className="w-6 h-6" />
-        </Link>
-      </Button>
     </div>
   );
 }
