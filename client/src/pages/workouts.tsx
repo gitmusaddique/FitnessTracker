@@ -218,7 +218,15 @@ export default function WorkoutsPage() {
   }
 
   return (
-    <div className="p-4 pb-20 max-w-md mx-auto">
+    <div 
+      className="p-4 pb-20 max-w-md mx-auto"
+      style={{ 
+        minHeight: '100vh', 
+        paddingBottom: '100px',
+        position: 'relative',
+        overflow: 'visible'
+      }}
+    >
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">Workouts</h2>
         <Button

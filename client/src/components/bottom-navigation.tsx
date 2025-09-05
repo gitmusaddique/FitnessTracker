@@ -25,7 +25,11 @@ export default function BottomNavigation() {
         backgroundColor: 'var(--card)',
         backdropFilter: 'blur(16px)',
         borderTop: '1px solid var(--border)',
-        boxShadow: '0 -4px 20px rgba(0,0,0,0.1)'
+        boxShadow: '0 -4px 20px rgba(0,0,0,0.1)',
+        WebkitTransform: 'translateX(-50%)',
+        WebkitPosition: 'fixed',
+        contain: 'layout size style',
+        willChange: 'auto'
       }}
     >
       <div className="flex items-center justify-around py-3 px-2">

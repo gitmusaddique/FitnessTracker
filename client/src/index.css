@@ -187,3 +187,35 @@
   transform: translateY(-2px);
   transition: transform 0.2s ease;
 }
+
+/* Mobile-specific fixes for navigation */
+@media screen and (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  body {
+    padding-bottom: 80px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Ensure navigation stays fixed on all mobile devices */
+  nav[style*="position: fixed"] {
+    position: fixed !important;
+    bottom: 0px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    -webkit-transform: translateX(-50%) !important;
+    z-index: 999999 !important;
+    width: 100% !important;
+    max-width: 448px !important;
+  }
+  
+  /* Prevent any scrolling interference */
+  .p-4.pb-20 {
+    padding-bottom: 100px !important;
+  }
+}
