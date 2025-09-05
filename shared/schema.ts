@@ -269,11 +269,19 @@ export const insertUserSchema = createInsertSchema(users).omit({
 export const insertWorkoutSchema = createInsertSchema(workouts).omit({
   id: true,
   date: true,
+}).extend({
+  name: z.string().min(1, "Workout name is required"),
+  type: z.string().min(1, "Workout type is required"),
+  duration: z.number().min(1, "Duration must be at least 1 minute"),
 });
 
 export const insertMealSchema = createInsertSchema(meals).omit({
   id: true,
   date: true,
+}).extend({
+  name: z.string().min(1, "Meal name is required"),
+  mealType: z.string().min(1, "Meal type is required"),
+  calories: z.number().min(1, "Calories must be greater than 0"),
 });
 
 export const insertExerciseSchema = createInsertSchema(exercises).omit({
