@@ -25,11 +25,11 @@ Preferred communication style: Simple, everyday language.
 - **Error handling** with centralized error middleware
 
 ## Database Design
-- **PostgreSQL** database with Drizzle ORM for type-safe database operations
-- **Neon Database** as the hosted PostgreSQL solution
+- **SQLite3** database with Drizzle ORM for type-safe database operations
+- **Local SQLite file** for data persistence without external dependencies
 - **Schema-first approach** with Zod validation for runtime type checking
 - **Database tables**: users, workouts, meals, trainers, gyms, bookings
-- **UUID primary keys** with foreign key relationships for data integrity
+- **Text-based primary keys** with foreign key relationships for data integrity
 
 ## Authentication & Authorization
 - **JWT token-based authentication** stored in localStorage
@@ -57,8 +57,8 @@ Preferred communication style: Simple, everyday language.
 - **Express.js** - Backend web framework
 
 ## Database & ORM
-- **Neon Database (@neondatabase/serverless)** - Hosted PostgreSQL database
-- **Drizzle ORM** - Type-safe database toolkit with PostgreSQL dialect
+- **SQLite3 (better-sqlite3)** - Local embedded database
+- **Drizzle ORM** - Type-safe database toolkit with SQLite dialect
 - **Drizzle-kit** - Database migration and schema management tool
 
 ## UI & Styling
@@ -70,7 +70,6 @@ Preferred communication style: Simple, everyday language.
 ## Authentication & Security
 - **JWT (jsonwebtoken)** - Token-based authentication
 - **bcryptjs** - Password hashing and comparison
-- **connect-pg-simple** - PostgreSQL session store (if using sessions)
 
 ## Data Management
 - **TanStack Query** - Server state management and data fetching
