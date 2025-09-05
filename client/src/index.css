@@ -205,4 +205,22 @@ div nav[class*="fixed"][class*="bottom-0"] {
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 99999 !important;
+  pointer-events: auto !important;
+  will-change: auto !important;
+}
+
+/* Prevent any transform or animation from affecting navigation */
+nav[class*="fixed"][class*="bottom-0"] * {
+  pointer-events: auto !important;
+}
+
+/* Ensure workout cards don't affect navigation positioning */
+.workout-card {
+  contain: layout style !important;
+}
+
+.workout-card:hover {
+  transform: translateY(-2px) !important;
+  transition: transform 0.2s ease !important;
+  contain: layout style !important;
 }
