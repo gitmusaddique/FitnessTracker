@@ -328,11 +328,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Serve uploaded files
-  app.use('/uploads', (req, res, next) => {
-    res.header('Cross-Origin-Resource-Policy', 'cross-origin');
-    next();
-  }, express.static('uploads'));
 
   const httpServer = createServer(app);
   return httpServer;
