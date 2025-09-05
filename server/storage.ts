@@ -73,6 +73,7 @@ export class MemStorage implements IStorage {
     const trainersData: InsertTrainer[] = [
       {
         name: "Mike Johnson",
+        email: "mike.johnson@email.com",
         specialty: "Strength Training",
         bio: "Certified personal trainer with 8+ years of experience in strength training and muscle building.",
         price: 6000, // $60
@@ -80,10 +81,15 @@ export class MemStorage implements IStorage {
         reviewCount: 127,
         photoUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
         location: "Downtown Fitness",
-        contact: "mike.johnson@email.com"
+        contact: "mike.johnson@email.com",
+        isVerified: 1,
+        experience: 8,
+        certifications: "NASM, ACE",
+        isActive: 1
       },
       {
         name: "Sarah Wilson",
+        email: "sarah.wilson@email.com",
         specialty: "Yoga & Flexibility",
         bio: "Certified yoga instructor specializing in flexibility, mindfulness, and stress relief techniques.",
         price: 4500, // $45
@@ -91,13 +97,31 @@ export class MemStorage implements IStorage {
         reviewCount: 89,
         photoUrl: "https://images.unsplash.com/photo-1594824181247-7b5297ae5b89?w=400&h=400&fit=crop",
         location: "Zen Studio",
-        contact: "sarah.wilson@email.com"
+        contact: "sarah.wilson@email.com",
+        isVerified: 1,
+        experience: 5,
+        certifications: "RYT-500, Yin Yoga",
+        isActive: 1
       }
     ];
 
     trainersData.forEach(trainer => {
       const id = randomUUID();
-      this.trainers.set(id, { ...trainer, id });
+      this.trainers.set(id, { 
+        ...trainer, 
+        id,
+        bio: trainer.bio ?? null,
+        experience: trainer.experience ?? null,
+        certifications: trainer.certifications ?? null,
+        rating: trainer.rating ?? null,
+        reviewCount: trainer.reviewCount ?? null,
+        photoUrl: trainer.photoUrl ?? null,
+        location: trainer.location ?? null,
+        contact: trainer.contact ?? null,
+        availability: trainer.availability ?? null,
+        isVerified: trainer.isVerified ?? null,
+        isActive: trainer.isActive ?? null
+      });
     });
 
     // Seed gyms
@@ -112,7 +136,10 @@ export class MemStorage implements IStorage {
         photoUrl: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=300&fit=crop",
         amenities: JSON.stringify(["Cardio Equipment", "Free Weights", "Group Classes", "Locker Rooms"]),
         hours: "Open 24/7",
-        distance: 1.2
+        distance: 1.2,
+        email: "info@fitzone.com",
+        phone: "+1234567890",
+        website: "https://fitzone.com"
       },
       {
         name: "Elite Fitness Club",
@@ -124,13 +151,32 @@ export class MemStorage implements IStorage {
         photoUrl: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800&h=300&fit=crop",
         amenities: JSON.stringify(["Premium Equipment", "Personal Training", "Swimming Pool", "Sauna", "Juice Bar"]),
         hours: "6 AM - 11 PM",
-        distance: 2.1
+        distance: 2.1,
+        email: "contact@elitefit.com",
+        phone: "+1234567891",
+        website: "https://elitefit.com"
       }
     ];
 
     gymsData.forEach(gym => {
       const id = randomUUID();
-      this.gyms.set(id, { ...gym, id });
+      this.gyms.set(id, { 
+        ...gym, 
+        id,
+        email: gym.email ?? null,
+        phone: gym.phone ?? null,
+        website: gym.website ?? null,
+        rating: gym.rating ?? null,
+        reviewCount: gym.reviewCount ?? null,
+        photoUrl: gym.photoUrl ?? null,
+        amenities: gym.amenities,
+        hours: gym.hours,
+        coordinates: gym.coordinates ?? null,
+        hasPool: gym.hasPool ?? 0,
+        hasSauna: gym.hasSauna ?? 0,
+        hasClasses: gym.hasClasses ?? 0,
+        hasPT: gym.hasPT ?? 0
+      });
     });
   }
 
@@ -148,7 +194,22 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id, 
-      createdAt: new Date()
+      createdAt: new Date(),
+      height: insertUser.height ?? null,
+      avatar: insertUser.avatar ?? null,
+      age: insertUser.age ?? null,
+      weight: insertUser.weight ?? null,
+      gender: insertUser.gender ?? null,
+      activityLevel: insertUser.activityLevel ?? null,
+      fitnessGoal: insertUser.fitnessGoal ?? null,
+      targetWeight: insertUser.targetWeight ?? null,
+      dailyCalorieGoal: insertUser.dailyCalorieGoal ?? 2000,
+      workoutStreak: insertUser.workoutStreak ?? 0,
+      totalWorkouts: insertUser.totalWorkouts ?? 0,
+      level: insertUser.level ?? 1,
+      xp: insertUser.xp ?? 0,
+      isVerified: insertUser.isVerified ?? 0,
+      isPremium: insertUser.isPremium ?? 0
     };
     this.users.set(id, user);
     return user;
@@ -166,7 +227,20 @@ export class MemStorage implements IStorage {
     const workout: Workout = {
       ...insertWorkout,
       id,
-      date: new Date()
+      date: new Date(),
+      visibility: insertWorkout.visibility ?? null,
+      location: insertWorkout.location ?? null,
+      distance: insertWorkout.distance ?? null,
+      category: insertWorkout.category ?? null,
+      calories: insertWorkout.calories ?? null,
+      intensity: insertWorkout.intensity ?? null,
+      exercises: insertWorkout.exercises ?? null,
+      personalRecord: insertWorkout.personalRecord ?? 0,
+      notes: insertWorkout.notes ?? null,
+      mood: insertWorkout.mood ?? null,
+      difficulty: insertWorkout.difficulty ?? null,
+      muscleGroups: insertWorkout.muscleGroups ?? null,
+      equipment: insertWorkout.equipment ?? null
     };
     this.workouts.set(id, workout);
     return workout;
@@ -192,7 +266,18 @@ export class MemStorage implements IStorage {
     const meal: Meal = {
       ...insertMeal,
       id,
-      date: new Date()
+      date: new Date(),
+      visibility: insertMeal.visibility ?? null,
+      rating: insertMeal.rating ?? null,
+      photoUrl: insertMeal.photoUrl ?? null,
+      notes: insertMeal.notes ?? null,
+      protein: insertMeal.protein ?? null,
+      carbs: insertMeal.carbs ?? null,
+      fat: insertMeal.fat ?? null,
+      fiber: insertMeal.fiber ?? null,
+      sugar: insertMeal.sugar ?? null,
+      sodium: insertMeal.sodium ?? null,
+      foods: insertMeal.foods ?? null
     };
     this.meals.set(id, meal);
     return meal;
@@ -254,7 +339,13 @@ export class MemStorage implements IStorage {
     const booking: Booking = {
       ...insertBooking,
       id,
-      createdAt: new Date()
+      createdAt: new Date(),
+      duration: insertBooking.duration ?? null,
+      status: insertBooking.status ?? "pending",
+      price: insertBooking.price ?? null,
+      rating: insertBooking.rating ?? null,
+      notes: insertBooking.notes ?? null,
+      review: insertBooking.review ?? null
     };
     this.bookings.set(id, booking);
     return booking;

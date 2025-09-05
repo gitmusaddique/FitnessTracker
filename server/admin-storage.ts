@@ -92,7 +92,20 @@ export class AdminStorage {
 
   async createTrainer(trainer: InsertTrainer): Promise<Trainer> {
     const id = crypto.randomUUID();
-    const newTrainer: Trainer = { ...trainer, id };
+    const newTrainer: Trainer = { 
+      ...trainer, 
+      id,
+      isVerified: trainer.isVerified ?? null,
+      experience: trainer.experience ?? null,
+      certifications: trainer.certifications ?? null,
+      isActive: trainer.isActive ?? null,
+      rating: trainer.rating ?? null,
+      reviewCount: trainer.reviewCount ?? null,
+      photoUrl: trainer.photoUrl ?? null,
+      location: trainer.location ?? null,
+      contact: trainer.contact ?? null,
+      availability: trainer.availability ?? null
+    };
     (storage as any).trainers.set(id, newTrainer);
     return newTrainer;
   }
@@ -118,7 +131,23 @@ export class AdminStorage {
 
   async createGym(gym: InsertGym): Promise<Gym> {
     const id = crypto.randomUUID();
-    const newGym: Gym = { ...gym, id };
+    const newGym: Gym = { 
+      ...gym, 
+      id,
+      phone: gym.phone ?? null,
+      email: gym.email ?? null,
+      website: gym.website ?? null,
+      rating: gym.rating ?? null,
+      reviewCount: gym.reviewCount ?? null,
+      photoUrl: gym.photoUrl ?? null,
+      amenities: gym.amenities ?? null,
+      hours: gym.hours ?? null,
+      coordinates: gym.coordinates ?? null,
+      hasPool: gym.hasPool ?? 0,
+      hasSauna: gym.hasSauna ?? 0,
+      hasClasses: gym.hasClasses ?? 0,
+      hasPT: gym.hasPT ?? 0
+    };
     (storage as any).gyms.set(id, newGym);
     return newGym;
   }
