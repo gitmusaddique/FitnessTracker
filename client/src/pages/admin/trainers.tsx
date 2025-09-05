@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import AdminLayout from "@/components/admin-layout";
 import { useAdminAuth, adminApiRequest } from "@/lib/admin-auth";
 import { AdminLogin } from "../admin";
 import { Link } from "wouter";
@@ -13,13 +12,14 @@ import type { Trainer } from "@shared/schema";
 import { useState } from "react";
 import { 
   Search,
-  Filter,
   Star,
   Users,
   Plus,
   Edit,
   Trash2,
-  MapPin
+  MapPin,
+  ArrowLeft,
+  ChevronRight
 } from "lucide-react";
 
 function TrainersManagement() {
@@ -51,6 +51,21 @@ function TrainersManagement() {
     }
   });
 
+  const handleDeleteTrainer = (trainer: Trainer) => {
+    const confirmMessage = `Are you sure you want to delete trainer "${trainer.name}"?\n\nThis action cannot be undone and will:\n• Remove the trainer from the system\n• Cancel any active bookings\n• Delete all trainer data\n\nType "DELETE" to confirm this action.`;
+    
+    const userInput = window.prompt(confirmMessage);
+    if (userInput === "DELETE") {
+      deleteTrainerMutation.mutate(trainer.id);
+    } else if (userInput !== null) {
+      toast({
+        variant: "destructive",
+        title: "Deletion cancelled",
+        description: "You must type 'DELETE' to confirm this action"
+      });
+    }
+  };
+
   const filteredTrainers = trainers.filter(trainer =>
     trainer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     trainer.specialty.toLowerCase().includes(searchQuery.toLowerCase())
@@ -61,150 +76,169 @@ function TrainersManagement() {
   };
 
   return (
-    <AdminLayout title="Manage Trainers" showBackButton>
-      <div className="p-4 space-y-6">
-        {/* Header Actions */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Trainers</h2>
-          <Link href="/admin/trainers/add">
-            <Button data-testid="button-add-trainer">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Trainer
+    <div className="p-4 pb-20 pt-16 max-w-md mx-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-3">
+          <Link href="/admin">
+            <Button variant="ghost" size="icon" data-testid="button-back">
+              <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
+          <h2 className="text-2xl font-bold">Trainers</h2>
         </div>
+        <Link href="/admin/trainers/add">
+          <Button size="sm" data-testid="button-add-trainer">
+            <Plus className="w-4 h-4 mr-2" />
+            Add
+          </Button>
+        </Link>
+      </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search trainers..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-            data-testid="input-search-trainers"
-          />
+      {/* Search */}
+      <div className="relative mb-6">
+        <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+        <Input
+          placeholder="Search trainers..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10"
+          data-testid="input-search-trainers"
+        />
+      </div>
+
+      {/* Loading */}
+      {isLoading && (
+        <div className="text-center py-8">
+          <div className="text-muted-foreground">Loading trainers...</div>
         </div>
+      )}
 
-        {/* Trainers List */}
-        <div className="space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <Card key={i} className="animate-pulse">
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-16 h-16 bg-muted rounded-full" />
-                      <div className="flex-1">
-                        <div className="w-32 h-5 bg-muted rounded mb-2" />
-                        <div className="w-24 h-4 bg-muted rounded" />
-                      </div>
+      {/* Trainers List */}
+      <div className="space-y-4">
+        {filteredTrainers.map((trainer) => (
+          <Card key={trainer.id} className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="flex">
+                {trainer.photoUrl ? (
+                  <img
+                    src={trainer.photoUrl}
+                    alt={trainer.name}
+                    className="w-24 h-24 object-cover"
+                  />
+                ) : (
+                  <div className="w-24 h-24 bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                )}
+                <div className="flex-1 p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h3 className="font-semibold text-lg leading-tight">{trainer.name}</h3>
+                      <p className="text-sm text-muted-foreground">{trainer.specialty}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : filteredTrainers.length === 0 ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No trainers found</h3>
-                <p className="text-muted-foreground mb-4">
-                  {searchQuery ? "Try adjusting your search terms." : "Get started by adding your first trainer."}
-                </p>
-                <Link href="/admin/trainers/add">
-                  <Button>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add First Trainer
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredTrainers.map((trainer) => (
-              <Card key={trainer.id} data-testid={`trainer-card-${trainer.id}`}>
-                <CardContent className="p-4">
-                  <div className="flex items-start space-x-4">
-                    {trainer.photoUrl ? (
-                      <img
-                        src={trainer.photoUrl}
-                        alt={trainer.name}
-                        className="w-16 h-16 rounded-full object-cover"
-                        data-testid={`trainer-photo-${trainer.id}`}
-                      />
-                    ) : (
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center">
-                        <Users className="w-8 h-8 text-white" />
-                      </div>
-                    )}
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="font-semibold text-lg" data-testid={`trainer-name-${trainer.id}`}>
-                            {trainer.name}
-                          </h3>
-                          <p className="text-sm text-muted-foreground mb-1">
-                            {trainer.specialty}
-                          </p>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            {trainer.email}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-semibold">
-                            {formatPrice(trainer.price)}/hr
-                          </div>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Star className="w-3 h-3 mr-1" />
-                            {trainer.rating} ({trainer.reviewCount})
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex items-center space-x-2">
-                          <Badge variant={trainer.isActive ? "default" : "secondary"}>
-                            {trainer.isActive ? "Active" : "Inactive"}
-                          </Badge>
-                          {trainer.isVerified && (
-                            <Badge variant="outline">Verified</Badge>
-                          )}
-                          {trainer.location && (
-                            <div className="flex items-center text-xs text-muted-foreground">
-                              <MapPin className="w-3 h-3 mr-1" />
-                              {trainer.location}
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div className="flex space-x-2">
-                          <Link href={`/admin/trainers/edit/${trainer.id}`}>
-                            <Button variant="outline" size="sm" data-testid={`button-edit-trainer-${trainer.id}`}>
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                          </Link>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => deleteTrainerMutation.mutate(trainer.id)}
-                            disabled={deleteTrainerMutation.isPending}
-                            data-testid={`button-delete-trainer-${trainer.id}`}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
+                    <div className="flex space-x-2">
+                      <Link href={`/admin/trainers/edit/${trainer.id}`}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-3"
+                          data-testid={`button-edit-trainer-${trainer.id}`}
+                        >
+                          <Edit className="w-3 h-3 mr-1" />
+                          Edit
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="h-8 px-3"
+                        onClick={() => handleDeleteTrainer(trainer)}
+                        disabled={deleteTrainerMutation.isPending}
+                        data-testid={`button-delete-trainer-${trainer.id}`}
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Delete
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))
+                  
+                  <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex items-center">
+                      <Star className="w-4 h-4 text-yellow-400 mr-1 fill-current" />
+                      <span>{trainer.rating || 0}</span>
+                      <span className="text-muted-foreground ml-1">
+                        ({trainer.reviewCount || 0})
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="font-semibold text-primary">{formatPrice(trainer.price)}</span>
+                      <span className="text-muted-foreground ml-1">/hr</span>
+                    </div>
+                  </div>
+                  
+                  {trainer.location && (
+                    <div className="flex items-center mt-2 text-sm text-muted-foreground">
+                      <MapPin className="w-4 h-4 mr-1" />
+                      <span>{trainer.location}</span>
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex space-x-2">
+                      <Badge variant={trainer.isActive ? "default" : "secondary"} className="text-xs">
+                        {trainer.isActive ? "Active" : "Inactive"}
+                      </Badge>
+                      {trainer.isVerified && (
+                        <Badge variant="outline" className="text-xs">
+                          Verified
+                        </Badge>
+                      )}
+                    </div>
+                    {trainer.experience && (
+                      <span className="text-xs text-muted-foreground">
+                        {trainer.experience}y exp
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {!isLoading && filteredTrainers.length === 0 && (
+        <div className="text-center py-12">
+          <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold mb-2">
+            {searchQuery ? "No trainers found" : "No trainers yet"}
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            {searchQuery 
+              ? "Try adjusting your search terms"
+              : "Add your first trainer to get started"
+            }
+          </p>
+          {!searchQuery && (
+            <Link href="/admin/trainers/add">
+              <Button data-testid="button-add-first-trainer">
+                <Plus className="w-4 h-4 mr-2" />
+                Add First Trainer
+              </Button>
+            </Link>
           )}
         </div>
-      </div>
-    </AdminLayout>
+      )}
+
+      {/* Total Count */}
+      {trainers.length > 0 && (
+        <div className="text-center mt-6 text-sm text-muted-foreground">
+          {filteredTrainers.length} of {trainers.length} trainers
+        </div>
+      )}
+    </div>
   );
 }
 

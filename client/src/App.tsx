@@ -18,6 +18,7 @@ import TrainersPage from "@/pages/trainers";
 import GymsPage from "@/pages/gyms";
 import ProfilePage from "@/pages/profile";
 import AdminPage from "@/pages/admin";
+import AdminUsersPage from "@/pages/admin/users";
 import AdminTrainersPage from "@/pages/admin/trainers";
 import AdminAddTrainerPage from "@/pages/admin/add-trainer";
 import AdminEditTrainerPage from "@/pages/admin/edit-trainer";
@@ -115,6 +116,7 @@ function Router() {
       
       {/* Admin routes - accessible via URL only */}
       <Route path="/admin" component={AdminPage} />
+      <Route path="/admin/users" component={AdminUsersPage} />
       <Route path="/admin/trainers" component={AdminTrainersPage} />
       <Route path="/admin/trainers/add" component={AdminAddTrainerPage} />
       <Route path="/admin/trainers/edit/:id" component={AdminEditTrainerPage} />

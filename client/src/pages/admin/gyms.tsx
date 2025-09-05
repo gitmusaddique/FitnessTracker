@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import AdminLayout from "@/components/admin-layout";
 import { useAdminAuth, adminApiRequest } from "@/lib/admin-auth";
 import { AdminLogin } from "../admin";
 import { Link } from "wouter";
@@ -18,7 +17,9 @@ import {
   Plus,
   Edit,
   Trash2,
-  Building
+  Building,
+  ArrowLeft,
+  Clock
 } from "lucide-react";
 
 function GymsManagement() {
@@ -50,6 +51,21 @@ function GymsManagement() {
     }
   });
 
+  const handleDeleteGym = (gym: Gym) => {
+    const confirmMessage = `Are you sure you want to delete gym "${gym.name}"?\n\nThis action cannot be undone and will:\n• Remove the gym from the system\n• Cancel any active memberships\n• Delete all gym data\n\nType "DELETE" to confirm this action.`;
+    
+    const userInput = window.prompt(confirmMessage);
+    if (userInput === "DELETE") {
+      deleteGymMutation.mutate(gym.id);
+    } else if (userInput !== null) {
+      toast({
+        variant: "destructive",
+        title: "Deletion cancelled",
+        description: "You must type 'DELETE' to confirm this action"
+      });
+    }
+  };
+
   const filteredGyms = gyms.filter(gym =>
     gym.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     gym.location.toLowerCase().includes(searchQuery.toLowerCase())
@@ -60,143 +76,180 @@ function GymsManagement() {
   };
 
   return (
-    <AdminLayout title="Manage Gyms" showBackButton>
-      <div className="p-4 space-y-6">
-        {/* Header Actions */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Gyms</h2>
-          <Link href="/admin/gyms/add">
-            <Button data-testid="button-add-gym">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Gym
+    <div className="p-4 pb-20 pt-16 max-w-md mx-auto">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-3">
+          <Link href="/admin">
+            <Button variant="ghost" size="icon" data-testid="button-back">
+              <ArrowLeft className="w-5 h-5" />
             </Button>
           </Link>
+          <h2 className="text-2xl font-bold">Gyms</h2>
         </div>
+        <Link href="/admin/gyms/add">
+          <Button size="sm" data-testid="button-add-gym">
+            <Plus className="w-4 h-4 mr-2" />
+            Add
+          </Button>
+        </Link>
+      </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search gyms..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-            data-testid="input-search-gyms"
-          />
+      {/* Search */}
+      <div className="relative mb-6">
+        <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+        <Input
+          placeholder="Search gyms..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10"
+          data-testid="input-search-gyms"
+        />
+      </div>
+
+      {/* Loading */}
+      {isLoading && (
+        <div className="text-center py-8">
+          <div className="text-muted-foreground">Loading gyms...</div>
         </div>
+      )}
 
-        {/* Gyms List */}
-        <div className="space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[...Array(3)].map((_, i) => (
-                <Card key={i} className="animate-pulse">
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-16 h-16 bg-muted rounded-lg" />
-                      <div className="flex-1">
-                        <div className="w-32 h-5 bg-muted rounded mb-2" />
-                        <div className="w-24 h-4 bg-muted rounded" />
-                      </div>
+      {/* Gyms List */}
+      <div className="space-y-4">
+        {filteredGyms.map((gym) => (
+          <Card key={gym.id} className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="flex">
+                {gym.photoUrl ? (
+                  <img
+                    src={gym.photoUrl}
+                    alt={gym.name}
+                    className="w-24 h-24 object-cover"
+                  />
+                ) : (
+                  <div className="w-24 h-24 bg-gradient-to-r from-primary to-accent flex items-center justify-center">
+                    <Building className="w-8 h-8 text-white" />
+                  </div>
+                )}
+                <div className="flex-1 p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h3 className="font-semibold text-lg leading-tight">{gym.name}</h3>
+                      <p className="text-sm text-muted-foreground">{gym.location}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : filteredGyms.length === 0 ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Building className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No gyms found</h3>
-                <p className="text-muted-foreground mb-4">
-                  {searchQuery ? "Try adjusting your search terms." : "Get started by adding your first gym."}
-                </p>
-                <Link href="/admin/gyms/add">
-                  <Button>
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add First Gym
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredGyms.map((gym) => (
-              <Card key={gym.id} data-testid={`gym-card-${gym.id}`}>
-                <CardContent className="p-4">
-                  <div className="flex items-start space-x-4">
-                    {gym.photoUrl ? (
-                      <img
-                        src={gym.photoUrl}
-                        alt={gym.name}
-                        className="w-16 h-16 rounded-lg object-cover"
-                        data-testid={`gym-photo-${gym.id}`}
-                      />
-                    ) : (
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
-                        <Building className="w-8 h-8 text-white" />
-                      </div>
-                    )}
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="font-semibold text-lg" data-testid={`gym-name-${gym.id}`}>
-                            {gym.name}
-                          </h3>
-                          <p className="text-sm text-muted-foreground mb-1">
-                            {gym.address}
-                          </p>
-                          <div className="flex items-center text-sm text-muted-foreground mb-2">
-                            <MapPin className="w-3 h-3 mr-1" />
-                            {gym.location} • {gym.distance}km away
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-semibold">
-                            {formatPrice(gym.price)}/month
-                          </div>
-                          <div className="flex items-center text-sm text-muted-foreground">
-                            <Star className="w-3 h-3 mr-1" />
-                            {gym.rating} ({gym.reviewCount})
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-center justify-between mt-3">
-                        <div className="flex flex-wrap gap-1">
-                          {gym.hasPool && <Badge variant="outline">Pool</Badge>}
-                          {gym.hasSauna && <Badge variant="outline">Sauna</Badge>}
-                          {gym.hasClasses && <Badge variant="outline">Classes</Badge>}
-                          {gym.hasPT && <Badge variant="outline">PT</Badge>}
-                        </div>
-                        
-                        <div className="flex space-x-2">
-                          <Link href={`/admin/gyms/edit/${gym.id}`}>
-                            <Button variant="outline" size="sm" data-testid={`button-edit-gym-${gym.id}`}>
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                          </Link>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => deleteGymMutation.mutate(gym.id)}
-                            disabled={deleteGymMutation.isPending}
-                            data-testid={`button-delete-gym-${gym.id}`}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
+                    <div className="flex space-x-2">
+                      <Link href={`/admin/gyms/edit/${gym.id}`}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-8 px-3"
+                          data-testid={`button-edit-gym-${gym.id}`}
+                        >
+                          <Edit className="w-3 h-3 mr-1" />
+                          Edit
+                        </Button>
+                      </Link>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="h-8 px-3"
+                        onClick={() => handleDeleteGym(gym)}
+                        disabled={deleteGymMutation.isPending}
+                        data-testid={`button-delete-gym-${gym.id}`}
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Delete
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))
+                  
+                  <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex items-center">
+                      <Star className="w-4 h-4 text-yellow-400 mr-1 fill-current" />
+                      <span>{gym.rating || 0}</span>
+                      <span className="text-muted-foreground ml-1">
+                        ({gym.reviewCount || 0})
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="font-semibold text-primary">{formatPrice(gym.price)}</span>
+                      <span className="text-muted-foreground ml-1">/mo</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between mt-2 text-sm text-muted-foreground">
+                    {gym.address && (
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        <span className="truncate">{gym.address}</span>
+                      </div>
+                    )}
+                    {gym.distance && (
+                      <span className="text-xs">{gym.distance}km away</span>
+                    )}
+                  </div>
+                  
+                  {gym.hours && (
+                    <div className="flex items-center mt-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4 mr-1" />
+                      <span>{gym.hours}</span>
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex flex-wrap gap-1">
+                      {gym.hasPool && (
+                        <Badge variant="outline" className="text-xs">Pool</Badge>
+                      )}
+                      {gym.hasSauna && (
+                        <Badge variant="outline" className="text-xs">Sauna</Badge>
+                      )}
+                      {gym.hasClasses && (
+                        <Badge variant="outline" className="text-xs">Classes</Badge>
+                      )}
+                      {gym.hasPT && (
+                        <Badge variant="outline" className="text-xs">PT</Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Empty State */}
+      {!isLoading && filteredGyms.length === 0 && (
+        <div className="text-center py-12">
+          <Building className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-semibold mb-2">
+            {searchQuery ? "No gyms found" : "No gyms yet"}
+          </h3>
+          <p className="text-muted-foreground mb-6">
+            {searchQuery 
+              ? "Try adjusting your search terms"
+              : "Add your first gym to get started"
+            }
+          </p>
+          {!searchQuery && (
+            <Link href="/admin/gyms/add">
+              <Button data-testid="button-add-first-gym">
+                <Plus className="w-4 h-4 mr-2" />
+                Add First Gym
+              </Button>
+            </Link>
           )}
         </div>
-      </div>
-    </AdminLayout>
+      )}
+
+      {/* Total Count */}
+      {gyms.length > 0 && (
+        <div className="text-center mt-6 text-sm text-muted-foreground">
+          {filteredGyms.length} of {gyms.length} gyms
+        </div>
+      )}
+    </div>
   );
 }
 

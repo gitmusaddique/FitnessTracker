@@ -136,7 +136,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-4 pb-20 max-w-md mx-auto">
+    <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       {/* Header */}
       <div className="mb-6">
         <h1 className="md-headline-medium mb-2" data-testid="text-welcome">

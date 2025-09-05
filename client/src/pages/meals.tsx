@@ -201,7 +201,7 @@ export default function MealsPage() {
 
   if (showAddForm) {
     return (
-      <div className="p-4 pb-20 max-w-md mx-auto">
+      <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold">Log Meal</h2>
           <Button
@@ -348,21 +348,32 @@ export default function MealsPage() {
             />
           </div>
 
-          <Button
-            type="submit"
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-            disabled={createMealMutation.isPending}
-            data-testid="button-save-meal"
-          >
-            {createMealMutation.isPending ? "Logging..." : "Log Meal"}
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => setShowAddForm(false)}
+              data-testid="button-cancel-meal"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+              disabled={createMealMutation.isPending}
+              data-testid="button-save-meal"
+            >
+              {createMealMutation.isPending ? "Logging..." : "Log Meal"}
+            </Button>
+          </div>
         </form>
       </div>
     );
   }
 
   return (
-    <div className="p-4 pb-20 max-w-md mx-auto">
+    <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>

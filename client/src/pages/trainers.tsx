@@ -94,7 +94,7 @@ export default function TrainersPage() {
   };
 
   return (
-    <div className="p-4 pb-20 max-w-md mx-auto">
+    <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">Find Trainers</h2>
         <Button variant="ghost" size="icon" data-testid="button-filter">

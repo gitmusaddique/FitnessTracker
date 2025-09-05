@@ -59,7 +59,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="p-4 pb-20 max-w-md mx-auto">
+    <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       {/* Profile Header */}
       <div className="text-center mb-8">
         {user.avatar ? (
