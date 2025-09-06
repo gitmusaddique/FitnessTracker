@@ -101,14 +101,9 @@ export default function AuthPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-background">
       <div className="w-full max-w-sm">
-        {/* Hero Image */}
+        {/* Hero Section */}
         <div className="text-center mb-8">
-          <img
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600"
-            alt="Fitness motivation"
-            className="w-32 h-32 rounded-full mx-auto object-cover shadow-lg"
-          />
-          <h1 className="text-3xl font-bold mt-6 text-foreground">
+          <h1 className="text-3xl font-bold text-foreground">
             FitTracker Pro
           </h1>
           <p className="text-muted-foreground mt-2">Transform your fitness journey</p>
