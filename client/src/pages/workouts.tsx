@@ -227,9 +227,9 @@ export default function WorkoutsPage() {
       name: se.exercise.name,
       sets: se.sets,
       reps: se.reps,
-      weight: se.weight,
-      category: se.exercise.category,
-      bodyPart: se.exercise.bodyPart
+      weight: se.weight || 0,
+      category: se.exercise.category || 'Custom',
+      bodyPart: se.exercise.bodyPart || 'Custom'
     }));
 
     createWorkoutMutation.mutate({
@@ -328,10 +328,10 @@ export default function WorkoutsPage() {
               {selectedExercises.length > 0 && (
                 <div className="space-y-2">
                   {selectedExercises.map((item, index) => (
-                    <div key={item.exercise.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                    <div key={`${item.exercise.id}-${index}`} className="flex items-center gap-2 p-3 border rounded-lg">
                       <div className="flex-1">
                         <p className="font-medium text-sm">{item.exercise.name}</p>
-                        <p className="text-xs text-muted-foreground">{item.exercise.bodyPart} • {item.exercise.difficulty}</p>
+                        <p className="text-xs text-muted-foreground">{item.exercise.bodyPart || 'Custom'} • {item.exercise.difficulty || 'Custom'}</p>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
                         <Input 
