@@ -11,7 +11,10 @@ import {
   insertMealSchema,
   insertBookingSchema,
   insertChallengeSchema,
-  insertAchievementSchema
+  insertAchievementSchema,
+  insertCustomMealTypeSchema,
+  insertCustomWorkoutTypeSchema,
+  insertCustomIntensityLevelSchema
 } from "@shared/schema";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
@@ -406,6 +409,114 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Check achievements error:', error);
       res.status(500).json({ message: "Failed to check achievements" });
+    }
+  });
+
+  // Custom meal types routes
+  app.get("/api/custom-meal-types", authenticateToken, async (req: any, res) => {
+    try {
+      const customTypes = await storage.getUserCustomMealTypes(req.user.id);
+      res.json(customTypes);
+    } catch (error) {
+      console.error('Get custom meal types error:', error);
+      res.status(500).json({ message: "Failed to fetch custom meal types" });
+    }
+  });
+
+  app.post("/api/custom-meal-types", authenticateToken, async (req: any, res) => {
+    try {
+      const customTypeData = insertCustomMealTypeSchema.parse({ ...req.body, userId: req.user.id });
+      const customType = await storage.createCustomMealType(customTypeData);
+      res.json(customType);
+    } catch (error) {
+      console.error('Create custom meal type error:', error);
+      res.status(400).json({ message: "Failed to create custom meal type" });
+    }
+  });
+
+  app.delete("/api/custom-meal-types/:id", authenticateToken, async (req: any, res) => {
+    try {
+      const deleted = await storage.deleteCustomMealType(req.params.id);
+      if (deleted) {
+        res.json({ message: "Custom meal type deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Custom meal type not found" });
+      }
+    } catch (error) {
+      console.error('Delete custom meal type error:', error);
+      res.status(500).json({ message: "Failed to delete custom meal type" });
+    }
+  });
+
+  // Custom workout types routes
+  app.get("/api/custom-workout-types", authenticateToken, async (req: any, res) => {
+    try {
+      const customTypes = await storage.getUserCustomWorkoutTypes(req.user.id);
+      res.json(customTypes);
+    } catch (error) {
+      console.error('Get custom workout types error:', error);
+      res.status(500).json({ message: "Failed to fetch custom workout types" });
+    }
+  });
+
+  app.post("/api/custom-workout-types", authenticateToken, async (req: any, res) => {
+    try {
+      const customTypeData = insertCustomWorkoutTypeSchema.parse({ ...req.body, userId: req.user.id });
+      const customType = await storage.createCustomWorkoutType(customTypeData);
+      res.json(customType);
+    } catch (error) {
+      console.error('Create custom workout type error:', error);
+      res.status(400).json({ message: "Failed to create custom workout type" });
+    }
+  });
+
+  app.delete("/api/custom-workout-types/:id", authenticateToken, async (req: any, res) => {
+    try {
+      const deleted = await storage.deleteCustomWorkoutType(req.params.id);
+      if (deleted) {
+        res.json({ message: "Custom workout type deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Custom workout type not found" });
+      }
+    } catch (error) {
+      console.error('Delete custom workout type error:', error);
+      res.status(500).json({ message: "Failed to delete custom workout type" });
+    }
+  });
+
+  // Custom intensity levels routes
+  app.get("/api/custom-intensity-levels", authenticateToken, async (req: any, res) => {
+    try {
+      const customLevels = await storage.getUserCustomIntensityLevels(req.user.id);
+      res.json(customLevels);
+    } catch (error) {
+      console.error('Get custom intensity levels error:', error);
+      res.status(500).json({ message: "Failed to fetch custom intensity levels" });
+    }
+  });
+
+  app.post("/api/custom-intensity-levels", authenticateToken, async (req: any, res) => {
+    try {
+      const customLevelData = insertCustomIntensityLevelSchema.parse({ ...req.body, userId: req.user.id });
+      const customLevel = await storage.createCustomIntensityLevel(customLevelData);
+      res.json(customLevel);
+    } catch (error) {
+      console.error('Create custom intensity level error:', error);
+      res.status(400).json({ message: "Failed to create custom intensity level" });
+    }
+  });
+
+  app.delete("/api/custom-intensity-levels/:id", authenticateToken, async (req: any, res) => {
+    try {
+      const deleted = await storage.deleteCustomIntensityLevel(req.params.id);
+      if (deleted) {
+        res.json({ message: "Custom intensity level deleted successfully" });
+      } else {
+        res.status(404).json({ message: "Custom intensity level not found" });
+      }
+    } catch (error) {
+      console.error('Delete custom intensity level error:', error);
+      res.status(500).json({ message: "Failed to delete custom intensity level" });
     }
   });
 

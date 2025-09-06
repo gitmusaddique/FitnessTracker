@@ -17,7 +17,13 @@ import {
   type InsertChallenge,
   type UserChallenge,
   type Achievement,
-  type InsertAchievement
+  type InsertAchievement,
+  type CustomMealType,
+  type InsertCustomMealType,
+  type CustomWorkoutType,
+  type InsertCustomWorkoutType,
+  type CustomIntensityLevel,
+  type InsertCustomIntensityLevel
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -75,6 +81,19 @@ export interface IStorage {
   // Food methods
   getAllFoods(): Promise<Food[]>;
   getFood(id: string): Promise<Food | undefined>;
+  
+  // Custom type methods
+  getUserCustomMealTypes(userId: string): Promise<CustomMealType[]>;
+  createCustomMealType(customType: InsertCustomMealType): Promise<CustomMealType>;
+  deleteCustomMealType(id: string): Promise<boolean>;
+  
+  getUserCustomWorkoutTypes(userId: string): Promise<CustomWorkoutType[]>;
+  createCustomWorkoutType(customType: InsertCustomWorkoutType): Promise<CustomWorkoutType>;
+  deleteCustomWorkoutType(id: string): Promise<boolean>;
+  
+  getUserCustomIntensityLevels(userId: string): Promise<CustomIntensityLevel[]>;
+  createCustomIntensityLevel(customLevel: InsertCustomIntensityLevel): Promise<CustomIntensityLevel>;
+  deleteCustomIntensityLevel(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -87,6 +106,9 @@ export class MemStorage implements IStorage {
   private challenges: Map<string, Challenge>;
   private userChallenges: Map<string, UserChallenge>;
   private achievements: Map<string, Achievement>;
+  private customMealTypes: Map<string, CustomMealType>;
+  private customWorkoutTypes: Map<string, CustomWorkoutType>;
+  private customIntensityLevels: Map<string, CustomIntensityLevel>;
 
   constructor() {
     this.users = new Map();
@@ -98,6 +120,9 @@ export class MemStorage implements IStorage {
     this.challenges = new Map();
     this.userChallenges = new Map();
     this.achievements = new Map();
+    this.customMealTypes = new Map();
+    this.customWorkoutTypes = new Map();
+    this.customIntensityLevels = new Map();
     
     this.seedData();
   }
@@ -468,6 +493,66 @@ export class MemStorage implements IStorage {
 
   async getFood(id: string): Promise<Food | undefined> {
     return undefined;
+  }
+
+  // Custom meal type methods
+  async getUserCustomMealTypes(userId: string): Promise<CustomMealType[]> {
+    return Array.from(this.customMealTypes.values()).filter(type => type.userId === userId);
+  }
+
+  async createCustomMealType(customType: InsertCustomMealType): Promise<CustomMealType> {
+    const id = randomUUID();
+    const newType = { 
+      ...customType, 
+      id, 
+      createdAt: new Date() 
+    } as CustomMealType;
+    this.customMealTypes.set(id, newType);
+    return newType;
+  }
+
+  async deleteCustomMealType(id: string): Promise<boolean> {
+    return this.customMealTypes.delete(id);
+  }
+
+  // Custom workout type methods
+  async getUserCustomWorkoutTypes(userId: string): Promise<CustomWorkoutType[]> {
+    return Array.from(this.customWorkoutTypes.values()).filter(type => type.userId === userId);
+  }
+
+  async createCustomWorkoutType(customType: InsertCustomWorkoutType): Promise<CustomWorkoutType> {
+    const id = randomUUID();
+    const newType = { 
+      ...customType, 
+      id, 
+      createdAt: new Date() 
+    } as CustomWorkoutType;
+    this.customWorkoutTypes.set(id, newType);
+    return newType;
+  }
+
+  async deleteCustomWorkoutType(id: string): Promise<boolean> {
+    return this.customWorkoutTypes.delete(id);
+  }
+
+  // Custom intensity level methods
+  async getUserCustomIntensityLevels(userId: string): Promise<CustomIntensityLevel[]> {
+    return Array.from(this.customIntensityLevels.values()).filter(level => level.userId === userId);
+  }
+
+  async createCustomIntensityLevel(customLevel: InsertCustomIntensityLevel): Promise<CustomIntensityLevel> {
+    const id = randomUUID();
+    const newLevel = { 
+      ...customLevel, 
+      id, 
+      createdAt: new Date() 
+    } as CustomIntensityLevel;
+    this.customIntensityLevels.set(id, newLevel);
+    return newLevel;
+  }
+
+  async deleteCustomIntensityLevel(id: string): Promise<boolean> {
+    return this.customIntensityLevels.delete(id);
   }
 }
 

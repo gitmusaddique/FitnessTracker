@@ -20,7 +20,13 @@ import {
   type InsertChallenge,
   type UserChallenge,
   type Achievement,
-  type InsertAchievement
+  type InsertAchievement,
+  type CustomMealType,
+  type InsertCustomMealType,
+  type CustomWorkoutType,
+  type InsertCustomWorkoutType,
+  type CustomIntensityLevel,
+  type InsertCustomIntensityLevel
 } from "@shared/schema";
 import { IStorage } from './storage';
 
@@ -393,5 +399,50 @@ export class SQLiteStorage implements IStorage {
   async getFood(id: string): Promise<Food | undefined> {
     const results = await db.select().from(schema.foods).where(eq(schema.foods.id, id)).limit(1);
     return results[0];
+  }
+
+  // Custom meal type methods
+  async getUserCustomMealTypes(userId: string): Promise<CustomMealType[]> {
+    return await db.select().from(schema.customMealTypes).where(eq(schema.customMealTypes.userId, userId));
+  }
+
+  async createCustomMealType(customType: InsertCustomMealType): Promise<CustomMealType> {
+    const results = await db.insert(schema.customMealTypes).values(customType).returning();
+    return results[0];
+  }
+
+  async deleteCustomMealType(id: string): Promise<boolean> {
+    const result = await db.delete(schema.customMealTypes).where(eq(schema.customMealTypes.id, id));
+    return result.changes > 0;
+  }
+
+  // Custom workout type methods
+  async getUserCustomWorkoutTypes(userId: string): Promise<CustomWorkoutType[]> {
+    return await db.select().from(schema.customWorkoutTypes).where(eq(schema.customWorkoutTypes.userId, userId));
+  }
+
+  async createCustomWorkoutType(customType: InsertCustomWorkoutType): Promise<CustomWorkoutType> {
+    const results = await db.insert(schema.customWorkoutTypes).values(customType).returning();
+    return results[0];
+  }
+
+  async deleteCustomWorkoutType(id: string): Promise<boolean> {
+    const result = await db.delete(schema.customWorkoutTypes).where(eq(schema.customWorkoutTypes.id, id));
+    return result.changes > 0;
+  }
+
+  // Custom intensity level methods
+  async getUserCustomIntensityLevels(userId: string): Promise<CustomIntensityLevel[]> {
+    return await db.select().from(schema.customIntensityLevels).where(eq(schema.customIntensityLevels.userId, userId));
+  }
+
+  async createCustomIntensityLevel(customLevel: InsertCustomIntensityLevel): Promise<CustomIntensityLevel> {
+    const results = await db.insert(schema.customIntensityLevels).values(customLevel).returning();
+    return results[0];
+  }
+
+  async deleteCustomIntensityLevel(id: string): Promise<boolean> {
+    const result = await db.delete(schema.customIntensityLevels).where(eq(schema.customIntensityLevels.id, id));
+    return result.changes > 0;
   }
 }
