@@ -626,9 +626,7 @@ export default function WorkoutsPage() {
             </div>
           ) : (
             <Button
-              variant="outline"
-              size="sm"
-              className="h-7 px-3 text-xs"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 h-7 px-3 text-xs"
               onClick={() => setShowCustomWorkoutTypeInput(true)}
             >
               <Plus className="w-3 h-3 mr-1" />
@@ -637,9 +635,8 @@ export default function WorkoutsPage() {
           )}
           <Button
             onClick={() => setShowAddForm(true)}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 h-7 px-3 text-xs"
             data-testid="button-add-workout"
-            size="sm"
           >
             <Plus className="w-3 h-3 mr-1" />
             Start
