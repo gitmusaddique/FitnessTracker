@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertMealSchema } from "@shared/schema";
-import type { Meal, InsertMeal, Food } from "@shared/schema";
+import type { Meal, InsertMeal, Food, CustomMealType } from "@shared/schema";
 import { useAuth } from "@/lib/auth";
 import { 
   Plus, 
@@ -60,6 +60,8 @@ export default function MealsPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [selectedFoods, setSelectedFoods] = useState<{food: Food, quantity: number}[]>([]);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [showCustomTypeInput, setShowCustomTypeInput] = useState(false);
+  const [customTypeName, setCustomTypeName] = useState("");
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -69,6 +71,10 @@ export default function MealsPage() {
 
   const { data: foods = [] } = useQuery<Food[]>({
     queryKey: ["/api/foods"],
+  });
+
+  const { data: customMealTypes = [] } = useQuery<CustomMealType[]>({
+    queryKey: ["/api/custom-meal-types"],
   });
 
   const form = useForm<InsertMeal>({
@@ -147,6 +153,26 @@ export default function MealsPage() {
         description: "Your meal has been removed."
       });
     }
+  });
+
+  const addCustomMealTypeMutation = useMutation({
+    mutationFn: async (name: string) => apiRequest("POST", "/api/custom-meal-types", { name }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-meal-types"] });
+      setShowCustomTypeInput(false);
+      setCustomTypeName("");
+      toast({
+        title: "Success",
+        description: "Custom meal type added successfully!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add custom meal type. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleSubmit = (data: InsertMeal) => {
@@ -346,6 +372,57 @@ export default function MealsPage() {
                   {Object.entries(mealTypeData).map(([value, data]) => (
                     <SelectItem key={value} value={value}>{data.label}</SelectItem>
                   ))}
+                  {customMealTypes.map((customType) => (
+                    <SelectItem key={customType.id} value={customType.name.toLowerCase()}>{customType.name}</SelectItem>
+                  ))}
+                  <div className="border-t border-border pt-2 mt-2">
+                    {showCustomTypeInput ? (
+                      <div className="flex gap-2 p-2">
+                        <Input
+                          value={customTypeName}
+                          onChange={(e) => setCustomTypeName(e.target.value)}
+                          placeholder="Enter meal type name"
+                          className="flex-1"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && customTypeName.trim()) {
+                              addCustomMealTypeMutation.mutate(customTypeName.trim());
+                            }
+                            if (e.key === 'Escape') {
+                              setShowCustomTypeInput(false);
+                              setCustomTypeName("");
+                            }
+                          }}
+                        />
+                        <Button 
+                          size="sm" 
+                          onClick={() => customTypeName.trim() && addCustomMealTypeMutation.mutate(customTypeName.trim())}
+                          disabled={!customTypeName.trim() || addCustomMealTypeMutation.isPending}
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          onClick={() => {
+                            setShowCustomTypeInput(false);
+                            setCustomTypeName("");
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => setShowCustomTypeInput(true)}
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add custom meal type
+                      </Button>
+                    )}
+                  </div>
                 </SelectContent>
               </Select>
             </div>
