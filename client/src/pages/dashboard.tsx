@@ -95,7 +95,7 @@ export default function Dashboard() {
   const maxWorkouts = Math.max(...weeklyData.map(d => d.workouts), 1);
 
   return (
-    <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
+    <div className="p-4 pb-20 pt-24 max-w-md mx-auto">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold mb-2" data-testid="text-welcome">

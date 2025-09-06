@@ -42,6 +42,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-w-md mx-auto bg-background min-h-screen">
+      <Header />
       <div className="pb-20">
         {children}
       </div>
@@ -126,7 +127,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="light" storageKey="fitness-app-theme">
+      <ThemeProvider defaultTheme="system" storageKey="fitness-app-theme">
         <TooltipProvider>
           <Toaster />
           <Router />
