@@ -691,7 +691,7 @@ export default function WorkoutsPage() {
 
       {/* Workout Template Modal */}
       <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
-        <DialogContent>
+        <DialogContent className="max-w-md mx-auto">
           <DialogHeader>
             <DialogTitle>Create Workout Template</DialogTitle>
           </DialogHeader>
