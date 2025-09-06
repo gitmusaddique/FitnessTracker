@@ -511,7 +511,7 @@ export default function MealsPage() {
 
       {/* Meal Template Modal */}
       <Dialog open={showMealTemplateModal} onOpenChange={setShowMealTemplateModal}>
-        <DialogContent className="max-w-md mx-auto">
+        <DialogContent className="max-w-sm max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Create Meal Template</DialogTitle>
           </DialogHeader>
