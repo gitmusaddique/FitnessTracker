@@ -111,10 +111,10 @@ export default function Dashboard() {
         <Card>
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center mb-2">
-              <Flame className="w-5 h-5 mr-1 text-orange-500" />
+              <Flame className="w-5 h-5 mr-1 text-green-500" />
               <span className="text-sm text-muted-foreground">Streak</span>
             </div>
-            <p className="text-2xl font-bold text-orange-500" data-testid="text-workout-streak">{stats.workoutStreak}</p>
+            <p className="text-2xl font-bold text-green-500" data-testid="text-workout-streak">{stats.workoutStreak}</p>
             <p className="text-sm text-muted-foreground">Days</p>
           </CardContent>
         </Card>
@@ -122,10 +122,10 @@ export default function Dashboard() {
         <Card>
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center mb-2">
-              <Trophy className="w-5 h-5 mr-1 text-yellow-500" />
+              <Trophy className="w-5 h-5 mr-1 text-green-600" />
               <span className="text-sm text-muted-foreground">PRs</span>
             </div>
-            <p className="text-2xl font-bold text-yellow-500" data-testid="text-personal-records">{stats.personalRecords}</p>
+            <p className="text-2xl font-bold text-green-600" data-testid="text-personal-records">{stats.personalRecords}</p>
             <p className="text-sm text-muted-foreground">This {selectedPeriod}</p>
           </CardContent>
         </Card>

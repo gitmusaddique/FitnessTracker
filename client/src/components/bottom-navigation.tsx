@@ -13,21 +13,18 @@ export default function BottomNavigation() {
 
   return (
     <div className="md-navigation-bar bottom-nav">
-      <div className="flex items-center justify-around h-16 max-w-md mx-auto px-4 mobile-safe-area">
+      <div className="flex items-center justify-around h-14 max-w-md mx-auto px-2 mobile-safe-area">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;
           
           return (
             <Link key={item.path} href={item.path}>
-              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-14 h-14 rounded-xl native-transition touch-target ${
+              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-12 h-12 rounded-lg native-transition touch-target ${
                 isActive ? 'active' : ''
-              }`} style={{ 
-                transform: isActive ? 'scale(1.05)' : 'scale(1)',
-                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}>
-                <Icon size={isActive ? 32 : 28} className="mb-0.5 native-transition" />
-                <span className={`md-label-medium leading-none text-[10px] ${isActive ? 'font-semibold' : 'font-medium'}`}>
+              }`}>
+                <Icon size={isActive ? 20 : 18} className="mb-1 native-transition" />
+                <span className={`leading-none text-[9px] ${isActive ? 'font-semibold' : 'font-medium'}`}>
                   {item.label}
                 </span>
               </div>
