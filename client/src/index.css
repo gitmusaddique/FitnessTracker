@@ -365,10 +365,13 @@ header {
   opacity: 1 !important;
 }
 
-/* Ensure select content has solid background */
+/* Glassmorphic select content */
 [data-radix-select-content] {
-  background: rgb(var(--card)) !important;
-  border: 1px solid rgb(var(--border)) !important;
+  background: rgba(68, 71, 90, 0.25) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(189, 147, 249, 0.2) !important;
+  border-radius: 16px !important;
 }
 
 /* Force all Radix select elements to be opaque */
@@ -399,12 +402,14 @@ header {
   background-image: none !important;
 }
 
-/* Ultra specific toast selectors */
+/* Glassmorphic toast selectors */
 [data-radix-toast-root].group,
 [data-radix-toast-root].pointer-events-auto,
 .bg-card {
-  background: rgb(var(--card)) !important;
-  background-color: rgb(var(--card)) !important;
+  background: rgba(68, 71, 90, 0.3) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(189, 147, 249, 0.2) !important;
 }
 
 /* Force all toast child elements to inherit solid background */
