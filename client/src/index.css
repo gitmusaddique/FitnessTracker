@@ -46,14 +46,11 @@
 }
 
 body {
-  background: linear-gradient(
-    135deg, 
-    rgb(15, 15, 25) 0%,
-    rgb(25, 25, 35) 25%, 
-    rgb(35, 35, 50) 50%,
-    rgb(25, 25, 35) 75%,
-    rgb(15, 15, 25) 100%
-  );
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, rgb(15, 15, 25) 0%, rgb(25, 25, 35) 50%, rgb(35, 35, 50) 100%);
   background-attachment: fixed;
   color: rgb(var(--foreground));
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
@@ -70,16 +67,16 @@ body {
 [data-radix-card],
 .bg-card {
   border-radius: 24px !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
   color: rgb(var(--foreground)) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
   position: relative;
   overflow: hidden;
 }
@@ -88,12 +85,14 @@ body {
 [data-radix-card]:hover,
 .bg-card:hover {
   transform: translateY(-4px) scale(1.01);
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(60px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(60px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
   box-shadow: 
-    0 16px 64px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 20px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
 }
 
 /* Glassmorphic Button Styles */
@@ -105,14 +104,15 @@ button,
   font-size: 14px;
   padding: 12px 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(30px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   color: rgb(var(--foreground)) !important;
   box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
   min-height: 44px;
   min-width: 44px;
 }
@@ -121,12 +121,14 @@ button:hover,
 .btn:hover,
 [role="button"]:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.15) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
 button:active,
@@ -141,29 +143,32 @@ button:active,
 button[data-primary="true"],
 .primary-button {
   background: linear-gradient(135deg, 
-    rgba(147, 51, 234, 0.9) 0%, 
-    rgba(168, 85, 247, 0.9) 100%) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(147, 51, 234, 0.4) !important;
+    rgba(147, 51, 234, 0.85) 0%, 
+    rgba(168, 85, 247, 0.85) 100%) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  border: 1px solid rgba(147, 51, 234, 0.3) !important;
   color: rgb(255, 255, 255) !important;
   box-shadow: 
-    0 4px 16px rgba(147, 51, 234, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 6px 24px rgba(147, 51, 234, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .bg-primary:hover,
 button[data-primary="true"]:hover,
 .primary-button:hover {
   background: linear-gradient(135deg, 
-    rgba(147, 51, 234, 1) 0%, 
-    rgba(168, 85, 247, 1) 100%) !important;
+    rgba(147, 51, 234, 0.95) 0%, 
+    rgba(168, 85, 247, 0.95) 100%) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
   box-shadow: 
-    0 8px 32px rgba(147, 51, 234, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 0 0 1px rgba(147, 51, 234, 0.2);
-  transform: translateY(-2px);
-  border: 1px solid rgba(147, 51, 234, 0.6) !important;
+    0 12px 48px rgba(147, 51, 234, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  border: 1px solid rgba(147, 51, 234, 0.4) !important;
 }
 
 /* Glassmorphic Input Styles */
@@ -174,13 +179,15 @@ select,
   border-radius: 16px !important;
   font-size: 16px !important;
   padding: 12px 16px !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(25px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(150%) !important;
   color: rgb(var(--foreground)) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 input:focus,
@@ -188,12 +195,14 @@ textarea:focus,
 select:focus,
 [data-radix-select-trigger]:focus {
   outline: none;
-  border: 1px solid rgba(147, 51, 234, 0.5) !important;
+  border: 1px solid rgba(147, 51, 234, 0.4) !important;
+  backdrop-filter: blur(35px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(180%) !important;
   box-shadow: 
     0 0 0 3px rgba(147, 51, 234, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 4px 16px rgba(147, 51, 234, 0.2);
-  background: rgba(255, 255, 255, 0.15) !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 6px 24px rgba(147, 51, 234, 0.25);
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 input::placeholder,
@@ -205,14 +214,14 @@ textarea::placeholder {
 .md-navigation-bar,
 nav,
 [data-navigation] {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(40px) !important;
-  -webkit-backdrop-filter: blur(40px) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(60px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(60px) saturate(180%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-bottom: none !important;
   box-shadow: 
-    0 -8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 -12px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
   position: fixed;
   bottom: 0;
   left: 0;
@@ -227,50 +236,59 @@ nav,
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 16px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   width: 3rem;
   height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .md-navigation-item.active,
 [data-navigation-item].active {
   color: rgb(255, 255, 255) !important;
   background: linear-gradient(135deg, 
-    rgba(147, 51, 234, 0.8) 0%, 
-    rgba(168, 85, 247, 0.8) 100%) !important;
-  backdrop-filter: blur(20px) !important;
+    rgba(147, 51, 234, 0.75) 0%, 
+    rgba(168, 85, 247, 0.75) 100%) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(200%) !important;
   transform: scale(1.1);
   box-shadow: 
-    0 8px 32px rgba(147, 51, 234, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(147, 51, 234, 0.3) !important;
+    0 12px 40px rgba(147, 51, 234, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(147, 51, 234, 0.2) !important;
 }
 
 .md-navigation-item:hover:not(.active),
 [data-navigation-item]:hover:not(.active) {
   color: rgba(147, 51, 234, 1) !important;
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(15px) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(25px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(170%) !important;
   transform: scale(1.05);
-  border: 1px solid rgba(147, 51, 234, 0.2) !important;
-  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.2);
+  border: 1px solid rgba(147, 51, 234, 0.15) !important;
+  box-shadow: 
+    0 6px 20px rgba(147, 51, 234, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 /* Glassmorphic Header */
 header,
 [data-header] {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(40px) !important;
-  -webkit-backdrop-filter: blur(40px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(50px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 
-    0 4px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 6px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 /* Glassmorphic Dropdowns and Popovers */
@@ -284,15 +302,15 @@ header,
 [data-radix-dropdown-menu-content],
 [data-radix-select-viewport],
 [data-radix-popover-content] {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(40px) !important;
-  -webkit-backdrop-filter: blur(40px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(50px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-radius: 16px !important;
   box-shadow: 
-    0 16px 64px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    0 20px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.08) !important;
   color: rgb(var(--foreground)) !important;
 }
 
@@ -305,15 +323,15 @@ header,
 [data-sonner-toaster] [data-sonner-toast],
 [role="status"],
 [role="alert"] {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(40px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(170%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-radius: 16px !important;
   box-shadow: 
-    0 16px 64px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    0 20px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.08) !important;
   color: rgb(var(--foreground)) !important;
 }
 
