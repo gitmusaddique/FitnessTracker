@@ -492,7 +492,7 @@ export default function MealsPage() {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={() => setShowMealTemplateModal(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
