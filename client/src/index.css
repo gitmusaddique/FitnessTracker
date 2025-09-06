@@ -54,15 +54,6 @@
   --input: 68 71 90; /* #44475A */
   --ring: 139 233 253; /* #8BE9FD Cyan */
   --radius: 1rem;
-  
-  /* Custom design colors */
-  --card-blue: 219 234 254; /* Light blue card background */
-  --card-peach: 255 237 213; /* Light peach card background */
-  --card-yellow: 254 249 195; /* Light yellow card background */
-  --card-green: 220 252 231; /* Light green card background */
-  --card-purple: 237 233 254; /* Light purple card background */
-  --dark-card: 30 41 59; /* Dark charcoal for contrast cards */
-  --dark-card-foreground: 248 250 252;
 }
 
 /* Base styles - colors will be set by theme manager */
@@ -184,10 +175,10 @@ input:focus, textarea:focus, select:focus {
   box-shadow: 0 0 0 3px hsl(var(--accent) / 0.2);
 }
 
-/* Black and white navigation */
+/* Navigation with theme support */
 .md-navigation-bar {
-  background: rgb(255, 255, 255);
-  border-top: 1px solid rgb(229, 229, 229);
+  background: hsl(var(--background) / 0.95);
+  border-top: 1px solid hsl(var(--border));
   position: fixed;
   bottom: 0;
   left: 0;
