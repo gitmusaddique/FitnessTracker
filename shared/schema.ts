@@ -260,6 +260,27 @@ export const follows = sqliteTable("follows", {
   createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
+export const customMealTypes = sqliteTable("custom_meal_types", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
+  name: text("name").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+export const customWorkoutTypes = sqliteTable("custom_workout_types", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
+  name: text("name").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+export const customIntensityLevels = sqliteTable("custom_intensity_levels", {
+  id: text("id").primaryKey().default(sql`(lower(hex(randomblob(16))))`),
+  userId: text("user_id").notNull().references(() => users.id),
+  name: text("name").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -324,6 +345,21 @@ export const insertSocialPostSchema = createInsertSchema(socialPosts).omit({
   createdAt: true,
 });
 
+export const insertCustomMealTypeSchema = createInsertSchema(customMealTypes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCustomWorkoutTypeSchema = createInsertSchema(customWorkoutTypes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCustomIntensityLevelSchema = createInsertSchema(customIntensityLevels).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Login schema
 export const loginSchema = z.object({
   email: z.string().email(),
@@ -360,3 +396,9 @@ export type WorkoutPlan = typeof workoutPlans.$inferSelect;
 export type UserChallenge = typeof userChallenges.$inferSelect;
 export type Follow = typeof follows.$inferSelect;
 export type LoginData = z.infer<typeof loginSchema>;
+export type CustomMealType = typeof customMealTypes.$inferSelect;
+export type InsertCustomMealType = z.infer<typeof insertCustomMealTypeSchema>;
+export type CustomWorkoutType = typeof customWorkoutTypes.$inferSelect;
+export type InsertCustomWorkoutType = z.infer<typeof insertCustomWorkoutTypeSchema>;
+export type CustomIntensityLevel = typeof customIntensityLevels.$inferSelect;
+export type InsertCustomIntensityLevel = z.infer<typeof insertCustomIntensityLevelSchema>;
