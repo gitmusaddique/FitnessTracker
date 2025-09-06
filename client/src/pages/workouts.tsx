@@ -306,33 +306,75 @@ export default function WorkoutsPage() {
           <div>
             <Label>Select Exercises</Label>
             <div className="mt-2 space-y-3">
-              <Select onValueChange={(workoutName) => {
-                const customExercise = {
-                  id: workoutName,
-                  name: workoutName,
-                  bodyPart: 'Custom',
-                  difficulty: 'Custom'
-                };
-                if (!selectedExercises.find(se => se.exercise.id === workoutName)) {
-                  setSelectedExercises([...selectedExercises, { exercise: customExercise, sets: 3, reps: 10 }]);
+              <Select onValueChange={(templateName) => {
+                const template = customWorkoutTypes.find(t => t.name === templateName);
+                if (template) {
+                  // For now, we'll create a basic exercise from the template name
+                  // In a future update, we could store template data with exercises
+                  const templateExercise = {
+                    id: template.id,
+                    name: template.name,
+                    bodyPart: 'Template',
+                    difficulty: 'Custom',
+                    category: 'strength'
+                  };
+                  if (!selectedExercises.find(se => se.exercise.id === template.id)) {
+                    setSelectedExercises([...selectedExercises, { 
+                      exercise: templateExercise, 
+                      sets: 3, 
+                      reps: 10,
+                      weight: 0
+                    }]);
+                  }
                 }
               }}>
                 <SelectTrigger data-testid="select-exercise">
                   <SelectValue placeholder="Choose an exercise to add" />
                 </SelectTrigger>
                 <SelectContent>
-                  {customWorkoutTypes.map(workout => (
-                    <SelectItem 
-                      key={workout.id} 
-                      value={workout.name}
-                      disabled={selectedExercises.some(se => se.exercise.name === workout.name)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{workout.name}</span>
-                        <Badge variant="secondary" className="text-xs">Custom</Badge>
+                  {customWorkoutTypes.length > 0 && (
+                    <>
+                      <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
+                        Workout Templates
                       </div>
-                    </SelectItem>
-                  ))}
+                      {customWorkoutTypes.map(workout => (
+                        <SelectItem 
+                          key={workout.id} 
+                          value={workout.name}
+                          disabled={selectedExercises.some(se => se.exercise.name === workout.name)}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Dumbbell className="w-3 h-3 text-primary" />
+                            <span className="font-medium">{workout.name}</span>
+                            <Badge variant="secondary" className="text-xs">Template</Badge>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </>
+                  )}
+                  {exercises.length > 0 && customWorkoutTypes.length > 0 && (
+                    <div className="border-t my-1"></div>
+                  )}
+                  {exercises.length > 0 && (
+                    <>
+                      <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
+                        Individual Exercises
+                      </div>
+                      {exercises.slice(0, 10).map(exercise => (
+                        <SelectItem 
+                          key={exercise.id} 
+                          value={exercise.id}
+                          disabled={selectedExercises.some(se => se.exercise.id === exercise.id)}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Activity className="w-3 h-3 text-muted-foreground" />
+                            <span className="font-medium">{exercise.name}</span>
+                            <Badge variant="outline" className="text-xs">{exercise.category}</Badge>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </>
+                  )}
                 </SelectContent>
               </Select>
               
