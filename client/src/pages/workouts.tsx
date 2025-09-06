@@ -637,11 +637,11 @@ export default function WorkoutsPage() {
           )}
           <Button
             onClick={() => setShowAddForm(true)}
-            className="bg-primary text-primary-foreground hover:bg-primary/90 h-7 px-3 text-xs"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
             data-testid="button-add-workout"
           >
-            <Plus className="w-3 h-3 mr-1" />
-            Start
+            <Plus className="w-4 h-4 mr-2" />
+            Start Workout
           </Button>
         </div>
       </div>
