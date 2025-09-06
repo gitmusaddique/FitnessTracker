@@ -671,7 +671,7 @@ export default function WorkoutsPage() {
             </div>
           ) : (
             <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
+              className="bg-white text-foreground border hover:bg-muted"
               onClick={() => setShowWorkoutTemplateModal(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
