@@ -14,7 +14,6 @@ import AuthPage from "@/pages/auth";
 import Dashboard from "@/pages/dashboard";
 import WorkoutsPage from "@/pages/workouts";
 import MealsPage from "@/pages/meals";
-import TrainersPage from "@/pages/trainers";
 import GymsPage from "@/pages/gyms";
 import ProfilePage from "@/pages/profile";
 import AdminPage from "@/pages/admin";
@@ -95,11 +94,6 @@ function Router() {
         </ProtectedRoute>
       </Route>
       
-      <Route path="/trainers">
-        <ProtectedRoute>
-          <TrainersPage />
-        </ProtectedRoute>
-      </Route>
       
       <Route path="/gyms">
         <ProtectedRoute>
