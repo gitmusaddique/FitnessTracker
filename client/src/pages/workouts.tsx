@@ -683,24 +683,11 @@ export default function WorkoutsPage() {
 
       {/* Workout Template Modal */}
       <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
-        <DialogPortal>
-          <DialogPrimitive.Content
-            className="fixed inset-0 z-50 bg-white overflow-y-auto"
-          >
-            <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Create Workout Template</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowWorkoutTemplateModal(false)}
-                  data-testid="button-close-template-form"
-                >
-                  <X className="w-5 h-5" />
-                </Button>
-              </div>
-
-              <div className="space-y-6">
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create Workout Template</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-6">
             <div>
               <Label htmlFor="template-name">Template Name</Label>
               <Input
@@ -948,12 +935,7 @@ export default function WorkoutsPage() {
                 </Button>
               </div>
             </div>
-            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </DialogPrimitive.Close>
-          </DialogPrimitive.Content>
-        </DialogPortal>
+        </DialogContent>
       </Dialog>
 
       {/* Custom Workout Names */}
