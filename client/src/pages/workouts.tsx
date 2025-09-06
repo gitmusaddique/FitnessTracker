@@ -386,12 +386,11 @@ export default function WorkoutsPage() {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="strength">Strength</SelectItem>
-                  <SelectItem value="cardio">Cardio</SelectItem>
-                  <SelectItem value="yoga">Yoga</SelectItem>
-                  <SelectItem value="sports">Sports</SelectItem>
-                  <SelectItem value="hiit">HIIT</SelectItem>
-                  <SelectItem value="flexibility">Flexibility</SelectItem>
+                  {Object.keys(workoutTypeData).map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -403,9 +402,9 @@ export default function WorkoutsPage() {
                   <SelectValue placeholder="Select intensity" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="low">Low</SelectItem>
-                  <SelectItem value="moderate">Moderate</SelectItem>
-                  <SelectItem value="high">High</SelectItem>
+                  {Object.entries(intensityLevels).map(([value, data]) => (
+                    <SelectItem key={value} value={value}>{data.label}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

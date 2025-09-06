@@ -343,10 +343,9 @@ export default function MealsPage() {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="breakfast">Breakfast</SelectItem>
-                  <SelectItem value="lunch">Lunch</SelectItem>
-                  <SelectItem value="dinner">Dinner</SelectItem>
-                  <SelectItem value="snack">Snack</SelectItem>
+                  {Object.entries(mealTypeData).map(([value, data]) => (
+                    <SelectItem key={value} value={value}>{data.label}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
