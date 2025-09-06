@@ -482,28 +482,30 @@ export default function MealsPage() {
   return (
     <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold">Nutrition</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground flex items-center gap-1">
+            <Utensils className="w-3 h-3" />
             {todayMeals.length} meal{todayMeals.length !== 1 ? 's' : ''} logged today
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Button
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            variant="outline"
+            size="icon"
             onClick={() => setShowMealTemplateModal(true)}
+            className="w-10 h-10"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Name
+            <Plus className="w-4 h-4" />
           </Button>
           <Button
             onClick={() => setShowAddForm(true)}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            size="icon"
+            className="w-10 h-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
             data-testid="button-add-meal"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Log Meal
+            <Plus className="w-4 h-4" />
           </Button>
         </div>
       </div>
@@ -777,69 +779,89 @@ export default function MealsPage() {
       </Dialog>
 
       {/* Daily Nutrition Summary */}
-      <Card className="mb-6 overflow-hidden">
-        <CardHeader className="bg-muted/10 pb-3">
-          <CardTitle className="flex items-center text-lg">
-            <Target className="w-5 h-5 mr-2" />
-            Today's Nutrition
+      <Card className="mb-6 border-0 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-between text-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary/15 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-primary" />
+              </div>
+              <span>Today's Goals</span>
+            </div>
+            <Calendar className="w-4 h-4 text-muted-foreground" />
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-4 space-y-4">
+        <CardContent className="space-y-6">
           {/* Calories */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">Calories</span>
-              <span className="text-sm">
-                <span className="font-bold text-lg">{todayStats.calories.toLocaleString()}</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">Calories</span>
+              </div>
+              <span className="text-sm font-bold">
+                <span className="text-primary">{todayStats.calories.toLocaleString()}</span>
                 <span className="text-muted-foreground"> / {goals.calories.toLocaleString()}</span>
               </span>
             </div>
             <Progress 
-              value={(todayStats.calories / goals.calories) * 100} 
-              className="h-2"
+              value={Math.min((todayStats.calories / goals.calories) * 100, 100)} 
+              className="h-2.5"
             />
           </div>
 
           {/* Macros */}
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-muted-foreground">Protein</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Fish className="w-3 h-3 text-blue-500" />
+                  <span className="text-xs font-medium">Protein</span>
+                </div>
                 <span className="text-xs font-medium">{Math.round(todayStats.protein)}g / {goals.protein}g</span>
               </div>
               <Progress 
-                value={(todayStats.protein / goals.protein) * 100} 
-                className="h-1"
+                value={Math.min((todayStats.protein / goals.protein) * 100, 100)} 
+                className="h-1.5"
               />
             </div>
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-muted-foreground">Carbs</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Wheat className="w-3 h-3 text-orange-500" />
+                  <span className="text-xs font-medium">Carbs</span>
+                </div>
                 <span className="text-xs font-medium">{Math.round(todayStats.carbs)}g / {goals.carbs}g</span>
               </div>
               <Progress 
-                value={(todayStats.carbs / goals.carbs) * 100} 
-                className="h-1"
+                value={Math.min((todayStats.carbs / goals.carbs) * 100, 100)} 
+                className="h-1.5"
               />
             </div>
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-muted-foreground">Fat</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Droplets className="w-3 h-3 text-yellow-500" />
+                  <span className="text-xs font-medium">Fat</span>
+                </div>
                 <span className="text-xs font-medium">{Math.round(todayStats.fat)}g / {goals.fat}g</span>
               </div>
               <Progress 
-                value={(todayStats.fat / goals.fat) * 100} 
-                className="h-1"
+                value={Math.min((todayStats.fat / goals.fat) * 100, 100)} 
+                className="h-1.5"
               />
             </div>
-            <div>
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-muted-foreground">Fiber</span>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-3 h-3 text-success" />
+                  <span className="text-xs font-medium">Fiber</span>
+                </div>
                 <span className="text-xs font-medium">{Math.round(todayStats.fiber)}g / {goals.fiber}g</span>
               </div>
               <Progress 
-                value={(todayStats.fiber / goals.fiber) * 100} 
-                className="h-1"
+                value={Math.min((todayStats.fiber / goals.fiber) * 100, 100)} 
+                className="h-1.5"
               />
             </div>
           </div>
@@ -847,32 +869,37 @@ export default function MealsPage() {
       </Card>
 
       {/* Meal Type Filters */}
-      <div className="flex space-x-2 mb-6 overflow-x-auto">
+      <div className="flex gap-1.5 mb-6 overflow-x-auto pb-2 scrollbar-hide">
         <button
           onClick={() => setActiveFilter("all")}
-          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-4 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
             activeFilter === "all"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted"
           }`}
           data-testid="filter-all"
         >
           All Meals
         </button>
-        {mealTypes.map((type) => (
-          <button
-            key={type}
-            onClick={() => setActiveFilter(type)}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all capitalize ${
-              activeFilter === type
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
-            }`}
-            data-testid={`filter-${type}`}
-          >
-            {mealTypeData[type as keyof typeof mealTypeData]?.label || type}
-          </button>
-        ))}
+        {mealTypes.map((type) => {
+          const typeData = mealTypeData[type as keyof typeof mealTypeData];
+          const Icon = typeData.icon;
+          return (
+            <button
+              key={type}
+              onClick={() => setActiveFilter(type)}
+              className={`px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap flex items-center gap-2 transition-all ${
+                activeFilter === type
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted"
+              }`}
+              data-testid={`filter-${type}`}
+            >
+              <Icon className="w-3 h-3" />
+              {typeData.label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Meal History */}

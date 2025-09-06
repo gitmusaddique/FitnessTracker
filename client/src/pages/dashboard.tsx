@@ -17,7 +17,9 @@ import {
   Plus,
   Calendar,
   Clock,
-  TrendingUp
+  TrendingUp,
+  Star,
+  Utensils
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -97,75 +99,103 @@ export default function Dashboard() {
   return (
     <div className="p-4 pb-20 pt-24 max-w-md mx-auto">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2" data-testid="text-welcome">
-          Hello, {user?.name?.split(' ')[0] || 'User'}!
-        </h1>
-        <p className="text-muted-foreground">
-          Ready to track your workouts today?
-        </p>
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <h1 className="text-3xl font-bold mb-1" data-testid="text-welcome">
+              Hello, {user?.name?.split(' ')[0] || 'User'} 👋
+            </h1>
+            <p className="text-muted-foreground text-sm">
+              Ready to crush your fitness goals?
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <Activity className="w-6 h-6 text-primary" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Quick Stats Cards */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <Card>
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Flame className="w-5 h-5 mr-1" style={{ color: 'rgb(var(--primary))' }} />
-              <span className="text-sm text-muted-foreground">Streak</span>
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-primary/5 to-primary/10">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 bg-primary/15 rounded-xl flex items-center justify-center">
+                <Flame className="w-5 h-5 text-primary" />
+              </div>
+              <TrendingUp className="w-4 h-4 text-primary/60" />
             </div>
-            <p className="text-2xl font-bold" style={{ color: 'rgb(var(--primary))' }} data-testid="text-workout-streak">{stats.workoutStreak}</p>
-            <p className="text-sm text-muted-foreground">Days</p>
+            <div>
+              <p className="text-2xl font-bold text-primary mb-1" data-testid="text-workout-streak">{stats.workoutStreak}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Day Streak</p>
+            </div>
           </CardContent>
         </Card>
         
-        <Card>
-          <CardContent className="p-4 text-center">
-            <div className="flex items-center justify-center mb-2">
-              <Trophy className="w-5 h-5 mr-1" style={{ color: 'rgb(var(--primary))' }} />
-              <span className="text-sm text-muted-foreground">PRs</span>
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-warning/5 to-warning/10">
+          <CardContent className="p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 bg-warning/15 rounded-xl flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-warning" />
+              </div>
+              <Star className="w-4 h-4 text-warning/60" />
             </div>
-            <p className="text-2xl font-bold" style={{ color: 'rgb(var(--primary))' }} data-testid="text-personal-records">{stats.personalRecords}</p>
-            <p className="text-sm text-muted-foreground">This {selectedPeriod}</p>
+            <div>
+              <p className="text-2xl font-bold text-warning mb-1" data-testid="text-personal-records">{stats.personalRecords}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Personal Records</p>
+            </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Today's Progress */}
-      <Card className="mb-6">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center text-lg">
-            <Target className="w-5 h-5 mr-2" />
-            Today's Progress
+      <Card className="mb-6 border-0 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center justify-between text-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-primary/15 rounded-lg flex items-center justify-center">
+                <Target className="w-4 h-4 text-primary" />
+              </div>
+              <span>Today's Goals</span>
+            </div>
+            <Calendar className="w-4 h-4 text-muted-foreground" />
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           {/* Calories */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">Calories Consumed</span>
-              <span className="text-sm">
-                <span className="font-bold" data-testid="text-calories-today">{stats.todayCaloriesEaten.toLocaleString()}</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Flame className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">Calories</span>
+              </div>
+              <span className="text-sm font-bold">
+                <span className="text-primary" data-testid="text-calories-today">{stats.todayCaloriesEaten.toLocaleString()}</span>
                 <span className="text-muted-foreground"> / {stats.calorieGoal.toLocaleString()}</span>
               </span>
             </div>
             <Progress 
-              value={(stats.todayCaloriesEaten / stats.calorieGoal) * 100} 
-              className="h-2"
+              value={Math.min((stats.todayCaloriesEaten / stats.calorieGoal) * 100, 100)} 
+              className="h-2.5"
             />
           </div>
 
           {/* Today's Workouts */}
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">Workouts Completed</span>
-              <span className="text-sm font-bold" data-testid="text-workouts-today">{todayWorkouts.length}</span>
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-2">
+                <Dumbbell className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">Workouts</span>
+              </div>
+              <span className="text-sm font-bold text-primary" data-testid="text-workouts-today">{todayWorkouts.length} / 3</span>
             </div>
-            <div className="flex space-x-2">
+            <div className="flex gap-1.5">
               {[...Array(3)].map((_, i) => (
                 <div
                   key={i}
-                  className={`flex-1 h-2 rounded ${
+                  className={`flex-1 h-2.5 rounded-full transition-colors ${
                     i < todayWorkouts.length ? 'bg-primary' : 'bg-muted'
                   }`}
                 />
@@ -176,94 +206,130 @@ export default function Dashboard() {
       </Card>
 
       {/* Period Stats */}
-      <Card className="mb-6">
-        <CardHeader className="pb-3">
+      <Card className="mb-6 border-0 shadow-sm">
+        <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-lg">
+            <CardTitle className="text-lg font-semibold">
               {selectedPeriod === "week" ? "This Week" : "This Month"}
             </CardTitle>
-            <div className="flex space-x-1">
-              <Button
-                variant={selectedPeriod === "week" ? "default" : "outline"}
-                size="sm"
+            <div className="flex bg-muted rounded-lg p-1">
+              <button
                 onClick={() => setSelectedPeriod("week")}
-                className="text-xs"
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  selectedPeriod === "week" 
+                    ? 'bg-primary text-primary-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 Week
-              </Button>
-              <Button
-                variant={selectedPeriod === "month" ? "default" : "outline"}
-                size="sm"
+              </button>
+              <button
                 onClick={() => setSelectedPeriod("month")}
-                className="text-xs"
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  selectedPeriod === "month" 
+                    ? 'bg-primary text-primary-foreground shadow-sm' 
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
               >
                 Month
-              </Button>
+              </button>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <p className="text-2xl font-bold text-foreground" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
-              <p className="text-xs text-muted-foreground">Workouts</p>
+          <div className="grid grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Dumbbell className="w-6 h-6 text-primary" />
+              </div>
+              <p className="text-2xl font-bold text-foreground mb-1" data-testid="text-weekly-workouts">{stats.totalWorkouts}</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Workouts</p>
             </div>
-            <div>
-              <p className="text-2xl font-bold text-foreground">{Math.round(stats.totalDuration / 60)}h</p>
-              <p className="text-xs text-muted-foreground">Hours</p>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Clock className="w-6 h-6 text-blue-500" />
+              </div>
+              <p className="text-2xl font-bold text-foreground mb-1">{Math.round(stats.totalDuration / 60)}h</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Hours</p>
             </div>
-            <div>
-              <p className="text-2xl font-bold text-foreground">{(stats.totalCalories / 1000).toFixed(1)}k</p>
-              <p className="text-xs text-muted-foreground">Calories</p>
+            <div className="text-center">
+              <div className="w-12 h-12 bg-orange-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Flame className="w-6 h-6 text-orange-500" />
+              </div>
+              <p className="text-2xl font-bold text-foreground mb-1">{(stats.totalCalories / 1000).toFixed(1)}k</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Calories</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Weekly Activity Chart */}
-      <Card className="mb-6">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center text-lg">
-            <BarChart3 className="w-5 h-5 mr-2" />
-            Weekly Activity
+      <Card className="mb-6 border-0 shadow-sm">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-3 text-lg">
+            <div className="w-8 h-8 bg-blue-500/15 rounded-lg flex items-center justify-center">
+              <BarChart3 className="w-4 h-4 text-blue-500" />
+            </div>
+            <span>Activity</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-end justify-between h-24 mb-3">
-            {weeklyData.map((day, index) => (
-              <div key={index} className="flex flex-col items-center space-y-2">
-                <div
-                  className="w-6 rounded-t min-h-[4px] transition-all"
-                  style={{
-                    backgroundColor: 'rgb(var(--primary)),',
-                    height: `${(day.workouts / maxWorkouts) * 60}px`,
-                    opacity: day.workouts > 0 ? 1 : 0.3
-                  }}
-                />
-                <span className="text-xs text-muted-foreground">{day.day}</span>
-              </div>
-            ))}
+          <div className="flex items-end justify-between h-28 mb-4 px-2">
+            {weeklyData.map((day, index) => {
+              const isToday = index === 6;
+              return (
+                <div key={index} className="flex flex-col items-center space-y-3">
+                  <div
+                    className={`w-7 rounded-lg min-h-[8px] transition-all ${
+                      day.workouts > 0 ? 'bg-primary' : 'bg-muted'
+                    } ${isToday ? 'shadow-md' : ''}`}
+                    style={{
+                      height: `${Math.max((day.workouts / maxWorkouts) * 70, 8)}px`
+                    }}
+                  />
+                  <div className="text-center">
+                    <span className={`text-xs font-medium ${
+                      isToday ? 'text-primary' : 'text-muted-foreground'
+                    }`}>
+                      {day.day}
+                    </span>
+                    {day.workouts > 0 && (
+                      <div className="w-1 h-1 bg-primary rounded-full mx-auto mt-1" />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <p className="text-xs text-muted-foreground text-center">
-            Workout frequency over the last 7 days
-          </p>
+          <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+            <Activity className="w-3 h-3" />
+            <span>Last 7 days workout frequency</span>
+          </div>
         </CardContent>
       </Card>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         <Link href="/workouts">
-          <Button className="w-full h-16 flex flex-col items-center justify-center space-y-1" data-testid="button-manage-workouts">
-            <Dumbbell className="w-6 h-6" />
-            <span className="text-sm">Manage Workouts</span>
-          </Button>
+          <Card className="border-0 shadow-sm bg-gradient-to-br from-primary to-primary/80 text-primary-foreground hover:shadow-md transition-all duration-200 active:scale-95" data-testid="button-manage-workouts">
+            <CardContent className="p-4 flex flex-col items-center justify-center text-center h-20">
+              <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center mb-2">
+                <Dumbbell className="w-4 h-4" />
+              </div>
+              <span className="text-xs font-medium">Workouts</span>
+            </CardContent>
+          </Card>
         </Link>
         
         <Link href="/meals">
-          <Button variant="outline" className="w-full h-16 flex flex-col items-center justify-center space-y-1" data-testid="button-track-meals">
-            <Target className="w-6 h-6" />
-            <span className="text-sm">Track Meals</span>
-          </Button>
+          <Card className="border-0 shadow-sm bg-gradient-to-br from-secondary to-secondary/80 hover:shadow-md transition-all duration-200 active:scale-95" data-testid="button-track-meals">
+            <CardContent className="p-4 flex flex-col items-center justify-center text-center h-20">
+              <div className="w-8 h-8 bg-primary/15 rounded-xl flex items-center justify-center mb-2">
+                <Utensils className="w-4 h-4 text-primary" />
+              </div>
+              <span className="text-xs font-medium">Nutrition</span>
+            </CardContent>
+          </Card>
         </Link>
       </div>
     </div>

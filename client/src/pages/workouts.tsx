@@ -623,10 +623,11 @@ export default function WorkoutsPage() {
   return (
     <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold">Workouts</h2>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-muted-foreground flex items-center gap-1">
+            <Activity className="w-3 h-3" />
             {todayWorkouts.length} workout{todayWorkouts.length !== 1 ? 's' : ''} today
           </p>
         </div>
@@ -679,11 +680,11 @@ export default function WorkoutsPage() {
           )}
           <Button
             onClick={() => setShowAddForm(true)}
-            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            size="icon"
+            className="w-10 h-10 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl"
             data-testid="button-add-workout"
           >
-            <Plus className="w-4 h-4 mr-2" />
-            Start Workout
+            <Plus className="w-4 h-4" />
           </Button>
         </div>
       </div>
@@ -963,53 +964,67 @@ export default function WorkoutsPage() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <Card className="p-4">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-primary">{weeklyWorkouts.length}</p>
-            <p className="text-xs text-muted-foreground">This Week</p>
-          </div>
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-primary/5 to-primary/10">
+          <CardContent className="p-4 text-center">
+            <div className="w-10 h-10 bg-primary/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Calendar className="w-5 h-5 text-primary" />
+            </div>
+            <p className="text-lg font-bold text-primary mb-1">{weeklyWorkouts.length}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">This Week</p>
+          </CardContent>
         </Card>
-        <Card className="p-4">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-foreground">{Math.round(totalDuration / 60)}h</p>
-            <p className="text-xs text-muted-foreground">Total Time</p>
-          </div>
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-blue-500/5 to-blue-500/10">
+          <CardContent className="p-4 text-center">
+            <div className="w-10 h-10 bg-blue-500/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Clock className="w-5 h-5 text-blue-500" />
+            </div>
+            <p className="text-lg font-bold text-blue-500 mb-1">{Math.round(totalDuration / 60)}h</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">Total Time</p>
+          </CardContent>
         </Card>
-        <Card className="p-4">
-          <div className="text-center">
-            <p className="text-2xl font-bold text-foreground">{personalRecords}</p>
-            <p className="text-xs text-muted-foreground">PRs</p>
-          </div>
+        <Card className="border-0 shadow-sm bg-gradient-to-br from-warning/5 to-warning/10">
+          <CardContent className="p-4 text-center">
+            <div className="w-10 h-10 bg-warning/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+              <Trophy className="w-5 h-5 text-warning" />
+            </div>
+            <p className="text-lg font-bold text-warning mb-1">{personalRecords}</p>
+            <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">PRs</p>
+          </CardContent>
         </Card>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex space-x-2 mb-6 overflow-x-auto">
+      <div className="flex gap-1.5 mb-6 overflow-x-auto pb-2 scrollbar-hide">
         <button
           onClick={() => setActiveFilter("all")}
-          className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+          className={`px-4 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
             activeFilter === "all"
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted"
           }`}
           data-testid="filter-all"
         >
-          All
+          All Types
         </button>
-        {workoutTypes.map((type) => (
-          <button
-            key={type}
-            onClick={() => setActiveFilter(type)}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all capitalize ${
-              activeFilter === type
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:bg-muted/80"
-            }`}
-            data-testid={`filter-${type}`}
-          >
-            {type}
-          </button>
-        ))}
+        {workoutTypes.map((type) => {
+          const typeData = workoutTypeData[type as keyof typeof workoutTypeData];
+          const Icon = typeData.icon;
+          return (
+            <button
+              key={type}
+              onClick={() => setActiveFilter(type)}
+              className={`px-3 py-2.5 rounded-xl text-xs font-medium whitespace-nowrap flex items-center gap-2 transition-all ${
+                activeFilter === type
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted"
+              }`}
+              data-testid={`filter-${type}`}
+            >
+              <Icon className="w-3 h-3" />
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          );
+        })}
       </div>
 
       {/* Workout History */}
