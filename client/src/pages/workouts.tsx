@@ -933,6 +933,7 @@ export default function WorkoutsPage() {
                   Create Template
                 </Button>
           </div>
+          </div>
         </DialogContent>
       </Dialog>
 

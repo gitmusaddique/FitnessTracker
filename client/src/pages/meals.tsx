@@ -774,6 +774,7 @@ export default function MealsPage() {
                 </Button>
               </div>
             </div>
+          </div>
         </DialogContent>
       </Dialog>
 
