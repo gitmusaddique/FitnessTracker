@@ -197,16 +197,26 @@ header {
   background-color: inherit !important;
 }
 
-/* Solid backgrounds for toast notifications - same as dropdowns */
+/* Solid backgrounds for toast notifications - completely opaque */
 [data-radix-toast-root],
 [data-radix-toast-root][data-state="open"],
 [data-radix-toast-root][data-state="closed"],
-.toast-content {
+.toast-content,
+[data-sonner-toast],
+[data-sonner-toaster] [data-sonner-toast] {
   background-color: hsl(var(--card)) !important;
   backdrop-filter: none !important;
   border: 1px solid hsl(var(--border)) !important;
   box-shadow: 0 4px 16px hsl(var(--foreground) / 0.1) !important;
   opacity: 1 !important;
+  background-image: none !important;
+  background: hsl(var(--card)) !important;
+}
+
+/* Force all toast child elements to inherit solid background */
+[data-radix-toast-root] *,
+[data-sonner-toast] * {
+  background-color: transparent !important;
 }
 
 /* Make bottom navigation bigger */
