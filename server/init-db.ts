@@ -226,6 +226,36 @@ async function initializeTables() {
       )
     `);
 
+    // Create custom meal types table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS custom_meal_types (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        user_id TEXT NOT NULL REFERENCES users(id),
+        name TEXT NOT NULL,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      )
+    `);
+
+    // Create custom workout types table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS custom_workout_types (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        user_id TEXT NOT NULL REFERENCES users(id),
+        name TEXT NOT NULL,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      )
+    `);
+
+    // Create custom intensity levels table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS custom_intensity_levels (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        user_id TEXT NOT NULL REFERENCES users(id),
+        name TEXT NOT NULL,
+        created_at INTEGER NOT NULL DEFAULT (unixepoch())
+      )
+    `);
+
     // Seed exercises
     db.run(`
       INSERT OR IGNORE INTO exercises (id, name, category, body_part, equipment, difficulty, instructions)
