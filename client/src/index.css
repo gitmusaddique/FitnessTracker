@@ -16,13 +16,13 @@
   --primary-foreground: 255 255 255;
   --secondary: 245 245 245; /* Light gray */
   --secondary-foreground: 0 0 0;
-  --tertiary: 239 68 68; /* Bright red accent */
+  --tertiary: 59 130 246; /* Blue accent */
   --tertiary-foreground: 255 255 255;
   --muted: 245 245 245;
   --muted-foreground: 115 115 115;
-  --accent: 220 38 38; /* Red accent */
+  --accent: 59 130 246; /* Blue accent */
   --accent-foreground: 255 255 255;
-  --destructive: 220 38 38;
+  --destructive: 239 68 68;
   --destructive-foreground: 255 255 255;
   --border: 229 229 229;
   --input: 245 245 245;
