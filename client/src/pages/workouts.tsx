@@ -359,29 +359,6 @@ export default function WorkoutsPage() {
                       ))}
                     </>
                   )}
-                  {exercises.length > 0 && customWorkoutTypes.length > 0 && (
-                    <div className="border-t my-1"></div>
-                  )}
-                  {exercises.length > 0 && (
-                    <>
-                      <div className="px-2 py-1 text-xs font-medium text-muted-foreground">
-                        Individual Exercises
-                      </div>
-                      {exercises.slice(0, 10).map(exercise => (
-                        <SelectItem 
-                          key={exercise.id} 
-                          value={exercise.id}
-                          disabled={selectedExercises.some(se => se.exercise.id === exercise.id)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <Activity className="w-3 h-3 text-muted-foreground" />
-                            <span className="font-medium">{exercise.name}</span>
-                            <Badge variant="outline" className="text-xs">{exercise.category}</Badge>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </>
-                  )}
                 </SelectContent>
               </Select>
               
