@@ -591,136 +591,68 @@ export default function WorkoutsPage() {
         </Button>
       </div>
 
-      {/* Custom Types Management */}
-      <div className="mb-4 space-y-3">
-        {/* Custom Workout Types */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="text-sm font-medium text-muted-foreground">Custom Workout Types</h3>
-            {customWorkoutTypes.length > 0 && (
-              <Badge variant="secondary" className="text-xs">{customWorkoutTypes.length}</Badge>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {customWorkoutTypes.map((type) => (
-              <Badge key={type.id} variant="outline" className="text-xs">
-                {type.name}
-              </Badge>
-            ))}
-            {showCustomWorkoutTypeInput ? (
-              <div className="flex gap-2 items-center">
-                <Input
-                  value={customWorkoutTypeName}
-                  onChange={(e) => setCustomWorkoutTypeName(e.target.value)}
-                  placeholder="Enter workout type"
-                  className="h-7 text-xs w-32"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && customWorkoutTypeName.trim()) {
-                      addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim());
-                    }
-                    if (e.key === 'Escape') {
-                      setShowCustomWorkoutTypeInput(false);
-                      setCustomWorkoutTypeName("");
-                    }
-                  }}
-                />
-                <Button 
-                  size="sm" 
-                  className="h-7 px-2"
-                  onClick={() => customWorkoutTypeName.trim() && addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim())}
-                  disabled={!customWorkoutTypeName.trim() || addCustomWorkoutTypeMutation.isPending}
-                >
-                  <Plus className="w-3 h-3" />
-                </Button>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className="h-7 px-2"
-                  onClick={() => {
+      {/* Custom Workout Names */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="text-sm font-medium text-muted-foreground">Custom Workout Names</h3>
+          {customWorkoutTypes.length > 0 && (
+            <Badge variant="secondary" className="text-xs">{customWorkoutTypes.length}</Badge>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {customWorkoutTypes.map((type) => (
+            <Badge key={type.id} variant="outline" className="text-xs">
+              {type.name}
+            </Badge>
+          ))}
+          {showCustomWorkoutTypeInput ? (
+            <div className="flex gap-2 items-center">
+              <Input
+                value={customWorkoutTypeName}
+                onChange={(e) => setCustomWorkoutTypeName(e.target.value)}
+                placeholder="Enter workout name"
+                className="h-7 text-xs w-32"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && customWorkoutTypeName.trim()) {
+                    addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim());
+                  }
+                  if (e.key === 'Escape') {
                     setShowCustomWorkoutTypeInput(false);
                     setCustomWorkoutTypeName("");
-                  }}
-                >
-                  <X className="w-3 h-3" />
-                </Button>
-              </div>
-            ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-7 px-3 text-xs"
-                onClick={() => setShowCustomWorkoutTypeInput(true)}
+                  }
+                }}
+              />
+              <Button 
+                size="sm" 
+                className="h-7 px-2"
+                onClick={() => customWorkoutTypeName.trim() && addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim())}
+                disabled={!customWorkoutTypeName.trim() || addCustomWorkoutTypeMutation.isPending}
               >
-                <Plus className="w-3 h-3 mr-1" />
-                Add Type
+                <Plus className="w-3 h-3" />
               </Button>
-            )}
-          </div>
-        </div>
-        
-        {/* Custom Intensity Levels */}
-        <div>
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="text-sm font-medium text-muted-foreground">Custom Intensity Levels</h3>
-            {customIntensityLevels.length > 0 && (
-              <Badge variant="secondary" className="text-xs">{customIntensityLevels.length}</Badge>
-            )}
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {customIntensityLevels.map((level) => (
-              <Badge key={level.id} variant="outline" className="text-xs">
-                {level.name}
-              </Badge>
-            ))}
-            {showCustomIntensityInput ? (
-              <div className="flex gap-2 items-center">
-                <Input
-                  value={customIntensityName}
-                  onChange={(e) => setCustomIntensityName(e.target.value)}
-                  placeholder="Enter intensity level"
-                  className="h-7 text-xs w-32"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && customIntensityName.trim()) {
-                      addCustomIntensityMutation.mutate(customIntensityName.trim());
-                    }
-                    if (e.key === 'Escape') {
-                      setShowCustomIntensityInput(false);
-                      setCustomIntensityName("");
-                    }
-                  }}
-                />
-                <Button 
-                  size="sm" 
-                  className="h-7 px-2"
-                  onClick={() => customIntensityName.trim() && addCustomIntensityMutation.mutate(customIntensityName.trim())}
-                  disabled={!customIntensityName.trim() || addCustomIntensityMutation.isPending}
-                >
-                  <Plus className="w-3 h-3" />
-                </Button>
-                <Button 
-                  size="sm" 
-                  variant="ghost" 
-                  className="h-7 px-2"
-                  onClick={() => {
-                    setShowCustomIntensityInput(false);
-                    setCustomIntensityName("");
-                  }}
-                >
-                  <X className="w-3 h-3" />
-                </Button>
-              </div>
-            ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-7 px-3 text-xs"
-                onClick={() => setShowCustomIntensityInput(true)}
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                className="h-7 px-2"
+                onClick={() => {
+                  setShowCustomWorkoutTypeInput(false);
+                  setCustomWorkoutTypeName("");
+                }}
               >
-                <Plus className="w-3 h-3 mr-1" />
-                Add Level
+                <X className="w-3 h-3" />
               </Button>
-            )}
-          </div>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7 px-3 text-xs"
+              onClick={() => setShowCustomWorkoutTypeInput(true)}
+            >
+              <Plus className="w-3 h-3 mr-1" />
+              Add Workout Name
+            </Button>
+          )}
         </div>
       </div>
 
