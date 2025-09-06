@@ -586,30 +586,7 @@ export default function WorkoutsPage() {
             {todayWorkouts.length} workout{todayWorkouts.length !== 1 ? 's' : ''} today
           </p>
         </div>
-        <Button
-          onClick={() => setShowAddForm(true)}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
-          data-testid="button-add-workout"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Start Workout
-        </Button>
-      </div>
-
-      {/* Custom Workout Names */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-2">
-          <h3 className="text-sm font-medium text-muted-foreground">Custom Workout Names</h3>
-          {customWorkoutTypes.length > 0 && (
-            <Badge variant="secondary" className="text-xs">{customWorkoutTypes.length}</Badge>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {customWorkoutTypes.map((type) => (
-            <Badge key={type.id} variant="outline" className="text-xs">
-              {type.name}
-            </Badge>
-          ))}
+        <div className="flex items-center gap-2">
           {showCustomWorkoutTypeInput ? (
             <div className="flex gap-2 items-center">
               <Input
@@ -655,9 +632,35 @@ export default function WorkoutsPage() {
               onClick={() => setShowCustomWorkoutTypeInput(true)}
             >
               <Plus className="w-3 h-3 mr-1" />
-              Add Workout Name
+              Add Name
             </Button>
           )}
+          <Button
+            onClick={() => setShowAddForm(true)}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            data-testid="button-add-workout"
+            size="sm"
+          >
+            <Plus className="w-3 h-3 mr-1" />
+            Start
+          </Button>
+        </div>
+      </div>
+
+      {/* Custom Workout Names */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="text-sm font-medium text-muted-foreground">Custom Workout Names</h3>
+          {customWorkoutTypes.length > 0 && (
+            <Badge variant="secondary" className="text-xs">{customWorkoutTypes.length}</Badge>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {customWorkoutTypes.map((type) => (
+            <Badge key={type.id} variant="outline" className="text-xs">
+              {type.name}
+            </Badge>
+          ))}
         </div>
       </div>
 
