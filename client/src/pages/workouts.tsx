@@ -295,25 +295,30 @@ export default function WorkoutsPage() {
           <div>
             <Label>Select Exercises</Label>
             <div className="mt-2 space-y-3">
-              <Select onValueChange={(exerciseId) => {
-                const exercise = exercises.find(e => e.id === exerciseId);
-                if (exercise && !selectedExercises.find(se => se.exercise.id === exerciseId)) {
-                  setSelectedExercises([...selectedExercises, { exercise, sets: 3, reps: 10 }]);
+              <Select onValueChange={(workoutName) => {
+                const customExercise = {
+                  id: workoutName,
+                  name: workoutName,
+                  bodyPart: 'Custom',
+                  difficulty: 'Custom'
+                };
+                if (!selectedExercises.find(se => se.exercise.id === workoutName)) {
+                  setSelectedExercises([...selectedExercises, { exercise: customExercise, sets: 3, reps: 10 }]);
                 }
               }}>
                 <SelectTrigger data-testid="select-exercise">
                   <SelectValue placeholder="Choose an exercise to add" />
                 </SelectTrigger>
                 <SelectContent>
-                  {exercises.map(exercise => (
+                  {customWorkoutTypes.map(workout => (
                     <SelectItem 
-                      key={exercise.id} 
-                      value={exercise.id}
-                      disabled={selectedExercises.some(se => se.exercise.id === exercise.id)}
+                      key={workout.id} 
+                      value={workout.name}
+                      disabled={selectedExercises.some(se => se.exercise.name === workout.name)}
                     >
                       <div className="flex items-center gap-2">
-                        <span className="font-medium">{exercise.name}</span>
-                        <Badge variant="secondary" className="text-xs">{exercise.bodyPart}</Badge>
+                        <span className="font-medium">{workout.name}</span>
+                        <Badge variant="secondary" className="text-xs">Custom</Badge>
                       </div>
                     </SelectItem>
                   ))}
