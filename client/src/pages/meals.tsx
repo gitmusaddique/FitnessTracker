@@ -317,20 +317,7 @@ export default function MealsPage() {
                   <SelectValue placeholder="Choose a food to add" />
                 </SelectTrigger>
                 <SelectContent>
-                  {foods.map(food => (
-                    <SelectItem 
-                      key={food.id} 
-                      value={food.id}
-                      disabled={selectedFoods.some(sf => sf.food.id === food.id)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{food.name}</span>
-                        <Badge variant="secondary" className="text-xs">
-                          {food.caloriesPerServing}cal/{food.servingSize}
-                        </Badge>
-                      </div>
-                    </SelectItem>
-                  ))}
+                  {/* No predefined foods - only show when manually added */}
                 </SelectContent>
               </Select>
               
