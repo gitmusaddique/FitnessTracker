@@ -773,8 +773,6 @@ export default function MealsPage() {
                   Create Template
                 </Button>
               </div>
-            </div>
-          </div>
         </DialogContent>
       </Dialog>
 
