@@ -203,7 +203,10 @@ header {
 [data-radix-toast-root][data-state="closed"],
 .toast-content,
 [data-sonner-toast],
-[data-sonner-toaster] [data-sonner-toast] {
+[data-sonner-toaster] [data-sonner-toast],
+.group.pointer-events-auto.relative.flex,
+[role="status"],
+[role="alert"] {
   background-color: hsl(var(--card)) !important;
   backdrop-filter: none !important;
   border: 1px solid hsl(var(--border)) !important;
@@ -211,11 +214,21 @@ header {
   opacity: 1 !important;
   background-image: none !important;
   background: hsl(var(--card)) !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Ultra specific toast selectors */
+[data-radix-toast-root].group,
+[data-radix-toast-root].pointer-events-auto,
+.bg-card {
+  background: hsl(var(--card)) !important;
+  background-color: hsl(var(--card)) !important;
 }
 
 /* Force all toast child elements to inherit solid background */
 [data-radix-toast-root] *,
-[data-sonner-toast] * {
+[data-sonner-toast] *,
+.group.pointer-events-auto * {
   background-color: transparent !important;
 }
 
