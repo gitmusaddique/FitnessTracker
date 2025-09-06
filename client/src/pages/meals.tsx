@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertMealSchema } from "@shared/schema";
-import type { Meal, InsertMeal } from "@shared/schema";
+import type { Meal, InsertMeal, Food } from "@shared/schema";
 import { useAuth } from "@/lib/auth";
 import { 
   Plus, 
@@ -58,12 +58,17 @@ const macroColors = {
 export default function MealsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFoods, setSelectedFoods] = useState<{food: Food, quantity: number}[]>([]);
   const [activeFilter, setActiveFilter] = useState("all");
   const { user } = useAuth();
   const { toast } = useToast();
 
   const { data: meals = [], isLoading } = useQuery<Meal[]>({
     queryKey: ["/api/meals"],
+  });
+
+  const { data: foods = [] } = useQuery<Food[]>({
+    queryKey: ["/api/foods"],
   });
 
   const form = useForm<InsertMeal>({
@@ -258,17 +263,79 @@ export default function MealsPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="name">Meal Name</Label>
-              <Input
-                id="name"
-                {...form.register("name")}
-                className="mt-2"
-                placeholder="e.g. Grilled Chicken Salad"
-                data-testid="input-meal-name"
-              />
+          <div>
+            <Label>Select Foods</Label>
+            <div className="mt-2 space-y-3">
+              <Select onValueChange={(foodId) => {
+                const food = foods.find(f => f.id === foodId);
+                if (food && !selectedFoods.find(sf => sf.food.id === foodId)) {
+                  setSelectedFoods([...selectedFoods, { food, quantity: 1 }]);
+                }
+              }}>
+                <SelectTrigger data-testid="select-food">
+                  <SelectValue placeholder="Choose a food to add" />
+                </SelectTrigger>
+                <SelectContent>
+                  {foods.map(food => (
+                    <SelectItem 
+                      key={food.id} 
+                      value={food.id}
+                      disabled={selectedFoods.some(sf => sf.food.id === food.id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{food.name}</span>
+                        <Badge variant="secondary" className="text-xs">
+                          {food.caloriesPerServing}cal/{food.servingSize}
+                        </Badge>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              {selectedFoods.length > 0 && (
+                <div className="space-y-2">
+                  {selectedFoods.map((item, index) => (
+                    <div key={item.food.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.food.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.food.servingSize} • {item.food.caloriesPerServing}cal/serving
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Input 
+                          type="number" 
+                          value={item.quantity} 
+                          onChange={(e) => {
+                            const updated = [...selectedFoods];
+                            updated[index].quantity = parseFloat(e.target.value) || 0;
+                            setSelectedFoods(updated);
+                          }}
+                          className="w-16 h-8 text-center" 
+                          min="0.1"
+                          step="0.1"
+                        />
+                        <span className="text-xs">servings</span>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => setSelectedFoods(selectedFoods.filter(sf => sf.food.id !== item.food.id))}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div></div>
             <div>
               <Label htmlFor="mealType">Meal Type</Label>
               <Select onValueChange={(value) => form.setValue("mealType", value)}>
