@@ -462,11 +462,11 @@ header {
   bottom: 0;
   background: linear-gradient(
     45deg,
-    rgba(189, 147, 249, 0.1) 0%,
-    rgba(255, 121, 198, 0.1) 25%,
-    rgba(139, 233, 253, 0.1) 50%,
-    rgba(255, 121, 198, 0.1) 75%,
-    rgba(189, 147, 249, 0.1) 100%
+    rgba(139, 95, 191, 0.08) 0%,
+    rgba(165, 120, 215, 0.08) 25%,
+    rgba(186, 145, 230, 0.08) 50%,
+    rgba(165, 120, 215, 0.08) 75%,
+    rgba(139, 95, 191, 0.08) 100%
   );
   background-size: 200% 200%;
   animation: gradient-shift 4s ease-in-out infinite;
@@ -479,13 +479,13 @@ header {
   z-index: 2;
 }
 
-/* Dracula gradient text */
+/* Glassmorphic gradient text */
 .gradient-text {
   background: linear-gradient(
     135deg,
-    rgb(189, 147, 249) 0%,
-    rgb(255, 121, 198) 50%,
-    rgb(139, 233, 253) 100%
+    rgb(139, 95, 191) 0%,
+    rgb(165, 120, 215) 50%,
+    rgb(186, 145, 230) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
