@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { Home, Dumbbell, Utensils, User } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function BottomNavigation() {
   const [location] = useLocation();
@@ -12,19 +13,20 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <div className="md-navigation-bar bottom-nav">
-      <div className="flex items-center justify-around h-14 max-w-md mx-auto px-2 mobile-safe-area">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border">
+      <div className="flex items-center justify-around h-16 max-w-md mx-auto px-4 pb-safe">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location === item.path;
           
           return (
             <Link key={item.path} href={item.path}>
-              <div className={`md-navigation-item md-state-layer flex flex-col items-center justify-center w-12 h-12 rounded-lg native-transition touch-target ${
-                isActive ? 'active' : ''
-              }`}>
-                <Icon size={isActive ? 20 : 18} className="mb-1 native-transition" />
-                <span className={`leading-none text-[9px] ${isActive ? 'font-semibold' : 'font-medium'}`}>
+              <div className={cn(
+                "flex flex-col items-center justify-center min-w-12 h-12 rounded-lg transition-colors hover:bg-accent",
+                isActive ? "text-primary" : "text-muted-foreground"
+              )}>
+                <Icon size={18} className="mb-1" />
+                <span className="text-[10px] font-medium leading-none">
                   {item.label}
                 </span>
               </div>
