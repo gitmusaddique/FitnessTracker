@@ -51,6 +51,7 @@ async function initializeTables() {
         equipment TEXT,
         location TEXT,
         visibility TEXT DEFAULT 'private',
+        photo_url TEXT,
         date INTEGER NOT NULL DEFAULT (unixepoch())
       )
     `);
