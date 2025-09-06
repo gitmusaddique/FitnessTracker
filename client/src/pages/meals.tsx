@@ -628,7 +628,7 @@ export default function MealsPage() {
                             id: food.id,
                             name: food.name,
                             quantity: 100,
-                            calories: food.calories || 0
+                            calories: food.caloriesPerServing || 0
                           }]
                         }));
                       }
