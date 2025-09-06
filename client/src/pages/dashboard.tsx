@@ -233,7 +233,7 @@ export default function Dashboard() {
             {weeklyData.map((day, index) => (
               <div key={index} className="flex flex-col items-center space-y-2">
                 <div
-                  className="w-6 bg-red-600 rounded-t min-h-[4px] transition-all"
+                  className="w-6 bg-blue-500 rounded-t min-h-[4px] transition-all"
                   style={{
                     height: `${(day.workouts / maxWorkouts) * 60}px`,
                     opacity: day.workouts > 0 ? 1 : 0.3

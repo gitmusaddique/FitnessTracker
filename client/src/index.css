@@ -12,7 +12,7 @@
   --card-foreground: 0 0 0;
   --popover: 255 255 255;
   --popover-foreground: 0 0 0;
-  --primary: 220 38 38; /* Red */
+  --primary: 59 130 246; /* Blue */
   --primary-foreground: 255 255 255;
   --secondary: 245 245 245; /* Light gray */
   --secondary-foreground: 0 0 0;
@@ -26,7 +26,7 @@
   --destructive-foreground: 255 255 255;
   --border: 229 229 229;
   --input: 245 245 245;
-  --ring: 220 38 38;
+  --ring: 59 130 246;
   --radius: 1rem;
   
   /* Custom design colors */
@@ -181,13 +181,13 @@ input:focus, textarea:focus, select:focus {
 
 .md-navigation-item.active {
   color: white;
-  background: rgb(220, 38, 38);
+  background: rgb(59, 130, 246);
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .md-navigation-item:hover:not(.active) {
-  color: rgb(220, 38, 38);
+  color: rgb(59, 130, 246);
   background-color: rgb(245, 245, 245);
   transform: scale(1.02);
 }
