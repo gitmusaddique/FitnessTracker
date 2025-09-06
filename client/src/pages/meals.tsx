@@ -663,15 +663,7 @@ export default function MealsPage() {
                         <SelectValue placeholder="Add a food item" />
                       </SelectTrigger>
                       <SelectContent>
-                        {foods.filter(food => !templateForm.foods.find(f => f.id === food.id)).slice(0, 10).map(food => (
-                          <SelectItem key={food.id} value={food.id}>
-                            <div className="flex items-center gap-2">
-                              <Apple className="w-3 h-3 text-success" />
-                              <span className="font-medium">{food.name}</span>
-                              <Badge variant="secondary" className="text-xs">{food.calories}cal</Badge>
-                            </div>
-                          </SelectItem>
-                        ))}
+                        {/* No predefined foods - only show when manually added */}
                       </SelectContent>
                     </Select>
                     
