@@ -31,28 +31,26 @@
 }
 
 .dark {
-  /* Exact Dracula theme colors */
-  --background: 40 42 54; /* #282A36 */
-  --foreground: 248 248 242; /* #F8F8F2 */
-  --card: 68 71 90; /* #44475A Selection */
-  --card-foreground: 248 248 242; /* #F8F8F2 */
-  --popover: 68 71 90; /* #44475A */
-  --popover-foreground: 248 248 242; /* #F8F8F2 */
-  --primary: 139 233 253; /* #8BE9FD Cyan */
-  --primary-foreground: 40 42 54; /* #282A36 */
-  --secondary: 98 114 164; /* #6272A4 Current Line */
-  --secondary-foreground: 248 248 242; /* #F8F8F2 */
-  --tertiary: 189 147 249; /* #BD93F9 Purple */
-  --tertiary-foreground: 40 42 54; /* #282A36 */
-  --muted: 98 114 164; /* #6272A4 Comment */
-  --muted-foreground: 248 248 242; /* #F8F8F2 */
-  --accent: 255 121 198; /* #FF79C6 Pink */
-  --accent-foreground: 40 42 54; /* #282A36 */
-  --destructive: 255 85 85; /* #FF5555 Red */
-  --destructive-foreground: 248 248 242; /* #F8F8F2 */
-  --border: 98 114 164; /* #6272A4 */
-  --input: 68 71 90; /* #44475A */
-  --ring: 139 233 253; /* #8BE9FD Cyan */
+  /* Dracula theme colors from dracula.json */
+  --background: 40 42 54; /* #282a36 */
+  --foreground: 248 248 242; /* #f8f8f2 */
+  --card: 68 71 90; /* #44475a */
+  --card-foreground: 248 248 242; /* #f8f8f2 */
+  --popover: 68 71 90; /* #44475a */
+  --popover-foreground: 248 248 242; /* #f8f8f2 */
+  --primary: 189 147 249; /* #bd93f9 purple */
+  --primary-foreground: 40 42 54; /* #282a36 */
+  --secondary: 255 121 198; /* #ff79c6 pink */
+  --secondary-foreground: 40 42 54; /* #282a36 */
+  --muted: 68 71 90; /* #44475a */
+  --muted-foreground: 98 114 164; /* #6272a4 */
+  --accent: 139 233 253; /* #8be9fd cyan */
+  --accent-foreground: 40 42 54; /* #282a36 */
+  --destructive: 255 85 85; /* #ff5555 */
+  --destructive-foreground: 248 248 242; /* #f8f8f2 */
+  --border: 68 71 90; /* #44475a */
+  --input: 68 71 90; /* #44475a */
+  --ring: 189 147 249; /* #bd93f9 */
   --radius: 1rem;
 }
 
