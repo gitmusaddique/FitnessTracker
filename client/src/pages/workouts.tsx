@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertWorkoutSchema } from "@shared/schema";
-import type { Workout, InsertWorkout, Exercise } from "@shared/schema";
+import type { Workout, InsertWorkout, Exercise, CustomWorkoutType, CustomIntensityLevel } from "@shared/schema";
 import { useAuth } from "@/lib/auth";
 import { 
   Plus, 
@@ -63,6 +63,10 @@ export default function WorkoutsPage() {
   const [activeTimer, setActiveTimer] = useState<string | null>(null);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [showCustomWorkoutTypeInput, setShowCustomWorkoutTypeInput] = useState(false);
+  const [customWorkoutTypeName, setCustomWorkoutTypeName] = useState("");
+  const [showCustomIntensityInput, setShowCustomIntensityInput] = useState(false);
+  const [customIntensityName, setCustomIntensityName] = useState("");
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -72,6 +76,14 @@ export default function WorkoutsPage() {
 
   const { data: exercises = [] } = useQuery<Exercise[]>({
     queryKey: ["/api/exercises"],
+  });
+
+  const { data: customWorkoutTypes = [] } = useQuery<CustomWorkoutType[]>({
+    queryKey: ["/api/custom-workout-types"],
+  });
+
+  const { data: customIntensityLevels = [] } = useQuery<CustomIntensityLevel[]>({
+    queryKey: ["/api/custom-intensity-levels"],
   });
 
   const form = useForm<InsertWorkout>({
@@ -151,6 +163,46 @@ export default function WorkoutsPage() {
         description: "Your workout has been removed."
       });
     }
+  });
+
+  const addCustomWorkoutTypeMutation = useMutation({
+    mutationFn: async (name: string) => apiRequest("POST", "/api/custom-workout-types", { name }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-workout-types"] });
+      setShowCustomWorkoutTypeInput(false);
+      setCustomWorkoutTypeName("");
+      toast({
+        title: "Success",
+        description: "Custom workout type added successfully!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add custom workout type. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const addCustomIntensityMutation = useMutation({
+    mutationFn: async (name: string) => apiRequest("POST", "/api/custom-intensity-levels", { name }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/custom-intensity-levels"] });
+      setShowCustomIntensityInput(false);
+      setCustomIntensityName("");
+      toast({
+        title: "Success",
+        description: "Custom intensity level added successfully!",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add custom intensity level. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleSubmit = (data: InsertWorkout) => {
@@ -391,6 +443,57 @@ export default function WorkoutsPage() {
                       {type.charAt(0).toUpperCase() + type.slice(1)}
                     </SelectItem>
                   ))}
+                  {customWorkoutTypes.map((customType) => (
+                    <SelectItem key={customType.id} value={customType.name.toLowerCase()}>{customType.name}</SelectItem>
+                  ))}
+                  <div className="border-t border-border pt-2 mt-2">
+                    {showCustomWorkoutTypeInput ? (
+                      <div className="flex gap-2 p-2">
+                        <Input
+                          value={customWorkoutTypeName}
+                          onChange={(e) => setCustomWorkoutTypeName(e.target.value)}
+                          placeholder="Enter workout type name"
+                          className="flex-1"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && customWorkoutTypeName.trim()) {
+                              addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim());
+                            }
+                            if (e.key === 'Escape') {
+                              setShowCustomWorkoutTypeInput(false);
+                              setCustomWorkoutTypeName("");
+                            }
+                          }}
+                        />
+                        <Button 
+                          size="sm" 
+                          onClick={() => customWorkoutTypeName.trim() && addCustomWorkoutTypeMutation.mutate(customWorkoutTypeName.trim())}
+                          disabled={!customWorkoutTypeName.trim() || addCustomWorkoutTypeMutation.isPending}
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          onClick={() => {
+                            setShowCustomWorkoutTypeInput(false);
+                            setCustomWorkoutTypeName("");
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => setShowCustomWorkoutTypeInput(true)}
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add custom workout type
+                      </Button>
+                    )}
+                  </div>
                 </SelectContent>
               </Select>
             </div>
@@ -405,6 +508,57 @@ export default function WorkoutsPage() {
                   {Object.entries(intensityLevels).map(([value, data]) => (
                     <SelectItem key={value} value={value}>{data.label}</SelectItem>
                   ))}
+                  {customIntensityLevels.map((customLevel) => (
+                    <SelectItem key={customLevel.id} value={customLevel.name.toLowerCase()}>{customLevel.name}</SelectItem>
+                  ))}
+                  <div className="border-t border-border pt-2 mt-2">
+                    {showCustomIntensityInput ? (
+                      <div className="flex gap-2 p-2">
+                        <Input
+                          value={customIntensityName}
+                          onChange={(e) => setCustomIntensityName(e.target.value)}
+                          placeholder="Enter intensity level name"
+                          className="flex-1"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' && customIntensityName.trim()) {
+                              addCustomIntensityMutation.mutate(customIntensityName.trim());
+                            }
+                            if (e.key === 'Escape') {
+                              setShowCustomIntensityInput(false);
+                              setCustomIntensityName("");
+                            }
+                          }}
+                        />
+                        <Button 
+                          size="sm" 
+                          onClick={() => customIntensityName.trim() && addCustomIntensityMutation.mutate(customIntensityName.trim())}
+                          disabled={!customIntensityName.trim() || addCustomIntensityMutation.isPending}
+                        >
+                          <Plus className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          onClick={() => {
+                            setShowCustomIntensityInput(false);
+                            setCustomIntensityName("");
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => setShowCustomIntensityInput(true)}
+                      >
+                        <Plus className="w-4 h-4 mr-2" />
+                        Add custom intensity level
+                      </Button>
+                    )}
+                  </div>
                 </SelectContent>
               </Select>
             </div>
