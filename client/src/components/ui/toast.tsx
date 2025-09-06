@@ -58,7 +58,7 @@ const Toast = React.forwardRef<
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
       style={{
-        backgroundColor: 'hsl(var(--card))',
+        backgroundColor: 'rgb(var(--card))',
         opacity: 1,
         backdropFilter: 'none',
         WebkitBackdropFilter: 'none',
