@@ -396,31 +396,6 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      {/* Quick Action Buttons */}
-      <div className="grid grid-cols-2 gap-4 mt-6 mb-20">
-        <Button
-          className="h-12 flex items-center justify-center space-x-2 rounded-full px-6"
-          asChild
-          data-testid="button-log-meal"
-        >
-          <Link href="/meals">
-            <Plus className="w-4 h-4" />
-            <span className="text-xs font-medium">Log Meal</span>
-          </Link>
-        </Button>
-        
-        <Button
-          className="h-12 flex items-center justify-center space-x-2 rounded-full px-6"
-          variant="outline"
-          asChild
-          data-testid="button-start-workout"
-        >
-          <Link href="/workouts">
-            <Plus className="w-4 h-4" />
-            <span className="text-xs font-medium">Start Workout</span>
-          </Link>
-        </Button>
-      </div>
 
     </div>
   );
