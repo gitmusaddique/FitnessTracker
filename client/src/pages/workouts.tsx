@@ -626,12 +626,10 @@ export default function WorkoutsPage() {
             </div>
           ) : (
             <Button
-              variant="outline"
-              size="sm"
-              className="h-7 px-3 text-xs"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
               onClick={() => setShowCustomWorkoutTypeInput(true)}
             >
-              <Plus className="w-3 h-3 mr-1" />
+              <Plus className="w-4 h-4 mr-2" />
               Add Name
             </Button>
           )}
