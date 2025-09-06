@@ -9,7 +9,9 @@ import {
   loginSchema, 
   insertWorkoutSchema,
   insertMealSchema,
-  insertBookingSchema
+  insertBookingSchema,
+  insertChallengeSchema,
+  insertAchievementSchema
 } from "@shared/schema";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
@@ -325,6 +327,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Cancel booking error:', error);
       res.status(500).json({ message: "Failed to cancel booking" });
+    }
+  });
+
+  // Challenge routes
+  app.get("/api/challenges", async (req, res) => {
+    try {
+      const challenges = await storage.getActiveChallenges();
+      res.json(challenges);
+    } catch (error) {
+      console.error('Get challenges error:', error);
+      res.status(500).json({ message: "Failed to fetch challenges" });
+    }
+  });
+
+  app.get("/api/challenges/user", authenticateToken, async (req: any, res) => {
+    try {
+      const userChallenges = await storage.getUserChallenges(req.user.id);
+      res.json(userChallenges);
+    } catch (error) {
+      console.error('Get user challenges error:', error);
+      res.status(500).json({ message: "Failed to fetch user challenges" });
+    }
+  });
+
+  app.post("/api/challenges/join", authenticateToken, async (req: any, res) => {
+    try {
+      const userChallenge = await storage.joinChallenge({
+        userId: req.user.id,
+        challengeId: req.body.challengeId,
+        progress: 0,
+        isCompleted: 0
+      });
+      res.json(userChallenge);
+    } catch (error) {
+      console.error('Join challenge error:', error);
+      res.status(400).json({ message: "Failed to join challenge" });
+    }
+  });
+
+  // Achievement routes
+  app.get("/api/achievements", authenticateToken, async (req: any, res) => {
+    try {
+      const achievements = await storage.getUserAchievements(req.user.id);
+      res.json(achievements);
+    } catch (error) {
+      console.error('Get achievements error:', error);
+      res.status(500).json({ message: "Failed to fetch achievements" });
+    }
+  });
+
+  app.post("/api/achievements/check", authenticateToken, async (req: any, res) => {
+    try {
+      const newAchievements = await storage.checkAndUnlockAchievements(req.user.id);
+      res.json(newAchievements);
+    } catch (error) {
+      console.error('Check achievements error:', error);
+      res.status(500).json({ message: "Failed to check achievements" });
     }
   });
 
