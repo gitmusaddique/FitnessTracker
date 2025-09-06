@@ -316,9 +316,16 @@ export default function WorkoutsPage() {
                   const templateExercise = {
                     id: template.id,
                     name: template.name,
-                    bodyPart: 'Template',
+                    category: 'strength',
+                    isVerified: null,
                     difficulty: 'Custom',
-                    category: 'strength'
+                    equipment: null,
+                    bodyPart: 'Template',
+                    instructions: null,
+                    tips: null,
+                    videoUrl: null,
+                    imageUrl: null,
+                    popularityScore: null
                   };
                   setSelectedExercises([...selectedExercises, { 
                     exercise: templateExercise, 
