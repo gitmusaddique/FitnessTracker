@@ -705,7 +705,7 @@ export default function WorkoutsPage() {
 
       {/* Workout Template Modal */}
       <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
-        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto bg-background border shadow-xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Dumbbell className="w-5 h-5 text-primary" />
