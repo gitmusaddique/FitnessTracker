@@ -708,7 +708,7 @@ export default function WorkoutsPage() {
       <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
         <DialogPortal>
           <DialogPrimitive.Content
-            className="fixed inset-0 z-50 bg-white dark:bg-gray-900 p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-white p-4 overflow-y-auto"
           >
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
