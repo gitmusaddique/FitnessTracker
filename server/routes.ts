@@ -123,6 +123,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Exercise routes
+  app.get("/api/exercises", async (req, res) => {
+    try {
+      const exercises = await storage.getAllExercises();
+      res.json(exercises);
+    } catch (error) {
+      console.error('Get exercises error:', error);
+      res.status(500).json({ message: "Failed to fetch exercises" });
+    }
+  });
+
+  // Food routes  
+  app.get("/api/foods", async (req, res) => {
+    try {
+      const foods = await storage.getAllFoods();
+      res.json(foods);
+    } catch (error) {
+      console.error('Get foods error:', error);
+      res.status(500).json({ message: "Failed to fetch foods" });
+    }
+  });
+
   // Workout routes
   app.get("/api/workouts", authenticateToken, async (req: any, res) => {
     try {

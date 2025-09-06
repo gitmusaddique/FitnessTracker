@@ -5,6 +5,8 @@ import {
   type InsertWorkout,
   type Meal,
   type InsertMeal,
+  type Exercise,
+  type Food,
   type Trainer,
   type InsertTrainer,
   type Gym,
@@ -65,6 +67,14 @@ export interface IStorage {
   getUserAchievements(userId: string): Promise<Achievement[]>;
   createAchievement(achievement: InsertAchievement): Promise<Achievement>;
   checkAndUnlockAchievements(userId: string): Promise<Achievement[]>;
+  
+  // Exercise methods
+  getAllExercises(): Promise<Exercise[]>;
+  getExercise(id: string): Promise<Exercise | undefined>;
+  
+  // Food methods
+  getAllFoods(): Promise<Food[]>;
+  getFood(id: string): Promise<Food | undefined>;
 }
 
 export class MemStorage implements IStorage {
@@ -386,6 +396,78 @@ export class MemStorage implements IStorage {
       return true;
     }
     return false;
+  }
+
+  // Challenge methods - stub implementations for MemStorage
+  async getAllChallenges(): Promise<Challenge[]> {
+    return [];
+  }
+
+  async getActiveChallenges(): Promise<Challenge[]> {
+    return [];
+  }
+
+  async createChallenge(challenge: InsertChallenge): Promise<Challenge> {
+    const id = randomUUID();
+    return { ...challenge, id } as Challenge;
+  }
+
+  async getUserChallenges(userId: string): Promise<UserChallenge[]> {
+    return [];
+  }
+
+  async joinChallenge(userChallenge: Omit<UserChallenge, 'id' | 'joinedAt' | 'completedAt'>): Promise<UserChallenge> {
+    const id = randomUUID();
+    return { 
+      ...userChallenge, 
+      id, 
+      joinedAt: new Date(), 
+      completedAt: null, 
+      progress: 0, 
+      isCompleted: 0 
+    } as UserChallenge;
+  }
+
+  async updateChallengeProgress(userId: string, challengeId: string, progress: number): Promise<boolean> {
+    return true;
+  }
+
+  // Achievement methods - stub implementations for MemStorage
+  async getUserAchievements(userId: string): Promise<Achievement[]> {
+    return [];
+  }
+
+  async createAchievement(achievement: InsertAchievement): Promise<Achievement> {
+    const id = randomUUID();
+    return { 
+      ...achievement, 
+      id, 
+      unlockedAt: new Date(),
+      isRare: achievement.isRare ?? 0,
+      points: achievement.points ?? 0
+    } as Achievement;
+  }
+
+  async checkAndUnlockAchievements(userId: string): Promise<Achievement[]> {
+    return [];
+  }
+
+  // Exercise methods - stub implementations for MemStorage
+  async getAllExercises(): Promise<Exercise[]> {
+    return [];
+  }
+
+  async getExercise(id: string): Promise<Exercise | undefined> {
+    return undefined;
+  }
+
+  // Food methods - stub implementations for MemStorage
+  async getAllFoods(): Promise<Food[]> {
+    return [];
+  }
+
+  async getFood(id: string): Promise<Food | undefined> {
+    return undefined;
   }
 }
 

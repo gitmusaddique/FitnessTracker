@@ -8,6 +8,8 @@ import {
   type InsertWorkout,
   type Meal,
   type InsertMeal,
+  type Exercise,
+  type Food,
   type Trainer,
   type InsertTrainer,
   type Gym,
@@ -371,5 +373,25 @@ export class SQLiteStorage implements IStorage {
     }
 
     return newAchievements;
+  }
+
+  // Exercise methods
+  async getAllExercises(): Promise<Exercise[]> {
+    return await db.select().from(schema.exercises).orderBy(schema.exercises.popularityScore);
+  }
+
+  async getExercise(id: string): Promise<Exercise | undefined> {
+    const results = await db.select().from(schema.exercises).where(eq(schema.exercises.id, id)).limit(1);
+    return results[0];
+  }
+
+  // Food methods
+  async getAllFoods(): Promise<Food[]> {
+    return await db.select().from(schema.foods).orderBy(schema.foods.name);
+  }
+
+  async getFood(id: string): Promise<Food | undefined> {
+    const results = await db.select().from(schema.foods).where(eq(schema.foods.id, id)).limit(1);
+    return results[0];
   }
 }
