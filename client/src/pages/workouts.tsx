@@ -876,9 +876,8 @@ export default function WorkoutsPage() {
                 placeholder="Add any notes or instructions for this workout template..."
               />
             </div>
-              </div>
 
-              <div className="flex gap-3 mt-6">
+          <div className="flex gap-3 mt-6">
                 <Button
                   type="button"
                   variant="outline"
@@ -933,8 +932,7 @@ export default function WorkoutsPage() {
                   <Plus className="w-4 h-4 mr-2" />
                   Create Template
                 </Button>
-              </div>
-            </div>
+          </div>
         </DialogContent>
       </Dialog>
 
