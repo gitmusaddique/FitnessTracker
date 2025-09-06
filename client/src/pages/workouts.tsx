@@ -13,7 +13,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertWorkoutSchema } from "@shared/schema";
-import type { Workout, InsertWorkout } from "@shared/schema";
+import type { Workout, InsertWorkout, Exercise } from "@shared/schema";
 import { useAuth } from "@/lib/auth";
 import { 
   Plus, 
@@ -58,6 +58,7 @@ const intensityLevels = {
 export default function WorkoutsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedExercises, setSelectedExercises] = useState<{exercise: Exercise, sets: number, reps: number, weight?: number}[]>([]);
   const [activeFilter, setActiveFilter] = useState("all");
   const [activeTimer, setActiveTimer] = useState<string | null>(null);
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -67,6 +68,10 @@ export default function WorkoutsPage() {
 
   const { data: workouts = [], isLoading } = useQuery<Workout[]>({
     queryKey: ["/api/workouts"],
+  });
+
+  const { data: exercises = [] } = useQuery<Exercise[]>({
+    queryKey: ["/api/exercises"],
   });
 
   const form = useForm<InsertWorkout>({
@@ -119,6 +124,7 @@ export default function WorkoutsPage() {
       queryClient.invalidateQueries({ queryKey: ["/api/workouts"] });
       form.reset();
       setSelectedFile(null);
+      setSelectedExercises([]);
       setShowAddForm(false);
       toast({
         title: "Workout completed!",
@@ -148,9 +154,37 @@ export default function WorkoutsPage() {
   });
 
   const handleSubmit = (data: InsertWorkout) => {
+    if (selectedExercises.length === 0) {
+      toast({
+        variant: "destructive", 
+        title: "No Exercises Selected",
+        description: "Please select at least one exercise for your workout.",
+      });
+      return;
+    }
+
+    // Generate workout name from exercises
+    const exerciseNames = selectedExercises.map(se => se.exercise.name);
+    const workoutName = exerciseNames.length > 2 
+      ? `${exerciseNames.slice(0, 2).join(', ')} + ${exerciseNames.length - 2} more`
+      : exerciseNames.join(', ');
+
+    // Store exercise data as JSON
+    const exercisesData = selectedExercises.map(se => ({
+      id: se.exercise.id,
+      name: se.exercise.name,
+      sets: se.sets,
+      reps: se.reps,
+      weight: se.weight,
+      category: se.exercise.category,
+      bodyPart: se.exercise.bodyPart
+    }));
+
     createWorkoutMutation.mutate({
       ...data,
       userId: user?.id || "",
+      name: workoutName,
+      exercises: JSON.stringify(exercisesData),
       duration: Number(data.duration),
       calories: data.calories ? Number(data.calories) : undefined,
       distance: data.distance ? Number(data.distance) : undefined,
@@ -207,14 +241,98 @@ export default function WorkoutsPage() {
 
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div>
-            <Label htmlFor="name">Workout Name</Label>
-            <Input
-              id="name"
-              {...form.register("name")}
-              className="mt-2"
-              placeholder="e.g. Morning Push Day"
-              data-testid="input-workout-name"
-            />
+            <Label>Select Exercises</Label>
+            <div className="mt-2 space-y-3">
+              <Select onValueChange={(exerciseId) => {
+                const exercise = exercises.find(e => e.id === exerciseId);
+                if (exercise && !selectedExercises.find(se => se.exercise.id === exerciseId)) {
+                  setSelectedExercises([...selectedExercises, { exercise, sets: 3, reps: 10 }]);
+                }
+              }}>
+                <SelectTrigger data-testid="select-exercise">
+                  <SelectValue placeholder="Choose an exercise to add" />
+                </SelectTrigger>
+                <SelectContent>
+                  {exercises.map(exercise => (
+                    <SelectItem 
+                      key={exercise.id} 
+                      value={exercise.id}
+                      disabled={selectedExercises.some(se => se.exercise.id === exercise.id)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">{exercise.name}</span>
+                        <Badge variant="secondary" className="text-xs">{exercise.bodyPart}</Badge>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              
+              {selectedExercises.length > 0 && (
+                <div className="space-y-2">
+                  {selectedExercises.map((item, index) => (
+                    <div key={item.exercise.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm">{item.exercise.name}</p>
+                        <p className="text-xs text-muted-foreground">{item.exercise.bodyPart} • {item.exercise.difficulty}</p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Input 
+                          type="number" 
+                          value={item.sets} 
+                          onChange={(e) => {
+                            const updated = [...selectedExercises];
+                            updated[index].sets = parseInt(e.target.value) || 0;
+                            setSelectedExercises(updated);
+                          }}
+                          className="w-12 h-8 text-center" 
+                          min="1"
+                        />
+                        <span>×</span>
+                        <Input 
+                          type="number" 
+                          value={item.reps} 
+                          onChange={(e) => {
+                            const updated = [...selectedExercises];
+                            updated[index].reps = parseInt(e.target.value) || 0;
+                            setSelectedExercises(updated);
+                          }}
+                          className="w-12 h-8 text-center" 
+                          min="1"
+                        />
+                        {item.exercise.category === 'strength' && (
+                          <>
+                            <span>@</span>
+                            <Input 
+                              type="number" 
+                              value={item.weight || ''} 
+                              onChange={(e) => {
+                                const updated = [...selectedExercises];
+                                updated[index].weight = parseFloat(e.target.value) || undefined;
+                                setSelectedExercises(updated);
+                              }}
+                              className="w-16 h-8 text-center" 
+                              placeholder="kg"
+                              min="0"
+                              step="0.5"
+                            />
+                          </>
+                        )}
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => setSelectedExercises(selectedExercises.filter(se => se.exercise.id !== item.exercise.id))}
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div>
