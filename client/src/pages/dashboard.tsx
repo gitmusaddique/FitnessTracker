@@ -111,10 +111,10 @@ export default function Dashboard() {
         <Card>
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center mb-2">
-              <Flame className="w-5 h-5 mr-1 text-blue-500" />
+              <Flame className="w-5 h-5 mr-1" style={{ color: 'rgb(59, 130, 246)' }} />
               <span className="text-sm text-muted-foreground">Streak</span>
             </div>
-            <p className="text-2xl font-bold text-blue-500" data-testid="text-workout-streak">{stats.workoutStreak}</p>
+            <p className="text-2xl font-bold" style={{ color: 'rgb(59, 130, 246)' }} data-testid="text-workout-streak">{stats.workoutStreak}</p>
             <p className="text-sm text-muted-foreground">Days</p>
           </CardContent>
         </Card>
@@ -122,10 +122,10 @@ export default function Dashboard() {
         <Card>
           <CardContent className="p-4 text-center">
             <div className="flex items-center justify-center mb-2">
-              <Trophy className="w-5 h-5 mr-1 text-blue-500" />
+              <Trophy className="w-5 h-5 mr-1" style={{ color: 'rgb(59, 130, 246)' }} />
               <span className="text-sm text-muted-foreground">PRs</span>
             </div>
-            <p className="text-2xl font-bold text-blue-500" data-testid="text-personal-records">{stats.personalRecords}</p>
+            <p className="text-2xl font-bold" style={{ color: 'rgb(59, 130, 246)' }} data-testid="text-personal-records">{stats.personalRecords}</p>
             <p className="text-sm text-muted-foreground">This {selectedPeriod}</p>
           </CardContent>
         </Card>
@@ -233,8 +233,9 @@ export default function Dashboard() {
             {weeklyData.map((day, index) => (
               <div key={index} className="flex flex-col items-center space-y-2">
                 <div
-                  className="w-6 bg-blue-500 rounded-t min-h-[4px] transition-all"
+                  className="w-6 rounded-t min-h-[4px] transition-all"
                   style={{
+                    backgroundColor: 'rgb(59, 130, 246)',
                     height: `${(day.workouts / maxWorkouts) * 60}px`,
                     opacity: day.workouts > 0 ? 1 : 0.3
                   }}
