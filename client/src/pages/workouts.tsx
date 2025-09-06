@@ -914,7 +914,7 @@ export default function WorkoutsPage() {
             </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 mt-6">
                 <Button
                   type="button"
                   variant="outline"
