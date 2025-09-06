@@ -306,11 +306,12 @@ export default function WorkoutsPage() {
           <div>
             <Label>Select Exercises</Label>
             <div className="mt-2 space-y-3">
-              <Select onValueChange={(templateName) => {
-                const template = customWorkoutTypes.find(t => t.name === templateName);
-                if (template) {
-                  // For now, we'll create a basic exercise from the template name
-                  // In a future update, we could store template data with exercises
+              <Select onValueChange={(value) => {
+                // Check if it's a template name or exercise ID
+                const template = customWorkoutTypes.find(t => t.name === value);
+                const exercise = exercises.find(e => e.id === value);
+                
+                if (template && !selectedExercises.find(se => se.exercise.name === template.name)) {
                   const templateExercise = {
                     id: template.id,
                     name: template.name,
@@ -318,14 +319,19 @@ export default function WorkoutsPage() {
                     difficulty: 'Custom',
                     category: 'strength'
                   };
-                  if (!selectedExercises.find(se => se.exercise.id === template.id)) {
-                    setSelectedExercises([...selectedExercises, { 
-                      exercise: templateExercise, 
-                      sets: 3, 
-                      reps: 10,
-                      weight: 0
-                    }]);
-                  }
+                  setSelectedExercises([...selectedExercises, { 
+                    exercise: templateExercise, 
+                    sets: 3, 
+                    reps: 10,
+                    weight: 0
+                  }]);
+                } else if (exercise && !selectedExercises.find(se => se.exercise.id === exercise.id)) {
+                  setSelectedExercises([...selectedExercises, { 
+                    exercise: exercise, 
+                    sets: 3, 
+                    reps: exercise.category === 'strength' ? 10 : 30,
+                    weight: exercise.category === 'strength' ? 0 : undefined
+                  }]);
                 }
               }}>
                 <SelectTrigger data-testid="select-exercise">
