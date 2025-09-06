@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogPortal } from "@/components/ui/dialog";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertMealSchema } from "@shared/schema";
@@ -62,6 +64,19 @@ export default function MealsPage() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [showCustomTypeInput, setShowCustomTypeInput] = useState(false);
   const [customTypeName, setCustomTypeName] = useState("");
+  const [showMealTemplateModal, setShowMealTemplateModal] = useState(false);
+  const [templateForm, setTemplateForm] = useState({
+    name: "",
+    mealType: "breakfast",
+    calories: 300,
+    protein: 20,
+    carbs: 30,
+    fat: 10,
+    fiber: 5,
+    sugar: 5,
+    foods: [] as {id: string, name: string, quantity: number, calories: number}[],
+    notes: ""
+  });
   const { user } = useAuth();
   const { toast } = useToast();
 
@@ -487,15 +502,319 @@ export default function MealsPage() {
             {todayMeals.length} meal{todayMeals.length !== 1 ? 's' : ''} logged today
           </p>
         </div>
-        <Button
-          onClick={() => setShowAddForm(true)}
-          className="bg-primary text-primary-foreground hover:bg-primary/90"
-          data-testid="button-add-meal"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Log Meal
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            onClick={() => setShowMealTemplateModal(true)}
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add Name
+          </Button>
+          <Button
+            onClick={() => setShowAddForm(true)}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
+            data-testid="button-add-meal"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Log Meal
+          </Button>
+        </div>
       </div>
+
+      {/* Meal Template Modal */}
+      <Dialog open={showMealTemplateModal} onOpenChange={setShowMealTemplateModal}>
+        <DialogPortal>
+          <DialogPrimitive.Content
+            className="fixed inset-0 z-50 bg-white overflow-y-auto"
+          >
+            <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold">Create Meal Template</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowMealTemplateModal(false)}
+                  data-testid="button-close-meal-template-form"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="template-name">Template Name</Label>
+                  <Input
+                    id="template-name"
+                    value={templateForm.name}
+                    onChange={(e) => setTemplateForm(prev => ({...prev, name: e.target.value}))}
+                    placeholder="e.g. Protein Breakfast"
+                    className="mt-2"
+                    data-testid="input-template-name"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="template-meal-type">Meal Type</Label>
+                  <Select onValueChange={(value) => setTemplateForm(prev => ({...prev, mealType: value}))}>
+                    <SelectTrigger className="mt-2">
+                      <SelectValue placeholder="Select meal type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(mealTypeData).map(([value, data]) => (
+                        <SelectItem key={value} value={value}>{data.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="template-calories">Calories</Label>
+                    <Input
+                      id="template-calories"
+                      type="number"
+                      value={templateForm.calories}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, calories: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="template-protein">Protein (g)</Label>
+                    <Input
+                      id="template-protein"
+                      type="number"
+                      value={templateForm.protein}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, protein: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="template-carbs">Carbs (g)</Label>
+                    <Input
+                      id="template-carbs"
+                      type="number"
+                      value={templateForm.carbs}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, carbs: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="template-fat">Fat (g)</Label>
+                    <Input
+                      id="template-fat"
+                      type="number"
+                      value={templateForm.fat}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, fat: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="template-fiber">Fiber (g)</Label>
+                    <Input
+                      id="template-fiber"
+                      type="number"
+                      value={templateForm.fiber}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, fiber: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="template-sugar">Sugar (g)</Label>
+                    <Input
+                      id="template-sugar"
+                      type="number"
+                      value={templateForm.sugar}
+                      onChange={(e) => setTemplateForm(prev => ({...prev, sugar: parseInt(e.target.value) || 0}))}
+                      className="mt-2"
+                      min="0"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label>Foods (optional)</Label>
+                  <div className="mt-2 space-y-3">
+                    <Select onValueChange={(foodId) => {
+                      const food = foods.find(f => f.id === foodId);
+                      if (food && !templateForm.foods.find(f => f.id === foodId)) {
+                        setTemplateForm(prev => ({
+                          ...prev,
+                          foods: [...prev.foods, {
+                            id: food.id,
+                            name: food.name,
+                            quantity: 100,
+                            calories: food.calories || 0
+                          }]
+                        }));
+                      }
+                    }}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Add a food item" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {foods.filter(food => !templateForm.foods.find(f => f.id === food.id)).slice(0, 10).map(food => (
+                          <SelectItem key={food.id} value={food.id}>
+                            <div className="flex items-center gap-2">
+                              <Apple className="w-3 h-3 text-success" />
+                              <span className="font-medium">{food.name}</span>
+                              <Badge variant="secondary" className="text-xs">{food.calories}cal</Badge>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    
+                    {templateForm.foods.length > 0 && (
+                      <div className="space-y-2">
+                        {templateForm.foods.map((food, index) => (
+                          <div key={food.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                            <div className="flex-1">
+                              <p className="font-medium text-sm">{food.name}</p>
+                            </div>
+                            <div className="flex items-center gap-2 text-sm">
+                              <Input 
+                                type="number" 
+                                value={food.quantity} 
+                                onChange={(e) => {
+                                  const updated = [...templateForm.foods];
+                                  updated[index].quantity = parseInt(e.target.value) || 0;
+                                  setTemplateForm(prev => ({...prev, foods: updated}));
+                                }}
+                                className="w-16 h-8 text-center" 
+                                min="1"
+                              />
+                              <span>g</span>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={() => {
+                                setTemplateForm(prev => ({
+                                  ...prev,
+                                  foods: prev.foods.filter(f => f.id !== food.id)
+                                }));
+                              }}
+                            >
+                              <X className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="template-notes">Notes (optional)</Label>
+                  <Textarea
+                    id="template-notes"
+                    value={templateForm.notes}
+                    onChange={(e) => setTemplateForm(prev => ({...prev, notes: e.target.value}))}
+                    className="mt-2 h-20"
+                    placeholder="Add any notes or instructions for this meal template..."
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => {
+                    setShowMealTemplateModal(false);
+                    setTemplateForm({
+                      name: "",
+                      mealType: "breakfast",
+                      calories: 300,
+                      protein: 20,
+                      carbs: 30,
+                      fat: 10,
+                      fiber: 5,
+                      sugar: 5,
+                      foods: [],
+                      notes: ""
+                    });
+                  }}
+                  data-testid="button-cancel-meal-template"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                  onClick={() => {
+                    if (templateForm.name.trim()) {
+                      // For now, we'll add it as a custom meal type
+                      // In the future, we could create a more comprehensive meal template system
+                      const customMealTypeMutation = {
+                        mutateAsync: async (name: string) => {
+                          await apiRequest("POST", "/api/custom-meal-types", { name });
+                        }
+                      };
+                      
+                      customMealTypeMutation.mutateAsync(templateForm.name.trim()).then(() => {
+                        queryClient.invalidateQueries({ queryKey: ["/api/custom-meal-types"] });
+                        toast({
+                          title: "Meal Template Created!",
+                          description: `"${templateForm.name}" has been added to your meal templates.`
+                        });
+                        setShowMealTemplateModal(false);
+                        setTemplateForm({
+                          name: "",
+                          mealType: "breakfast",
+                          calories: 300,
+                          protein: 20,
+                          carbs: 30,
+                          fat: 10,
+                          fiber: 5,
+                          sugar: 5,
+                          foods: [],
+                          notes: ""
+                        });
+                      }).catch(() => {
+                        toast({
+                          variant: "destructive",
+                          title: "Failed to create template",
+                          description: "Please try again."
+                        });
+                      });
+                    } else {
+                      toast({
+                        variant: "destructive",
+                        title: "Template name required",
+                        description: "Please add a name for your meal template."
+                      });
+                    }
+                  }}
+                  disabled={!templateForm.name.trim()}
+                  data-testid="button-create-meal-template"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Template
+                </Button>
+              </div>
+            </div>
+            <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
+          </DialogPrimitive.Content>
+        </DialogPortal>
+      </Dialog>
 
       {/* Daily Nutrition Summary */}
       <Card className="mb-6 overflow-hidden">
