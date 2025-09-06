@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertWorkoutSchema } from "@shared/schema";
@@ -65,6 +66,16 @@ export default function WorkoutsPage() {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [showCustomWorkoutTypeInput, setShowCustomWorkoutTypeInput] = useState(false);
   const [customWorkoutTypeName, setCustomWorkoutTypeName] = useState("");
+  const [showWorkoutTemplateModal, setShowWorkoutTemplateModal] = useState(false);
+  const [templateForm, setTemplateForm] = useState({
+    name: "",
+    type: "",
+    category: "",
+    intensity: "moderate",
+    duration: 30,
+    exercises: [] as {id: string, name: string, sets: number, reps: number, weight?: number}[],
+    notes: ""
+  });
   const [showCustomIntensityInput, setShowCustomIntensityInput] = useState(false);
   const [customIntensityName, setCustomIntensityName] = useState("");
   const { user } = useAuth();
@@ -627,7 +638,7 @@ export default function WorkoutsPage() {
           ) : (
             <Button
               className="bg-primary text-primary-foreground hover:bg-primary/90"
-              onClick={() => setShowCustomWorkoutTypeInput(true)}
+              onClick={() => setShowWorkoutTemplateModal(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Name
@@ -643,6 +654,261 @@ export default function WorkoutsPage() {
           </Button>
         </div>
       </div>
+
+      {/* Workout Template Modal */}
+      <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Dumbbell className="w-5 h-5 text-primary" />
+              Create Workout Template
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <Label htmlFor="template-name">Template Name</Label>
+              <Input
+                id="template-name"
+                value={templateForm.name}
+                onChange={(e) => setTemplateForm(prev => ({...prev, name: e.target.value}))}
+                placeholder="e.g. Upper Body Strength"
+                className="mt-2"
+                data-testid="input-template-name"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="template-type">Type</Label>
+                <Select onValueChange={(value) => setTemplateForm(prev => ({...prev, type: value}))}>
+                  <SelectTrigger className="mt-2">
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.keys(workoutTypeData).map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="template-intensity">Intensity</Label>
+                <Select onValueChange={(value) => setTemplateForm(prev => ({...prev, intensity: value}))}>
+                  <SelectTrigger className="mt-2">
+                    <SelectValue placeholder="Select intensity" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(intensityLevels).map(([value, data]) => (
+                      <SelectItem key={value} value={value}>{data.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="template-category">Category</Label>
+              <Select onValueChange={(value) => setTemplateForm(prev => ({...prev, category: value}))}>
+                <SelectTrigger className="mt-2">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="upper">Upper Body</SelectItem>
+                  <SelectItem value="lower">Lower Body</SelectItem>
+                  <SelectItem value="full-body">Full Body</SelectItem>
+                  <SelectItem value="push">Push</SelectItem>
+                  <SelectItem value="pull">Pull</SelectItem>
+                  <SelectItem value="core">Core</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="template-duration">Duration (minutes)</Label>
+              <Input
+                id="template-duration"
+                type="number"
+                value={templateForm.duration}
+                onChange={(e) => setTemplateForm(prev => ({...prev, duration: parseInt(e.target.value) || 30}))}
+                className="mt-2"
+                min="5"
+                max="180"
+              />
+            </div>
+
+            <div>
+              <Label>Exercises</Label>
+              <div className="mt-2 space-y-3">
+                <Select onValueChange={(exerciseId) => {
+                  const exercise = exercises.find(e => e.id === exerciseId);
+                  if (exercise && !templateForm.exercises.find(e => e.id === exerciseId)) {
+                    setTemplateForm(prev => ({
+                      ...prev,
+                      exercises: [...prev.exercises, {
+                        id: exercise.id,
+                        name: exercise.name,
+                        sets: 3,
+                        reps: 10,
+                        weight: exercise.category === 'strength' ? 0 : undefined
+                      }]
+                    }));
+                  }
+                }}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Add an exercise" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {exercises.filter(ex => !templateForm.exercises.find(e => e.id === ex.id)).map(exercise => (
+                      <SelectItem key={exercise.id} value={exercise.id}>
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">{exercise.name}</span>
+                          <Badge variant="secondary" className="text-xs">{exercise.category}</Badge>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                
+                {templateForm.exercises.length > 0 && (
+                  <div className="space-y-2">
+                    {templateForm.exercises.map((exercise, index) => (
+                      <div key={exercise.id} className="flex items-center gap-2 p-3 border rounded-lg">
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">{exercise.name}</p>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm">
+                          <Input 
+                            type="number" 
+                            value={exercise.sets} 
+                            onChange={(e) => {
+                              const updated = [...templateForm.exercises];
+                              updated[index].sets = parseInt(e.target.value) || 0;
+                              setTemplateForm(prev => ({...prev, exercises: updated}));
+                            }}
+                            className="w-12 h-8 text-center" 
+                            min="1"
+                          />
+                          <span>×</span>
+                          <Input 
+                            type="number" 
+                            value={exercise.reps} 
+                            onChange={(e) => {
+                              const updated = [...templateForm.exercises];
+                              updated[index].reps = parseInt(e.target.value) || 0;
+                              setTemplateForm(prev => ({...prev, exercises: updated}));
+                            }}
+                            className="w-12 h-8 text-center" 
+                            min="1"
+                          />
+                          {exercise.weight !== undefined && (
+                            <>
+                              <span>@</span>
+                              <Input 
+                                type="number" 
+                                value={exercise.weight || ''} 
+                                onChange={(e) => {
+                                  const updated = [...templateForm.exercises];
+                                  updated[index].weight = parseFloat(e.target.value) || 0;
+                                  setTemplateForm(prev => ({...prev, exercises: updated}));
+                                }}
+                                className="w-16 h-8 text-center" 
+                                placeholder="kg"
+                                min="0"
+                                step="0.5"
+                              />
+                            </>
+                          )}
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => {
+                            setTemplateForm(prev => ({
+                              ...prev,
+                              exercises: prev.exercises.filter(e => e.id !== exercise.id)
+                            }));
+                          }}
+                        >
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="template-notes">Notes (optional)</Label>
+              <Textarea
+                id="template-notes"
+                value={templateForm.notes}
+                onChange={(e) => setTemplateForm(prev => ({...prev, notes: e.target.value}))}
+                className="mt-2 h-20"
+                placeholder="Add any notes or instructions for this workout template..."
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setShowWorkoutTemplateModal(false);
+                setTemplateForm({
+                  name: "",
+                  type: "",
+                  category: "",
+                  intensity: "moderate",
+                  duration: 30,
+                  exercises: [],
+                  notes: ""
+                });
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                if (templateForm.name.trim() && templateForm.exercises.length > 0) {
+                  addCustomWorkoutTypeMutation.mutate(templateForm.name.trim());
+                  toast({
+                    title: "Template Created!",
+                    description: `"${templateForm.name}" has been added to your workout templates.`
+                  });
+                  setShowWorkoutTemplateModal(false);
+                  setTemplateForm({
+                    name: "",
+                    type: "",
+                    category: "",
+                    intensity: "moderate",
+                    duration: 30,
+                    exercises: [],
+                    notes: ""
+                  });
+                } else {
+                  toast({
+                    variant: "destructive",
+                    title: "Incomplete Template",
+                    description: "Please add a name and at least one exercise."
+                  });
+                }
+              }}
+              disabled={!templateForm.name.trim() || templateForm.exercises.length === 0}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Create Template
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Custom Workout Names */}
       <div className="mb-4">
