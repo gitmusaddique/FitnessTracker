@@ -708,16 +708,22 @@ export default function WorkoutsPage() {
       <Dialog open={showWorkoutTemplateModal} onOpenChange={setShowWorkoutTemplateModal}>
         <DialogPortal>
           <DialogPrimitive.Content
-            className="fixed inset-0 z-50 bg-white p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 bg-white overflow-y-auto"
           >
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Dumbbell className="w-5 h-5 text-primary" />
-              Create Workout Template
-            </DialogTitle>
-          </DialogHeader>
-          
-          <div className="space-y-4 py-4">
+            <div className="p-4 pb-20 pt-20 max-w-md mx-auto">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold">Create Workout Template</h2>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowWorkoutTemplateModal(false)}
+                  data-testid="button-close-template-form"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              <div className="space-y-6">
             <div>
               <Label htmlFor="template-name">Template Name</Label>
               <Input
@@ -906,59 +912,65 @@ export default function WorkoutsPage() {
                 placeholder="Add any notes or instructions for this workout template..."
               />
             </div>
-          </div>
+              </div>
 
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setShowWorkoutTemplateModal(false);
-                setTemplateForm({
-                  name: "",
-                  type: "",
-                  category: "",
-                  intensity: "moderate",
-                  duration: 30,
-                  exercises: [],
-                  notes: ""
-                });
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                if (templateForm.name.trim() && templateForm.exercises.length > 0) {
-                  addCustomWorkoutTypeMutation.mutate(templateForm.name.trim());
-                  toast({
-                    title: "Template Created!",
-                    description: `"${templateForm.name}" has been added to your workout templates.`
-                  });
-                  setShowWorkoutTemplateModal(false);
-                  setTemplateForm({
-                    name: "",
-                    type: "",
-                    category: "",
-                    intensity: "moderate",
-                    duration: 30,
-                    exercises: [],
-                    notes: ""
-                  });
-                } else {
-                  toast({
-                    variant: "destructive",
-                    title: "Incomplete Template",
-                    description: "Please add a name and at least one exercise."
-                  });
-                }
-              }}
-              disabled={!templateForm.name.trim() || templateForm.exercises.length === 0}
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Create Template
-            </Button>
-          </DialogFooter>
+              <div className="flex gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => {
+                    setShowWorkoutTemplateModal(false);
+                    setTemplateForm({
+                      name: "",
+                      type: "",
+                      category: "",
+                      intensity: "moderate",
+                      duration: 30,
+                      exercises: [],
+                      notes: ""
+                    });
+                  }}
+                  data-testid="button-cancel-template"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                  onClick={() => {
+                    if (templateForm.name.trim() && templateForm.exercises.length > 0) {
+                      addCustomWorkoutTypeMutation.mutate(templateForm.name.trim());
+                      toast({
+                        title: "Template Created!",
+                        description: `"${templateForm.name}" has been added to your workout templates.`
+                      });
+                      setShowWorkoutTemplateModal(false);
+                      setTemplateForm({
+                        name: "",
+                        type: "",
+                        category: "",
+                        intensity: "moderate",
+                        duration: 30,
+                        exercises: [],
+                        notes: ""
+                      });
+                    } else {
+                      toast({
+                        variant: "destructive",
+                        title: "Incomplete Template",
+                        description: "Please add a name and at least one exercise."
+                      });
+                    }
+                  }}
+                  disabled={!templateForm.name.trim() || templateForm.exercises.length === 0}
+                  data-testid="button-create-template"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Template
+                </Button>
+              </div>
+            </div>
             <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
