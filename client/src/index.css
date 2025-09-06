@@ -6,51 +6,51 @@
 
 :root {
   /* Light theme - Black, white, and blue */
-  --background: 255 255 255; /* Pure white */
-  --foreground: 0 0 0; /* Pure black */
-  --card: 255 255 255; /* Pure white */
-  --card-foreground: 0 0 0;
-  --popover: 255 255 255;
-  --popover-foreground: 0 0 0;
-  --primary: 59 130 246; /* Blue */
-  --primary-foreground: 255 255 255;
-  --secondary: 245 245 245; /* Light gray */
-  --secondary-foreground: 0 0 0;
-  --tertiary: 59 130 246; /* Blue accent */
-  --tertiary-foreground: 255 255 255;
-  --muted: 245 245 245;
-  --muted-foreground: 115 115 115;
-  --accent: 59 130 246; /* Blue accent */
-  --accent-foreground: 255 255 255;
-  --destructive: 239 68 68;
-  --destructive-foreground: 255 255 255;
-  --border: 229 229 229;
-  --input: 245 245 245;
-  --ring: 59 130 246;
+  --background: 255, 255, 255; /* Pure white */
+  --foreground: 0, 0, 0; /* Pure black */
+  --card: 255, 255, 255; /* Pure white */
+  --card-foreground: 0, 0, 0;
+  --popover: 255, 255, 255;
+  --popover-foreground: 0, 0, 0;
+  --primary: 59, 130, 246; /* Blue */
+  --primary-foreground: 255, 255, 255;
+  --secondary: 245, 245, 245; /* Light gray */
+  --secondary-foreground: 0, 0, 0;
+  --tertiary: 59, 130, 246; /* Blue accent */
+  --tertiary-foreground: 255, 255, 255;
+  --muted: 245, 245, 245;
+  --muted-foreground: 115, 115, 115;
+  --accent: 59, 130, 246; /* Blue accent */
+  --accent-foreground: 255, 255, 255;
+  --destructive: 239, 68, 68;
+  --destructive-foreground: 255, 255, 255;
+  --border: 229, 229, 229;
+  --input: 245, 245, 245;
+  --ring: 59, 130, 246;
   --radius: 1rem;
 }
 
 .dark {
   /* Dracula theme colors from dracula.json */
-  --background: 40 42 54; /* #282a36 */
-  --foreground: 248 248 242; /* #f8f8f2 */
-  --card: 68 71 90; /* #44475a */
-  --card-foreground: 248 248 242; /* #f8f8f2 */
-  --popover: 68 71 90; /* #44475a */
-  --popover-foreground: 248 248 242; /* #f8f8f2 */
-  --primary: 189 147 249; /* #bd93f9 purple */
-  --primary-foreground: 40 42 54; /* #282a36 */
-  --secondary: 255 121 198; /* #ff79c6 pink */
-  --secondary-foreground: 40 42 54; /* #282a36 */
-  --muted: 68 71 90; /* #44475a */
-  --muted-foreground: 98 114 164; /* #6272a4 */
-  --accent: 139 233 253; /* #8be9fd cyan */
-  --accent-foreground: 40 42 54; /* #282a36 */
-  --destructive: 255 85 85; /* #ff5555 */
-  --destructive-foreground: 248 248 242; /* #f8f8f2 */
-  --border: 68 71 90; /* #44475a */
-  --input: 68 71 90; /* #44475a */
-  --ring: 189 147 249; /* #bd93f9 */
+  --background: 40, 42, 54; /* #282a36 */
+  --foreground: 248, 248, 242; /* #f8f8f2 */
+  --card: 68, 71, 90; /* #44475a */
+  --card-foreground: 248, 248, 242; /* #f8f8f2 */
+  --popover: 68, 71, 90; /* #44475a */
+  --popover-foreground: 248, 248, 242; /* #f8f8f2 */
+  --primary: 189, 147, 249; /* #bd93f9 purple */
+  --primary-foreground: 40, 42, 54; /* #282a36 */
+  --secondary: 255, 121, 198; /* #ff79c6 pink */
+  --secondary-foreground: 40, 42, 54; /* #282a36 */
+  --muted: 68, 71, 90; /* #44475a */
+  --muted-foreground: 98, 114, 164; /* #6272a4 */
+  --accent: 139, 233, 253; /* #8be9fd cyan */
+  --accent-foreground: 40, 42, 54; /* #282a36 */
+  --destructive: 255, 85, 85; /* #ff5555 */
+  --destructive-foreground: 248, 248, 242; /* #f8f8f2 */
+  --border: 68, 71, 90; /* #44475a */
+  --input: 68, 71, 90; /* #44475a */
+  --ring: 189, 147, 249; /* #bd93f9 */
   --radius: 1rem;
 }
 
@@ -95,13 +95,13 @@ body::-webkit-scrollbar {
   border: none;
   color: rgb(var(--card-foreground));
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgb(0, 0, 0, 0.15);
 }
 
 /* Remove colored card variants that might cause conflicts */
@@ -113,7 +113,7 @@ button, .btn {
   border-radius: 16px !important;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 button:active, .btn:active {
@@ -122,7 +122,7 @@ button:active, .btn:active {
 
 button:hover, .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgb(0, 0, 0, 0.15);
 }
 
 /* Primary Button */
@@ -162,7 +162,7 @@ input:focus, textarea:focus, select:focus {
   z-index: 50;
   padding-bottom: env(safe-area-inset-bottom);
   backdrop-filter: blur(20px);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 10px rgb(0, 0, 0, 0.1);
 }
 
 .md-navigation-item {
@@ -173,7 +173,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .md-navigation-item.active {
-  color: white;
+  color: rgb(255, 255, 255);
   background: rgb(var(--primary));
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgb(var(--primary) / 0.3);
@@ -208,11 +208,11 @@ header {
 
 /* Modern shadows */
 .shadow-soft {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.08);
 }
 
 .shadow-soft-lg {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 30px rgb(0, 0, 0, 0.12);
 }
 
 /* Text styles matching the design */
@@ -230,7 +230,7 @@ header {
 
 /* Avatar enhancements */
 .avatar-gradient {
-  background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ef4444 100%);
+  background: linear-gradient(135deg, rgb(245, 158, 11) 0%, rgb(249, 115, 22) 50%, rgb(239, 68, 68) 100%);
 }
 
 /* Card hover effects and animations */
@@ -241,7 +241,7 @@ header {
 
 .card-interactive:hover {
   transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 40px rgb(0, 0, 0, 0.15);
 }
 
 .card-interactive:active {
