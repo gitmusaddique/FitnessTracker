@@ -47,42 +47,7 @@ export class SQLiteStorage implements IStorage {
 
   private async seedData() {
     try {
-      // Seed trainers if none exist
-      const existingTrainers = await db.select().from(schema.trainers).limit(1);
-      if (existingTrainers.length === 0) {
-        const trainersData: InsertTrainer[] = [
-          {
-            name: "Mike Johnson",
-            email: "mike.johnson@email.com",
-            specialty: "Strength Training",
-            bio: "Certified personal trainer with 8+ years of experience in strength training and muscle building.",
-            price: 6000, // $60
-            rating: 4.9,
-            reviewCount: 127,
-            photoUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop",
-            location: "Downtown Fitness",
-            contact: "mike.johnson@email.com",
-            isVerified: 1,
-            isActive: 1
-          },
-          {
-            name: "Sarah Wilson", 
-            email: "sarah.wilson@email.com",
-            specialty: "Yoga & Flexibility",
-            bio: "Certified yoga instructor specializing in flexibility, mindfulness, and stress relief techniques.",
-            price: 4500, // $45
-            rating: 4.7,
-            reviewCount: 89,
-            photoUrl: "https://images.unsplash.com/photo-1594824181247-7b5297ae5b89?w=400&h=400&fit=crop",
-            location: "Zen Studio",
-            contact: "sarah.wilson@email.com",
-            isVerified: 1,
-            isActive: 1
-          }
-        ];
-
-        await db.insert(schema.trainers).values(trainersData);
-      }
+      // Trainers are now managed only through admin panel - no seeding
 
       // Seed gyms if none exist
       const existingGyms = await db.select().from(schema.gyms).limit(1);
