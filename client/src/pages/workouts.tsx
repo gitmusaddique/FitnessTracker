@@ -675,7 +675,7 @@ export default function WorkoutsPage() {
               onClick={() => setShowWorkoutTemplateModal(true)}
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add Name
+              Add Workout
             </Button>
           )}
           <Button

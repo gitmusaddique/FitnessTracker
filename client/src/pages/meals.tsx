@@ -493,11 +493,10 @@ export default function MealsPage() {
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
-            size="icon"
             onClick={() => setShowMealTemplateModal(true)}
-            className="w-10 h-10"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 mr-2" />
+            Add Meal
           </Button>
           <Button
             onClick={() => setShowAddForm(true)}
