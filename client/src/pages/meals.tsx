@@ -375,54 +375,6 @@ export default function MealsPage() {
                   {customMealTypes.map((customType) => (
                     <SelectItem key={customType.id} value={customType.name.toLowerCase()}>{customType.name}</SelectItem>
                   ))}
-                  <div className="border-t border-border pt-2 mt-2">
-                    {showCustomTypeInput ? (
-                      <div className="flex gap-2 p-2">
-                        <Input
-                          value={customTypeName}
-                          onChange={(e) => setCustomTypeName(e.target.value)}
-                          placeholder="Enter meal type name"
-                          className="flex-1"
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && customTypeName.trim()) {
-                              addCustomMealTypeMutation.mutate(customTypeName.trim());
-                            }
-                            if (e.key === 'Escape') {
-                              setShowCustomTypeInput(false);
-                              setCustomTypeName("");
-                            }
-                          }}
-                        />
-                        <Button 
-                          size="sm" 
-                          onClick={() => customTypeName.trim() && addCustomMealTypeMutation.mutate(customTypeName.trim())}
-                          disabled={!customTypeName.trim() || addCustomMealTypeMutation.isPending}
-                        >
-                          <Plus className="w-4 h-4" />
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          onClick={() => {
-                            setShowCustomTypeInput(false);
-                            setCustomTypeName("");
-                          }}
-                        >
-                          <X className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full justify-start"
-                        onClick={() => setShowCustomTypeInput(true)}
-                      >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add custom meal type
-                      </Button>
-                    )}
-                  </div>
                 </SelectContent>
               </Select>
             </div>
@@ -543,6 +495,71 @@ export default function MealsPage() {
           <Plus className="w-4 h-4 mr-2" />
           Log Meal
         </Button>
+      </div>
+
+      {/* Custom Meal Types Management */}
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <h3 className="text-sm font-medium text-muted-foreground">Custom Meal Types</h3>
+          {customMealTypes.length > 0 && (
+            <Badge variant="secondary" className="text-xs">{customMealTypes.length}</Badge>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {customMealTypes.map((type) => (
+            <Badge key={type.id} variant="outline" className="text-xs">
+              {type.name}
+            </Badge>
+          ))}
+          {showCustomTypeInput ? (
+            <div className="flex gap-2 items-center">
+              <Input
+                value={customTypeName}
+                onChange={(e) => setCustomTypeName(e.target.value)}
+                placeholder="Enter meal type"
+                className="h-7 text-xs w-32"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && customTypeName.trim()) {
+                    addCustomMealTypeMutation.mutate(customTypeName.trim());
+                  }
+                  if (e.key === 'Escape') {
+                    setShowCustomTypeInput(false);
+                    setCustomTypeName("");
+                  }
+                }}
+              />
+              <Button 
+                size="sm" 
+                className="h-7 px-2"
+                onClick={() => customTypeName.trim() && addCustomMealTypeMutation.mutate(customTypeName.trim())}
+                disabled={!customTypeName.trim() || addCustomMealTypeMutation.isPending}
+              >
+                <Plus className="w-3 h-3" />
+              </Button>
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                className="h-7 px-2"
+                onClick={() => {
+                  setShowCustomTypeInput(false);
+                  setCustomTypeName("");
+                }}
+              >
+                <X className="w-3 h-3" />
+              </Button>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-7 px-3 text-xs"
+              onClick={() => setShowCustomTypeInput(true)}
+            >
+              <Plus className="w-3 h-3 mr-1" />
+              Add Type
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Daily Nutrition Summary */}
