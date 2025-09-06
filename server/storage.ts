@@ -10,7 +10,12 @@ import {
   type Gym,
   type InsertGym,
   type Booking,
-  type InsertBooking
+  type InsertBooking,
+  type Challenge,
+  type InsertChallenge,
+  type UserChallenge,
+  type Achievement,
+  type InsertAchievement
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -47,6 +52,19 @@ export interface IStorage {
   createBooking(booking: InsertBooking): Promise<Booking>;
   getBooking(id: string): Promise<Booking | undefined>;
   cancelBooking(id: string): Promise<boolean>;
+  
+  // Challenge methods
+  getAllChallenges(): Promise<Challenge[]>;
+  getActiveChallenges(): Promise<Challenge[]>;
+  createChallenge(challenge: InsertChallenge): Promise<Challenge>;
+  getUserChallenges(userId: string): Promise<UserChallenge[]>;
+  joinChallenge(userChallenge: Omit<UserChallenge, 'id' | 'joinedAt' | 'completedAt'>): Promise<UserChallenge>;
+  updateChallengeProgress(userId: string, challengeId: string, progress: number): Promise<boolean>;
+  
+  // Achievement methods
+  getUserAchievements(userId: string): Promise<Achievement[]>;
+  createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+  checkAndUnlockAchievements(userId: string): Promise<Achievement[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -56,6 +74,9 @@ export class MemStorage implements IStorage {
   private trainers: Map<string, Trainer>;
   private gyms: Map<string, Gym>;
   private bookings: Map<string, Booking>;
+  private challenges: Map<string, Challenge>;
+  private userChallenges: Map<string, UserChallenge>;
+  private achievements: Map<string, Achievement>;
 
   constructor() {
     this.users = new Map();
@@ -64,6 +85,9 @@ export class MemStorage implements IStorage {
     this.trainers = new Map();
     this.gyms = new Map();
     this.bookings = new Map();
+    this.challenges = new Map();
+    this.userChallenges = new Map();
+    this.achievements = new Map();
     
     this.seedData();
   }
@@ -365,6 +389,6 @@ export class MemStorage implements IStorage {
   }
 }
 
-// import { SQLiteStorage } from './sqlite-storage';
+import { SQLiteStorage } from './sqlite-storage';
 
-export const storage = new MemStorage();
+export const storage = new SQLiteStorage();

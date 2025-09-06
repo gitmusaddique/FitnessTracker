@@ -1,4 +1,4 @@
-import { eq, like, desc } from 'drizzle-orm';
+import { eq, like, desc, and } from 'drizzle-orm';
 import { db } from './db';
 import * as schema from '@shared/schema';
 import { 
@@ -13,7 +13,12 @@ import {
   type Gym,
   type InsertGym,
   type Booking,
-  type InsertBooking
+  type InsertBooking,
+  type Challenge,
+  type InsertChallenge,
+  type UserChallenge,
+  type Achievement,
+  type InsertAchievement
 } from "@shared/schema";
 import { IStorage } from './storage';
 
@@ -231,5 +236,140 @@ export class SQLiteStorage implements IStorage {
       .set({ status: 'cancelled' })
       .where(eq(schema.bookings.id, id));
     return result.changes > 0;
+  }
+
+  // Challenge methods
+  async getAllChallenges(): Promise<Challenge[]> {
+    return await db.select().from(schema.challenges);
+  }
+
+  async getActiveChallenges(): Promise<Challenge[]> {
+    return await db.select()
+      .from(schema.challenges)
+      .where(eq(schema.challenges.isActive, 1));
+  }
+
+  async createChallenge(insertChallenge: InsertChallenge): Promise<Challenge> {
+    const results = await db.insert(schema.challenges).values(insertChallenge).returning();
+    return results[0];
+  }
+
+  async getUserChallenges(userId: string): Promise<UserChallenge[]> {
+    return await db.select()
+      .from(schema.userChallenges)
+      .where(eq(schema.userChallenges.userId, userId));
+  }
+
+  async joinChallenge(insertUserChallenge: Omit<UserChallenge, 'id' | 'joinedAt' | 'completedAt'>): Promise<UserChallenge> {
+    const results = await db.insert(schema.userChallenges).values(insertUserChallenge).returning();
+    return results[0];
+  }
+
+  async updateChallengeProgress(userId: string, challengeId: string, progress: number): Promise<boolean> {
+    const challenge = await db.select().from(schema.challenges).where(eq(schema.challenges.id, challengeId)).limit(1);
+    const isCompleted = challenge[0] && progress >= (challenge[0].target ?? 0) ? 1 : 0;
+    
+    const result = await db.update(schema.userChallenges)
+      .set({ 
+        progress, 
+        isCompleted,
+        completedAt: isCompleted ? new Date() : null
+      })
+      .where(
+        and(
+          eq(schema.userChallenges.userId, userId),
+          eq(schema.userChallenges.challengeId, challengeId)
+        )
+      );
+    return result.changes > 0;
+  }
+
+  // Achievement methods
+  async getUserAchievements(userId: string): Promise<Achievement[]> {
+    return await db.select()
+      .from(schema.achievements)
+      .where(eq(schema.achievements.userId, userId))
+      .orderBy(desc(schema.achievements.unlockedAt));
+  }
+
+  async createAchievement(insertAchievement: InsertAchievement): Promise<Achievement> {
+    const results = await db.insert(schema.achievements).values(insertAchievement).returning();
+    return results[0];
+  }
+
+  async checkAndUnlockAchievements(userId: string): Promise<Achievement[]> {
+    const newAchievements: Achievement[] = [];
+    
+    // Get user data
+    const userWorkouts = await this.getUserWorkouts(userId);
+    const userMeals = await this.getUserMeals(userId);
+    
+    // Check for first workout achievement
+    if (userWorkouts.length >= 1) {
+      const existing = await db.select().from(schema.achievements)
+        .where(and(
+          eq(schema.achievements.userId, userId),
+          eq(schema.achievements.type, "first_workout")
+        ))
+        .limit(1);
+      
+      if (existing.length === 0) {
+        const achievement = await this.createAchievement({
+          userId,
+          type: "first_workout",
+          title: "First Steps",
+          description: "Completed your first workout!",
+          icon: "🎯",
+          points: 10
+        });
+        newAchievements.push(achievement);
+      }
+    }
+
+    // Check for workout warrior achievement
+    if (userWorkouts.length >= 10) {
+      const existing = await db.select().from(schema.achievements)
+        .where(and(
+          eq(schema.achievements.userId, userId),
+          eq(schema.achievements.type, "workout_warrior")
+        ))
+        .limit(1);
+      
+      if (existing.length === 0) {
+        const achievement = await this.createAchievement({
+          userId,
+          type: "workout_warrior", 
+          title: "Workout Warrior",
+          description: "Completed 10 workouts!",
+          icon: "💪",
+          points: 50
+        });
+        newAchievements.push(achievement);
+      }
+    }
+
+    // Check for nutrition tracker achievement
+    if (userMeals.length >= 1) {
+      const existing = await db.select().from(schema.achievements)
+        .where(and(
+          eq(schema.achievements.userId, userId),
+          eq(schema.achievements.type, "nutrition_start")
+        ))
+        .limit(1);
+      
+      if (existing.length === 0) {
+        const achievement = await this.createAchievement({
+          userId,
+          type: "nutrition_start",
+          title: "Nutrition Tracker", 
+          description: "Logged your first meal!",
+          icon: "🥗",
+          points: 10
+        });
+        newAchievements.push(achievement);
+      }
+    }
+
+    return newAchievements;
   }
 }

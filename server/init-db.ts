@@ -142,6 +142,51 @@ async function initializeTables() {
       )
     `);
 
+    // Create challenges table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS challenges (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        title TEXT NOT NULL,
+        description TEXT,
+        type TEXT,
+        goal TEXT,
+        target INTEGER,
+        start_date INTEGER,
+        end_date INTEGER,
+        reward TEXT,
+        is_active INTEGER DEFAULT 1,
+        created_by TEXT REFERENCES users(id)
+      )
+    `);
+
+    // Create user_challenges table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS user_challenges (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        user_id TEXT NOT NULL REFERENCES users(id),
+        challenge_id TEXT NOT NULL REFERENCES challenges(id),
+        progress INTEGER DEFAULT 0,
+        is_completed INTEGER DEFAULT 0,
+        joined_at INTEGER NOT NULL DEFAULT (unixepoch()),
+        completed_at INTEGER
+      )
+    `);
+
+    // Create achievements table
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS achievements (
+        id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+        user_id TEXT NOT NULL REFERENCES users(id),
+        type TEXT NOT NULL,
+        title TEXT NOT NULL,
+        description TEXT,
+        icon TEXT,
+        points INTEGER DEFAULT 0,
+        is_rare INTEGER DEFAULT 0,
+        unlocked_at INTEGER NOT NULL DEFAULT (unixepoch())
+      )
+    `);
+
     console.log('All database tables initialized successfully');
   } catch (error) {
     console.error('Error initializing database tables:', error);
